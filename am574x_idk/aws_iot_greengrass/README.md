@@ -91,8 +91,14 @@ The build and flash instructions are very similar to what is in the Texas Instru
     ```bash
     /home/UID/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/am57xx-evm/arago-base-tisdk-image-am57xx-evm-20200409163450.rootfs.tar.xz
     ```
+11. Unmount the microSD card from your workstation.
 
-11. Unmount the microSD card from your workstation and put into your EVK system.  Boot the system as normal, using a 115200N81 connection speed.
+11. Boot the system as normal (turn on with SW3, reset with SW2), using a 115200N81 connection speed.  There has been mixed results using `screen` and `minicom`.  Best results have been demonstrated on `picocom` on Linux and `TeraTerm` on Windows.
+
+    ```bash
+    sudo apt-get install picocom
+    picocom -b 115200 /dev/ttyUSB1
+    ```
 
 ## Go build solutions
 
