@@ -71,6 +71,7 @@ The build and flash instructions are very similar to what is in the Texas Instru
    ```bash
    $HOME/ti-processor-sdk-linux-am57xx-evm-06.02.00.81/bin
    ```
+
 10. Because the tool must access peripherals as `root`, we must run with the sudo command.
 
     ```bash
@@ -79,18 +80,16 @@ The build and flash instructions are very similar to what is in the Texas Instru
 
     Follow the instructions at [SD Card Using Custom Images](http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/Overview/Processor_SDK_Linux_create_SD_card_script.html#sd-card-using-custom-images).
 
-    Replace UID with your home directory's ID to complete the fully qualified paths.
-
-    You will input the fully qualified path for the boot files:
+    Replace UID with your home directory's ID to complete the fully qualified paths.  You will input the fully qualified path for the boot files:
 
     ```bash
-/home/UID/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/am57xx-evm/u-boot.tar.xz
+    /home/UID/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/am57xx-evm/u-boot.tar.xz
     ```
 
     And the fully qualified path for the rootfs:
 
     ```bash
-/home/UID/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/am57xx-evm/arago-base-tisdk-image-am57xx-evm-20200409163450.rootfs.tar.xz
+    /home/UID/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/am57xx-evm/arago-base-tisdk-image-am57xx-evm-20200409163450.rootfs.tar.xz
     ```
 
 11. Unmount the microSD card from your workstation and put into your EVK system.  Boot the system as normal, using a 115200N81 connection speed.
