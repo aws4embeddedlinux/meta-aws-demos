@@ -1,4 +1,4 @@
-# Greengrass for UP2 board under Yocto
+# Greengrass for UP2 board with Yocto
 
 For more information on building the Yocto image for UP2 board, see:  https://github.com/AAEONAEU-SW/meta-up-board. The warrior branch is used because it has python3.7 support.
 
@@ -24,49 +24,17 @@ git clone -b warrior https://git.yoctoproject.org/git/meta-java
 
 ## Applying a couple of patches to make it compatible with the UP2 BSP
 
-We need to add a couple of fixes from the master branch that are not integrated in the warrior branch yet.
-
+This tutorial has been verified with meta-aws commit ID ae0e7b9. If there would be breaking changes in the future, please revert to this commit:
 ```
 cd meta-aws
-git cherry-pick 1b91f16
-git cherry-pick 49f2adb
-git cherry-pick 3ba9e4e
+git checkout ae0e7b9
 ```
 
-Output:
+Since the UP2 board is using the linux-intel kernel, we have to copy to linux-yocto_%.bbappend file to linux-intel_%.bbappend.
 ```
-$ git cherry-pick 1b91f16
-[warrior 755b6ba] add support for greengrass 1.10.1
- Author: rpcme <rich@richelberger.com>
- Date: Wed May 6 14:25:26 2020 -0400
- 1 file changed, 37 insertions(+)
- create mode 100644 recipes-greengrass/greengrass-core/greengrass_1.10.1.bb
-$ git cherry-pick 49f2adb
-[warrior cd93073] move runtime dependencies to individual version dists and change patchelf to target all x86_64
- Author: rpcme <rich@richelberger.com>
- Date: Wed May 6 16:42:22 2020 -0400
- 3 files changed, 11 insertions(+), 8 deletions(-)
- delete mode 100644 recipes-greengrass/greengrass-core/greengrass_1.10.0.bbappend
-$ git cherry-pick 3ba9e4e
-[warrior a99ac0b] move runtime dependencies to version specific recipes since they will evolve over time
- Author: rpcme <rich@richelberger.com>
- Date: Wed May 6 16:45:39 2020 -0400
- 1 file changed, 1 insertion(+), 2 deletions(-)
-```
-
-Apply a patch to add a symbolic link /lib64/ld-linux...  
-Transfer the [ld-linux.patch](./ld-linux.patch) to the build system and apply:
-```
-patch -p1 ld-linux.patch
-```
-
-
-Rename to linux-yocto_%.bbappend file to linux-intel_%.bbappend and remove the linux-ti-staging_%.bbappend file because it is being picked up by bitbake.
-```
-cd meta-aws/recipes-greengrass/greengrass-core
-cp base/linux-yocto_%.bbappend linux-intel_%.bbappend
-cp base/linux-kernel.cfg .
-cd ../../..
+cd meta-aws/recipes-greengrass/greengrass-core/base
+cp linux-yocto_%.bbappend linux-intel_%.bbappend
+cd ../../../..
 ```
 
 ## Configure the BSP
