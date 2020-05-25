@@ -24,7 +24,7 @@ git clone -b warrior https://git.yoctoproject.org/git/meta-java
 
 ## Applying a couple of patches to make it compatible with the UP2 BSP
 
-This tutorial has been verified with meta-aws commit ID ae0e7b9. If there would be breaking changes in the future, please revert to this commit:
+This tutorial has been verified with meta-aws commit ID [ae0e7b9](https://github.com/aws/meta-aws/commit/ae0e7b993f0a654404ab02ca2f04a0465b54a947). If there would be breaking changes in the future, please revert to this commit:
 ```
 cd meta-aws
 git checkout ae0e7b9
