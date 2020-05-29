@@ -61,7 +61,7 @@ with some minor modifications to include IoT Greengrass.
    ```
 
 2. Source the Yocto environment script.  This tutorial was written
-   using the latest SDK at the time which was at version 06\_02\_00\_81.
+   using the latest Processor SDK Linux Automotive at the time which was at version 06\_02\_00.
 
    ```bash
    cd $BASEDIR/tisdk
