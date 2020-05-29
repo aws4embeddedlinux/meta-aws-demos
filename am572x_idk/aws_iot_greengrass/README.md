@@ -1,4 +1,4 @@
-# AWS IoT Greengrass for the Texas Instruments AM574x Industrial Development Kit
+# AWS IoT Greengrass for the Texas Instruments AM572x Industrial Development Kit
 
 **DISCLAIMER** This walk-through currently uses the arago
 configuration for the `zeus` branch.  This branch will not be used for
@@ -72,9 +72,9 @@ with some minor modifications to include IoT Greengrass.
 3. Copy the `local.conf` we will use for this demonstration to your `conf` directory.
 
    ```bash
-   wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/am574x_idk/aws_iot_greengrass/am574x_iot_greengrass.conf
-   mv am574x_iot_greengrass.conf \
-      $BASEDIR/tisdk/build/conf/am574x_iot_greengrass.conf
+   wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/am572x_idk/aws_iot_greengrass/am572x_iot_greengrass.conf
+   mv am572x_iot_greengrass.conf \
+      $BASEDIR/tisdk/build/conf/am572x_iot_greengrass.conf
    ```
 
 4. The TI Processor SDK includes the meta-aws project in the source
@@ -107,7 +107,7 @@ with some minor modifications to include IoT Greengrass.
    ```bash
    cd $BASEDIR/tisdk/build
    . conf/setenv
-   bitbake -r conf/am574x_iot_greengrass.conf arago-base-tisdk-image
+   bitbake -r conf/am572x_iot_greengrass.conf arago-base-tisdk-image
    ```
 
    After building, the images will be in the following directory.
@@ -182,14 +182,14 @@ the target device.
 Tester](https://docs.aws.amazon.com/greengrass/latest/developerguide/device-tester-for-greengrass-ug.html)
 requires additional additional software.  To build the image for IDT,
 please use the
-[am574x\_iot\_greengrass\_idt.conf](am574x_iot_greengrass_idt.conf)
+[am572x\_iot\_greengrass\_idt.conf](am572x_iot_greengrass_idt.conf)
 file.  You will need to install package =ntp= for use of =ntpd= or
 else Greengrass OTA testing will fail due to potential system time
 mismatch causing the SSL handshake during =wget= invocation to fail. 
 
 ```bash
-wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/am574x_idk/aws_iot_greengrass/am574x_iot_greengrass_idt.conf
-mv am574x_iot_greengrass_idt.conf $BASEDIR/tisdk/build/conf/am574x_iot_greengrass_idt.conf
+wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/am572x_idk/aws_iot_greengrass/am572x_iot_greengrass_idt.conf
+mv am572x_iot_greengrass_idt.conf $BASEDIR/tisdk/build/conf/am572x_iot_greengrass_idt.conf
 ```
 
 If you would also like to perform IDT tests for Stream Manager and
@@ -197,8 +197,8 @@ Connectors (which requires Docker), use the following configuration
 file:
 
 ```bash
-wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/am574x_idk/aws_iot_greengrass/am574x_iot_greengrass_idt_full.conf
-mv am574x_iot_greengrass_idt.conf $BASEDIR/tisdk/build/conf/am574x_iot_greengrass_idt_full.conf
+wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/am572x_idk/aws_iot_greengrass/am572x_iot_greengrass_idt_full.conf
+mv am572x_iot_greengrass_idt.conf $BASEDIR/tisdk/build/conf/am572x_iot_greengrass_idt_full.conf
 ```
 
 If you are building the **full** version, then you will need to add
