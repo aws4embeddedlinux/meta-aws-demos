@@ -9,7 +9,8 @@ The number of demonstrations will increase over time and your contribution is ve
 
 | Hardware Partner | Hardware | Demonstration |
 |---|---|---|
-|[Texas Instruments](https://www.ti.com/)|[AM574x Industrial Development Kit](http://www.ti.com/tool/PROCESSOR-SDK-AM57X)|[AWS IoT Greengrass](am574x_idk/aws_iot_greengrass/README.md)|
 |[Intel Corporation](https://www.intel.com/)|[UP Squared Developer Kit](https://up-board.org/upsquared/development-kits/)|[AWS IoT Greengrass](up_squared/greengrass/README.md)|
+|[Texas Instruments](https://www.ti.com/)|[AM572x Industrial Development Kit](http://www.ti.com/tool/TMDSIDK572)|[AWS IoT Greengrass](am572x_idk/aws_iot_greengrass/README.md)|
+|[Texas Instruments](https://www.ti.com/)|[AM574x Industrial Development Kit](http://www.ti.com/tool/TMDSIDK574)|[AWS IoT Greengrass](am574x_idk/aws_iot_greengrass/README.md)|
 
 © 2020, Amazon Web Services, Inc. or its affiliates. All rights reserved.
