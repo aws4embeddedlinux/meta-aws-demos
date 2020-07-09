@@ -13,19 +13,9 @@ branch.
 You will need to complete all preparation steps to complete all the
 sections in this tutorial successfully.
 
-1. [Download and install the TI Processor SDK for
-   Linux](http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/Overview/Download_and_Install_the_SDK.html).
-   **Note** we will be using the flash utilities but will not be using
-   the Arago source tree from the distribution.
-2. Complete section 1.2.2.1 to [install and configure the Linaro GCC
-   toolchain and Yocto Project build
-   prerequisites](http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/Overview_Building_the_SDK.html#prerequisites-one-time-setup). We
-   will modify the steps in 1.2.2.2 for adding IoT Greengrass to the
-   distribution.
-
 1. Perform all workstation preparation steps as defined in the Yocto
    Mega Manual.
-3. An [AWS Account](https://aws.amazon.com/free) and an [AWS Identity
+2. An [AWS Account](https://aws.amazon.com/free) and an [AWS Identity
    and Access Management (IAM)](https://aws.amazon.com/iam/) with
    authorization to run the [IoT Greengrass
    Tutorial](https://docs.aws.amazon.com/greengrass/latest/developerguide/gg-gs.html)
