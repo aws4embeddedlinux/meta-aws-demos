@@ -84,25 +84,25 @@ sections in this tutorial successfully.
    utility breaks.  On the author's system, `BASEDIR` is `/src`.
    
    ```text
-# POKY_BBLAYERS_CONF_VERSION is increased each time build/conf/bblayers.conf
-# changes incompatibly
-POKY_BBLAYERS_CONF_VERSION = "2"
+   # POKY_BBLAYERS_CONF_VERSION is increased each time build/conf/bblayers.conf
+   # changes incompatibly
+   POKY_BBLAYERS_CONF_VERSION = "2"
 
-BBPATH = "${TOPDIR}"
-BBFILES ?= ""
+   BBPATH = "${TOPDIR}"
+   BBFILES ?= ""
 
-BBLAYERS ?= " \
-  /src/poky-rpi4/meta \
-  /src/poky-rpi4/meta-poky \
-  /src/poky-rpi4/meta-openembedded/meta-networking \
-  /src/poky-rpi4/meta-openembedded/meta-python \
-  /src/poky-rpi4/meta-openembedded/meta-oe \
-  /src/poky-rpi4/meta-openembedded/meta-filesystems \
-  /src/poky-rpi4/meta-raspberrypi \
-  /src/poky-rpi4/meta-java \
-  /src/poky-rpi4/meta-virtualization \
-  /src/poky-rpi4/meta-aws \
-  "
+   BBLAYERS ?= " \
+     /src/poky-rpi4/meta \
+     /src/poky-rpi4/meta-poky \
+     /src/poky-rpi4/meta-openembedded/meta-networking \
+     /src/poky-rpi4/meta-openembedded/meta-python \
+     /src/poky-rpi4/meta-openembedded/meta-oe \
+     /src/poky-rpi4/meta-openembedded/meta-filesystems \
+     /src/poky-rpi4/meta-raspberrypi \
+     /src/poky-rpi4/meta-java \
+     /src/poky-rpi4/meta-virtualization \
+     /src/poky-rpi4/meta-aws \
+     "
    ```
 
 7. Build the image.
