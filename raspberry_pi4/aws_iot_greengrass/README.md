@@ -126,18 +126,25 @@ sections in this tutorial successfully.
 8. Image the target device using `dd`.  You can also use an imaging
    tool you are comfortable with. **BE SUPER CAREFUL**
    
+   First identify the device using `lsblk` and then set it to the 
+   output variable. This will help you confirm that this is really 
+   the target device you want to image. **BE SUPER CAREFUL**
+   
    ```bash
-   sudo dd if=$FILE of=`/dev/sda bs=1m
+   lsblk
+   #DEVICE=<IDENTIFIED DEVICE, i.e.>
+   DEVICE=/dev/sda
+   sudo dd if=$FILE of=$DEVICE bs=1m
    ```
 
-8. Modify config.txt
+9. Modify config.txt
 
    In my case, I use the UART to communicate with the Raspberry Pi.  I
    then remove the remark for the `init_uart_baud` and
    `init_uart_clock` properties.
    
 
-9. Eject the SD Card, insert the SD Card to the Raspberry Pi, connect
+10. Eject the SD Card, insert the SD Card to the Raspberry Pi, connect
 the UART and Ethernet, and power up.
 
 
