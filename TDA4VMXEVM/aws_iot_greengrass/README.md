@@ -17,6 +17,74 @@ tutorial expects you are working on a local workstation.
 You will need to complete all preparation steps to complete all the
 sections in this tutorial successfully.
 
+### Provisioning script (optional)
+
+For convenience, a Vagrantfile, provisioning script (`bootstrap.sh`) and build script (`starsdkbuild.sh`) are available to create a virtual machine under [Vagrant](https://vagrantup.com).
+
+#### Vagrant setup of SDK (optional)
+
+1. Download and install a Virtual Machine technology (such as [Virtual Box](https://www.virtualbox.org/)).
+
+*NB* - the Vagranfile here has been developed and tested with Virtual Box.
+
+2. Download and install [Vagrant](https://vagrantup.com).
+
+3. From the `TDA4VMXEVM` directory, start Vagrant with
+
+   ```bash
+   vagrant up
+   ```
+
+Vagrant will download an Ubuntu 16.04 virtual machine and run the provisioning script `bootstrap.sh` to 
+
+* Download cross-compiling toolchains
+* Clone the TI SDK from the git repo
+* Setup the SDK for development with meta-aws
+* Clone the meta-aws layer into the SDK tree
+
+This will take some time, but once the command is finished, connect to the virtual machine with
+
+   ```bash
+   vagrant ssh
+   ```
+
+4. The build can be initiated with
+
+   ```bash
+   cd /vagrant
+   ./startsdkbuild.sh
+   ```
+
+   *By default, the current host directory is shared on the guest as `/vagrant`.*
+
+### Setup with script (optional)
+
+If you choose *NOT* to use Vagrant (for example a Cloud9/EC2 instance, stand alone box, or other configuration), the `bootstrap.sh` script can be used to set up the SDK to be ready to build.
+
+1. Run the provisioning script
+
+   ```bash
+   bootstrap.sh
+   ```
+
+2. As with Vagrant, the provisioning script will 
+
+* Download cross-compiling toolchains
+* Clone the TI SDK from the git repo
+* Setup the SDK for development with meta-aws
+* Clone the meta-aws layer into the SDK tree
+
+3. The build can be initiated with
+
+   ```bash
+   startsdkbuild.sh
+   ```
+
+*The configuration of the virtual machine can be configured to limit processor and/or memory utilization, forward ports, share directories, etc by modifying `Vagrantfile`*
+
+### Manual setup and configuration
+
+
 1. [Download and install the TI Processor SDK for Linux
    (Automotive)](http://www.ti.com/tool/PROCESSOR-SDK-DRA8X-TDA4X).
    **Note** we will be using the flash utilities and boot files but
@@ -90,13 +158,14 @@ with some minor modifications to include IoT Greengrass.
    git clone -b zeus https://github.com/aws/meta-aws
    
    ```
+
 5. Add the `meta-aws` and `meta-java` layers to the build.
 
    ```text
-/src/tisdk/build/conf$ diff bblayers.conf.1 bblayers.conf
-30a31,32
-> 	/src/tisdk/sources/meta-aws \
+   /src/tisdk/build/conf$ diff bblayers.conf.1 bblayers.conf 30a31,32
+ 	> /src/tisdk/sources/meta-aws \
    ```
+
 6. Ensure the toolchain is configured in your terminal's environment.
 
    ```bash
@@ -138,7 +207,7 @@ with some minor modifications to include IoT Greengrass.
     boot files:
 
     ```bash
-/home/rpcme/ti-processor-sdk-linux-automotive-j7-evm-06_02_00/board-support/prebuilt-images/boot-j7-evm.tar.gz
+   /home/rpcme/ti-processor-sdk-linux-automotive-j7-evm-06_02_00/board-support/prebuilt-images/boot-j7-evm.tar.gz
     ```
 
     And the fully qualified path for the rootfs (your time and date will vary ):
@@ -259,6 +328,23 @@ rm -rf $BASEDIR/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf
 rm -rf $BASEDIR/gcc-arm-8.3-2019.03-x86_64-aarch64-linux-gnu
 rm -rf $BASEDIR/tisdk
 ```
+
+### Vagrant cleanup (optional)
+
+To stop the vagrant virtual machine, log out of the vagrant ssh shell if already logged in, then
+   ```bash
+   vagrant halt
+   ```
+This will stop the vagrnat virtual machine, which can be restarted at any time with `vagrant up`.
+
+*NB* - the provisioning script (`boothstrap.sh`) is only run on the first creation of the virtual machine, subsequent calls to start the VM, will not re-provision.
+
+To remove the Vagrant virtual machine completely
+   ```bash
+   vagrant destroy
+   ```
+
+
 
 # Notes
 
