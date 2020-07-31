@@ -1,0 +1,58 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-16.04"
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # config.vm.network "forwarded_port", guest: 69, host: 69
+  # config.vm.network "forwarded_port", guest: 111, host: 111
+  # config.vm.network "forwarded_port", guest: 2049, host: 2049
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  config.vm.provider "virtualbox" do |vb|
+   #   vb.gui = true
+ 
+   #vb.memory = "4096"
+   # vb.cpus = 4
+
+ ### pass through Jacinto Console device on USB
+      #
+      # FIRST -- get the device with this command:
+      # `VBoxManage list usbhost`
+      #
+      # output looks something like this:
+      #
+      # Host USB Devices:
+      #
+      # UUID:               a96f03db-8dd9-432c-a87b-9afb763d3fc4
+      # VendorId:           0x0403 (0403)
+      # ProductId:          0x6011 (6011)
+      # Revision:           8.0 (0800)
+      # Port:               2
+      # USB version/speed:  0/High
+      # Manufacturer:       FTDI
+      # Product:            USB <-> Serial Converter
+      # SerialNumber:       49197900770A
+      # Address:            p=0x6011;v=0x0403;s=0x00000257a9d698e8;l=0x14420000
+      # Current State:      Busy
+
+    vb.customize ["modifyvm", :id, "--usb", "on"]
+    vb.customize ["modifyvm", :id, "--usbehci", "on"]
+
+      vb.customize ["usbfilter", "add", "0",
+       "--target", :id,
+         "--name", "JacintoJ7",
+         "--vendorid", "0403",
+         "--productid", "6011"
+         ]
+
+  end
+
+  config.vm.provision :shell, :path => "bootstrap.sh", :privileged => false, :env => {"USER_NAME" => 'vagrant'}
+  
+end
