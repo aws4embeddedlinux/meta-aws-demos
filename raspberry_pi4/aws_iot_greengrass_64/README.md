@@ -133,13 +133,13 @@ meta-aws             = "dunfell:758f2f34ef1461efba0b8bb4a5756a67fbd4e4ce"
    After building, the images will be in the following directory.
 
    ```bash
-   ls tmp/deploy/images/raspberrypi4/*sdimg
+   ls tmp/deploy/images/raspberrypi4-64/*sdimg
    ```
 
     Where my image happens to be:
 
     ```bash
-    FILE=tmp/deploy/images/raspberrypi4/core-image-minimal-raspberrypi4-20200709170237.rootfs.rpi-sdimg
+    FILE=tmp/deploy/images/raspberrypi4-64/core-image-minimal-raspberrypi4-64.rpi-sdimg
     ```
 
 8. Image the target device using `dd`.  You can also use an imaging
