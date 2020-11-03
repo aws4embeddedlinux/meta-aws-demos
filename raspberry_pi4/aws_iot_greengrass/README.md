@@ -4,10 +4,6 @@ You may perform the build steps on an EC2 instance, copy the image
 locally, and then flash the MicroSD locally.  The steps in this
 tutorial expects you are working on a local workstation.
 
-Note that even though **dunfell** has released at the time of posting,
-AWS IoT Greengrass depends on Python 3.7 so we are using the **zeus**
-branch.
-
 ## Preparation
 
 You will need to complete all preparation steps to complete all the
@@ -24,6 +20,26 @@ sections in this tutorial successfully.
 
 ## Build and flash the image
 
+The build was performed under the following configuration.  If your
+build breaks when working against the tip of the branch, consider
+checking out these commit hashes for the respective layers.
+
+```
+meta                 
+meta-poky            
+meta-yocto-bsp       = "dunfell:40e448301edf142dc00a0ae6190017adac1e57b2"
+meta-networking      
+meta-python          
+meta-oe              
+meta-filesystems     = "dunfell:2a5c534d2b9f01e9c0f39701fccd7fc874945b1c"
+meta-raspberrypi     = "dunfell:806575fc1d1ea3a6852210b83be9f2999d93b0da"
+meta-java            = "dunfell:03537feee539526ec9bb0cf4f55dd4eef6badc71"
+meta-virtualization  = "dunfell:ff997b6b3ba800978546098ab3cdaa113b6695e1"
+meta-aws             = "dunfell:758f2f34ef1461efba0b8bb4a5756a67fbd4e4ce"
+```
+
+
+
 1. Open a terminal window on your workstation.
 
    **NOTE** For the sake of this tutorial, the variable `BASE` refers to the
@@ -34,7 +50,7 @@ sections in this tutorial successfully.
    ```bash
    export BASEDIR=$HOME
    export DIST=poky-rpi4
-   export B=zeus
+   export B=dunfell
    ```
 
    Clone the Poky base layer to include OpenEmbedded Core, Bitbake,
