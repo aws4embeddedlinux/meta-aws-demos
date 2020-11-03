@@ -4,6 +4,12 @@ You may perform the build steps on an EC2 instance, copy the image
 locally, and then flash the MicroSD locally.  The steps in this
 tutorial expects you are working on a local workstation.
 
+**NOTE** OpenJDK-8 would not cleanly build so it has been removed from
+the configuration.  However, it has been left in the steps and we will
+check its build-ability at some interval.  Please also file an issue
+if you notice that it does in fact build cleanly for a specific commit
+hash on the target branch.
+
 ## Preparation
 
 You will need to complete all preparation steps to complete all the
@@ -37,8 +43,6 @@ meta-java            = "dunfell:03537feee539526ec9bb0cf4f55dd4eef6badc71"
 meta-virtualization  = "dunfell:ff997b6b3ba800978546098ab3cdaa113b6695e1"
 meta-aws             = "dunfell:758f2f34ef1461efba0b8bb4a5756a67fbd4e4ce"
 ```
-
-
 
 1. Open a terminal window on your workstation.
 
@@ -88,7 +92,7 @@ meta-aws             = "dunfell:758f2f34ef1461efba0b8bb4a5756a67fbd4e4ce"
    `conf` directory.
 
    ```bash
-   wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/raspberry_pi4/aws_iot_greengrass/rpi4_iot_greengrass_idt.conf
+   wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/raspberry_pi4/aws_iot_greengrass_64/rpi4_iot_greengrass_idt.conf
    mv rpi4_iot_greengrass_idt.conf \
       $BASEDIR/$DIST/build/conf/rpi4_iot_greengrass_idt.conf
    ```
@@ -115,7 +119,6 @@ meta-aws             = "dunfell:758f2f34ef1461efba0b8bb4a5756a67fbd4e4ce"
      /src/poky-rpi4/meta-openembedded/meta-oe \
      /src/poky-rpi4/meta-openembedded/meta-filesystems \
      /src/poky-rpi4/meta-raspberrypi \
-     /src/poky-rpi4/meta-java \
      /src/poky-rpi4/meta-virtualization \
      /src/poky-rpi4/meta-aws \
      "
