@@ -15,8 +15,11 @@ phases:
           -m raspberry_pi4/aws_iot_greengrass_64/hardknott-repo.xml
       - $HOME/repo sync
       - env
+      - mkdir -p /build-output
+      - chown aws-yocto-builder:aws-yocto-builder /build-output
       - chown aws-yocto-builder:aws-yocto-builder /downloads
       - chown aws-yocto-builder:aws-yocto-builder /sstate-cache
+      - chmod 777 /build-output
       - chmod 777 /downloads
       - chmod 777 /sstate-cache
       - git config --global user.name "Cloudy Builder"
