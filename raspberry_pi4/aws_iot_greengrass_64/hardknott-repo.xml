@@ -18,6 +18,10 @@
            revision="master"
            name="meta-virtualization"
            path="meta-virtualization" />
+  <project remote="yp"
+           revision="master"
+           name="meta-raspberrypi"
+           path="meta-raspberrypi" />
   <project remote="aws"
            revision="master"
            name="meta-aws"
