@@ -11,8 +11,8 @@ phases:
       - mkdir $HOME/dist
       - cd $HOME/dist
       - $HOME/repo init -u
-        https://git-codecommit.us-east-1.amazonaws.com/v1/repos/meta-you
-          -m ci-cd/repo/repo-ci.xml
+        https://github.com/aws-samples/meta-aws-demos
+          -m /raspberry_pi4/aws_iot_greengrass_64/hardknott-repo.xml
       - $HOME/repo sync
       - env
       - chown aws-yocto-builder:aws-yocto-builder /downloads
