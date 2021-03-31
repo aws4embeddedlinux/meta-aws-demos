@@ -1,0 +1,36 @@
+version: 0.2
+run-as: aws-yocto-builder
+env:
+  git-credential-helper: yes
+phases:
+  pre_build:
+    run-as: root
+    commands:
+      - curl https://storage.googleapis.com/git-repo-downloads/repo > $HOME/repo
+      - chmod +x $HOME/repo
+      - mkdir $HOME/dist
+      - cd $HOME/dist
+      - $HOME/repo init -u
+        https://git-codecommit.us-east-1.amazonaws.com/v1/repos/meta-you
+          -m ci-cd/repo/repo-ci.xml
+      - $HOME/repo sync
+      - env
+      - chown aws-yocto-builder:aws-yocto-builder /downloads
+      - chown aws-yocto-builder:aws-yocto-builder /sstate-cache
+      - chmod 777 /downloads
+      - chmod 777 /sstate-cache
+      - git config --global user.name "Cloudy Builder"
+      - git config --global user.email "email@example.com"
+  build:
+    commands:
+      - export PATH=$HOME/dist/poky/scripts:$HOME/dist/poky/bitbake/bin:$PATH
+      - export BUILDDIR=/build-output
+      - export BBPATH=${CODEBUILD_SRC_DIR}/ci-cd
+      - export TEMPLATECONF=${CODEBUILD_SRC_DIR}/raspberry_pi4/aws_iot_greengrass_64/hardknott-bblayers.conf
+      - export BB_ENV_EXTRAWHITE=ALL_PROXY BBPATH_EXTRA BB_LOGCONFIG BB_NO_NETWORK BB_NUMBER_THREADS BB_SETSCENE_ENFORCE BB_SRCREV_POLICY DISTRO FTPS_PROXY FTP_PROXY GIT_PROXY_COMMAND HTTPS_PROXY HTTP_PROXY MACHINE NO_PROXY PARALLEL_MAKE SCREENDIR SDKMACHINE SOCKS5_PASSWD SOCKS5_USER SSH_AGENT_PID SSH_AUTH_SOCK STAMPS_DIR TCLIBC TCMODE all_proxy ftp_proxy ftps_proxy http_proxy https_proxy no_proxy
+      - sed -i -e "s,DIST,$HOME/dist," -e "s,CODEBUILD_SRC_DIR,${CODEBUILD_SRC_DIR}," ${CODEBUILD_SRC_DIR}/raspberry_pi4/aws_iot_greengrass_64/hardknott-bblayers.conf
+      - bitbake -r ${CODEBUILD_SRC_DIR}/raspberry_pi4/aws_iot_greengrass_64/hardknott-local.conf core-image-minimal
+artifacts:
+  s3-prefix: images
+  files: $BUILDDIR/deploy/images/qemux86-64/* 
+
