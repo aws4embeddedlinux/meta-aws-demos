@@ -10,7 +10,7 @@ The number of demonstrations will increase over time and your contribution is ve
 <table><tr><td>Distro</td><td>MACHINE</td><td>Demo</td><td>zeus</td><td>dunfell</td><td>gatesgarth</td><td>hardknott</td></tr>
 
 <tr>
-<td>&nbsp;</td>
+<td>up-squared</td>
 <td><a href="https://up-board.org/upsquared/development-kits/">UP Squared Developer Kit</a></td>
 <td><a href="up_squared/greengrass/README.md">AWS IoT Greengrass</a></td>
 <td colspan="4">&nbsp;</td>
@@ -44,24 +44,21 @@ The number of demonstrations will increase over time and your contribution is ve
 
 <tr>
 <td>arago</td>
-<td>am57xx-evm</td>
-<td><a href ="http://www.ti.com/tool/TMDSIDK572">AM572x Industrial</br>Development Kit</a></td>
+<td>am57xx-evm<br/>(<a href ="http://www.ti.com/tool/TMDSIDK572">AM572x</a>)</td>
 <td><a href="am572x_idk/aws_iot_greengrass/README.md">AWS IoT Greengrass</a></td>
 <td colspan="4">&nbsp;</td>
 </tr>
 
 <tr>
 <td>arago</td>
-<td>am57xx-evm</td>
-<td><a href="http://www.ti.com/tool/TMDSIDK574">AM574x Industrial Development Kit</a></td>
+<td>am57xx-evm<br/>(<a href ="http://www.ti.com/tool/TMDSIDK574">TMDSIDK574</a>)</td>
 <td><a href="am574x_idk/aws_iot_greengrass/README.md">AWS IoT Greengrass</a></td>
 <td colspan="4">&nbsp;</td>
 </tr>
 
 <tr>
 <td>arago</td>
-<td>j7-evm</td>
-<td><a href="http://www.ti.com/tool/TDA4VMXEVM">Jacinto7 TDA4VMXEVM</a></td>
+<td>j7-evm<br/>(<a href="http://www.ti.com/tool/TDA4VMXEVM">TDA4VMXEVM</a>)</td>
 <td><a href="TDA4VMXEVM/aws_iot_greengrass/README.md">AWS IoT Greengrass</a></td>
 <td colspan="4">&nbsp;</td>
 </tr>
