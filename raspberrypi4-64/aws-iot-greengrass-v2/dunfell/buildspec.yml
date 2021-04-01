@@ -25,8 +25,6 @@ phases:
         https://github.com/aws-samples/meta-aws-demos
           -m raspberry_pi4/aws_iot_greengrass_64/hardknott-repo.xml
       - $HOME/repo sync
-      - env
-      - ls -lR /build-output
       - export PATH=$HOME/dist/poky/scripts:$HOME/dist/poky/bitbake/bin:$PATH
       - export BUILDDIR=/build-output
       - export BBPATH=${CODEBUILD_SRC_DIR}/raspberry_pi4/aws_iot_greengrass_64/hardknott
