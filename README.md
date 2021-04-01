@@ -11,32 +11,32 @@ The number of demonstrations will increase over time and your contribution is ve
 
 <tr>
 <td>&nbsp;</td>
-<td>[UP Squared Developer Kit](https://up-board.org/upsquared/development-kits/)</td>
-<td>[AWS IoT Greengrass](up_squared/greengrass/README.md)</td>
+<td><a href="https://up-board.org/upsquared/development-kits/">UP Squared Developer Kit</a></td>
+<td><a href="up_squared/greengrass/README.md">AWS IoT Greengrass</a></td>
 <td colspan="4">&nbsp;</td>
 </tr>
 
 <tr>
 <td>poky</td>
 <td>raspberrypi4</td>
-<td>[AWS IoT Greengrass v2](raspberry_pi4/aws-iot-greengrass-v2/README.md)</td>
+<td><a href="raspberry_pi4/aws-iot-greengrass-v2/README.md">AWS IoT Greengrass v2</a></td>
 <td colspan="4">&nbsp;</td>
 </tr>
 
 <tr>
 <td>poky</td>
 <td>raspberrypi4-64</td>
-<td>[AWS IoT Greengrass v2](raspberrypi4-64/aws-iot-greengrass-v2/README.md)</td>
+<td><a href="raspberrypi4-64/aws-iot-greengrass-v2/README.md">AWS IoT Greengrass</a></td>
 <td>&nbsp;</td>
-<td>https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoibk5sbXVMVDlKZm05QVNhNHVSMVFpTFYwOE11SXlkS2luQUE2dGluL0RIa1pTbzEzdVJnWCtJTzQzOXVwZGU3UXJoM252R0Vld0EzY0w4ZXJHY1o1YzlZPSIsIml2UGFyYW1ldGVyU3BlYyI6Ilp4WGNEVVVtcE9XSmlEazYiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main</td>
-<td>https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiQjdONVhQVnRNQmxuNWRGaGdUUDZsTGJ5emlhMmlrTlpNWDRHVURBYlRJcmxDTWVQK1EwMEhWWnZIc250UWxxbVFNZHRaRDhUNTd3bmpCa3dCaXFRK2t3PSIsIml2UGFyYW1ldGVyU3BlYyI6Ikxnb1RXcVJSVDFrTTRxeDkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main</td>
-<td>https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoidmlOeGpHU1Q2OW00UExNWXo0M3lnQlkyTDcxQ0k2VENkbGZQb2NsSWxWM2lvWjVuQ3kzV3E1UGVwR1dZaHJId1RHZHNVaU9sVFpRd1hqdzZrZEpUcGRNPSIsIml2UGFyYW1ldGVyU3BlYyI6Ilc2UHlkS1pnaEdtaE9EMGgiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=main</td>
+<td><img src="https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoibk5sbXVMVDlKZm05QVNhNHVSMVFpTFYwOE11SXlkS2luQUE2dGluL0RIa1pTbzEzdVJnWCtJTzQzOXVwZGU3UXJoM252R0Vld0EzY0w4ZXJHY1o1YzlZPSIsIml2UGFyYW1ldGVyU3BlYyI6Ilp4WGNEVVVtcE9XSmlEazYiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master"/></td>
+<td><img src="https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiQjdONVhQVnRNQmxuNWRGaGdUUDZsTGJ5emlhMmlrTlpNWDRHVURBYlRJcmxDTWVQK1EwMEhWWnZIc250UWxxbVFNZHRaRDhUNTd3bmpCa3dCaXFRK2t3PSIsIml2UGFyYW1ldGVyU3BlYyI6Ikxnb1RXcVJSVDFrTTRxeDkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master"/></td>
+<td><img src="https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoidmlOeGpHU1Q2OW00UExNWXo0M3lnQlkyTDcxQ0k2VENkbGZQb2NsSWxWM2lvWjVuQ3kzV3E1UGVwR1dZaHJId1RHZHNVaU9sVFpRd1hqdzZrZEpUcGRNPSIsIml2UGFyYW1ldGVyU3BlYyI6Ilc2UHlkS1pnaEdtaE9EMGgiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master"/></td>
 </tr>
 
 <tr>
 <td>agl</td>
 <td>h3ulcb</td>
-<td>[R-Car H3 Premier](https://www.renesas.com/br/en/solutions/automotive/adas/solution-kits/r-car-starter-kit.html)</td>
+<td><a href="https://www.renesas.com/br/en/solutions/automotive/adas/solution-kits/r-car-starter-kit.html">R-Car H3 Premier</a></td>
 <td colspan="4">&nbsp;</td>
 </tr>
 
@@ -45,24 +45,24 @@ The number of demonstrations will increase over time and your contribution is ve
 <tr>
 <td>arago</td>
 <td>am57xx-evm</td>
-<td>[AM572x Industrial Development Kit](http://www.ti.com/tool/TMDSIDK572)</td>
-<td>|[AWS IoT Greengrass](am572x_idk/aws_iot_greengrass/README.md)</td>
+<td><a href ="http://www.ti.com/tool/TMDSIDK572">AM572x Industrial</br>Development Kit</a></td>
+<td><a href="am572x_idk/aws_iot_greengrass/README.md">AWS IoT Greengrass</a></td>
 <td colspan="4">&nbsp;</td>
 </tr>
 
 <tr>
 <td>arago</td>
 <td>am57xx-evm</td>
-<td>[AM574x Industrial Development Kit](http://www.ti.com/tool/TMDSIDK574)</td>
-<td>|[AWS IoT Greengrass](am574x_idk/aws_iot_greengrass/README.md)</td>
+<td><a href="http://www.ti.com/tool/TMDSIDK574">AM574x Industrial Development Kit</a></td>
+<td><a href="am574x_idk/aws_iot_greengrass/README.md">AWS IoT Greengrass</a></td>
 <td colspan="4">&nbsp;</td>
 </tr>
 
 <tr>
 <td>arago</td>
 <td>j7-evm</td>
-<td>[Jacinto7 TDA4VMXEVM](http://www.ti.com/tool/TDA4VMXEVM)</td>
-<td>|[AWS IoT Greengrass](TDA4VMXEVM/aws_iot_greengrass/README.md)</td>
+<td><a href="http://www.ti.com/tool/TDA4VMXEVM">Jacinto7 TDA4VMXEVM</a></td>
+<td><a href="TDA4VMXEVM/aws_iot_greengrass/README.md">AWS IoT Greengrass</a></td>
 <td colspan="4">&nbsp;</td>
 </tr>
 
