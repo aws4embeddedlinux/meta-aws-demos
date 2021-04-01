@@ -6,15 +6,6 @@ phases:
   pre_build:
     run-as: root
     commands:
-      - curl https://storage.googleapis.com/git-repo-downloads/repo > $HOME/repo
-      - chmod +x $HOME/repo
-      - mkdir $HOME/dist
-      - cd $HOME/dist
-      - $HOME/repo init -u
-        https://github.com/aws-samples/meta-aws-demos
-          -m raspberry_pi4/aws_iot_greengrass_64/hardknott-repo.xml
-      - $HOME/repo sync
-      - env
       - mkdir -p /build-output
       - chown aws-yocto-builder:aws-yocto-builder /build-output
       - chown aws-yocto-builder:aws-yocto-builder /downloads
@@ -26,6 +17,16 @@ phases:
       - git config --global user.email "email@example.com"
   build:
     commands:
+      - curl https://storage.googleapis.com/git-repo-downloads/repo > $HOME/repo
+      - chmod +x $HOME/repo
+      - mkdir $HOME/dist
+      - cd $HOME/dist
+      - $HOME/repo init -u
+        https://github.com/aws-samples/meta-aws-demos
+          -m raspberry_pi4/aws_iot_greengrass_64/hardknott-repo.xml
+      - $HOME/repo sync
+      - env
+      - ls -lR /build-output
       - export PATH=$HOME/dist/poky/scripts:$HOME/dist/poky/bitbake/bin:$PATH
       - export BUILDDIR=/build-output
       - export BBPATH=${CODEBUILD_SRC_DIR}/raspberry_pi4/aws_iot_greengrass_64/hardknott
