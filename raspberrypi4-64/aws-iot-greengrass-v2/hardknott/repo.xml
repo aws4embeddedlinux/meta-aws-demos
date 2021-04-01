@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <default sync-j="4" />
+  
+  <remote name="oe"  fetch="git://git.openembedded.org" />
+  <remote name="yp"  fetch="git://git.yoctoproject.org" />
+  <remote name="aws" fetch="git://github.com/aws" />
+
+  <project remote="oe"
+	   revision="master"
+           name="meta-openembedded"
+           path="meta-openembedded" />
+  <project remote="yp"
+           revision="master"
+           name="poky"
+           path="poky" />
+  <project remote="yp"
+           revision="master"
+           name="meta-virtualization"
+           path="meta-virtualization" />
+  <project remote="yp"
+           revision="master"
+           name="meta-raspberrypi"
+           path="meta-raspberrypi" />
+  <project remote="aws"
+           revision="master"
+           name="meta-aws"
+           path="meta-aws" />
+</manifest>
