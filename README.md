@@ -11,7 +11,7 @@ The number of demonstrations will increase over time and your contribution is ve
 
 <tr>
 <td>up-squared</td>
-<td><a href="https://up-board.org/upsquared/development-kits/">UP Squared Developer Kit</a></td>
+<td><a href="https://up-board.org/upsquared/development-kits/">up-squared</a></td>
 <td><a href="up_squared/greengrass/README.md">AWS IoT Greengrass</a></td>
 <td colspan="4">&nbsp;</td>
 </tr>
