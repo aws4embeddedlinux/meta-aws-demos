@@ -22,7 +22,11 @@
   <project remote="xilinx"
            revision="zeus"
            name="meta-xilinx"
-           path="meta-xilinx" />
+	   path="meta-xilinx" />
+  <project remote="xilinx"
+	   revision="rel-v2020.3"
+	   name="meta-xilinx-tools"
+	   path="meta-xilinx-tools" />
   <project remote="aws"
            revision="zeus"
            name="meta-aws"
