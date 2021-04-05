@@ -23,6 +23,10 @@
            revision="gatesgarth"
            name="meta-xilinx"
            path="meta-xilinx" />
+  <project remote="xilinx"
+	   revision="gatesgarth"
+	   name="meta-xilinx-tools"
+	   path="meta-xilinx-tools" />
   <project remote="aws"
            revision="gatesgarth"
            name="meta-aws"
