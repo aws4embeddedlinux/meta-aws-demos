@@ -787,4 +787,14 @@ If your setup has been successful, you will be able to view the device in the AW
 3. Look for your Thing Name and under Status the device should report as 'HEALTHY' 
 
 ## 17. Next Steps
-Now that your NXP i.MX8M has AWS IoT Greengrass v2 installed and it is connected to AWS IoT Core, you can use the Greengrass deployment mechanisms to install software over the air. If you want to explore Greengrass v2 and edge machine learning with Amazon SageMaker, please see [Greengrass v2 and Amazon SageMaker Edge Manager workshop](https://github.com/dhwalters423/greengrass-v2-sagemaker-edge-manager-python).
+Now that your NXP i.MX8M has AWS IoT Greengrass v2 installed and it is connected to AWS IoT Core, you can use the Greengrass deployment mechanisms to install software over the air. 
+
+### Create a Hello World Component
+To create your first Hello World component and run it locally on your i.MX8M device, follow the [documentation](https://docs.aws.amazon.com/greengrass/v2/developerguide/create-components.html).
+
+To upload the component to the cloud and deploy to a fleet of devices, follow [Upload components to deploy to your core devices](https://docs.aws.amazon.com/greengrass/v2/developerguide/upload-components.html)
+
+Fianally, to deploy your component to a fleet of devices, create a new deployment by following [Create deployments documentation](https://docs.aws.amazon.com/greengrass/v2/developerguide/create-deployments.html)
+
+### Follow the SageMaker Edge Manager + Greengrass v2 workshop
+If you want to explore Greengrass v2 and edge machine learning with Amazon SageMaker, please see [Greengrass v2 and Amazon SageMaker Edge Manager workshop](https://github.com/dhwalters423/greengrass-v2-sagemaker-edge-manager-python).
