@@ -1,6 +1,6 @@
-# Build AWS IoT Greengrass v2.0 on the NXP i.MX8MQEVK
+# Build AWS IoT Greengrass v2.0 on the NXP i.MX8MQEVK and i.MX8MPEVK
 
-The following guide will build a Yocto image on an AWS instance for the NXP i.MX8MQuad EVK that contains AWS IoT Greengrass v. 2.0 and the dependencies for Amazon SageMaker Edge Manager and the Deep Learning Runtime.
+The following guide will build a Yocto image on an AWS instance for the NXP i.MX8MQuad EVK or i.MX8MPlus EVK that contains AWS IoT Greengrass v. 2.0 and the dependencies for Amazon SageMaker Edge Manager and the Deep Learning Runtime.
 
 **Requirements** :
 * An AWS account
@@ -79,12 +79,16 @@ Follow step 4 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en
 ## 3. Initialize the build environment
 ``cd imx-yocto-bsp``
 
+To build the i.MX8MQEVK:
 ``DISTRO=fsl-imx-wayland MACHINE=imx8mqevk source imx-setup-release.sh -b build-dir``
+
+To build the i.MX8MPEVK:
+``DISTRO=fsl-imx-wayland MACHINE=imx8mpevk source imx-setup-release.sh -b build-dir``
 
 ## 4. Clone meta-aws
 ``cd imx-yocto-bsp/sources``
 
-``git clone -b gatesgarth https://github.com/aws/meta-aws``
+``git clone -b hardknott https://github.com/aws/meta-aws``
 
 ## 5. Setup your Yocto build
 Open ``imx-yocto-bsp/build-dir/conf/local.conf`` and add the following lines:
@@ -203,7 +207,7 @@ You can use S3 to upload the image from Cloud9 and distribute to any local machi
 
 [Create an S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) with default settings.
 
-The SD card image name should be similar to the following: imx-image-full-imx8mqevk-20201223010742.gg.rootfs.wic.bz2
+The SD card image name should be similar to the following: imx-image-full-imx8mqevk-20201223010742.gg.rootfs.wic.bz2, 'imx8mqevk' should be replaced with 'imx8mpevk' if you are using the i.MX8MPlus
 
 ``aws s3 cp imx-yocto-bsp/build-dir/tmp/deploy/images/imx8mqebvk/imx-image-full-imx8mqevk-20201223010742.gg.rootfs.wic.bz2 s3://your-bucket-name``
 
@@ -238,11 +242,17 @@ Unmount the SD card before proceeding:
 
 ``sudo diskutil unmountDisk <your disk>``
 
-## 11. Prepare the i.MX8MQEVK
+## 11. Prepare the device
+
+### i.MX8MQEVK
 Set SW801 dip switches to boot from an SD card. 1&2 should be high, 3&4 should be low.
 Insert the SD card, an Ethernet cable, and power on the device.
 
-## 12. Access the i.MX8MQEVK
+### i.MX8MPEVK
+Set SW4 boot dip switches to boot from an SD card. 1&2 shoud be low, 3&4 should be high.
+Insert the SD card, an Ethernet cable, and power on the device.
+
+## 12. Access the device over SSH
 Wait for the device to power on. It is configured for DHCP on the Ethernet port.
 
 ``ssh root@<IP address>``
@@ -777,4 +787,4 @@ If your setup has been successful, you will be able to view the device in the AW
 3. Look for your Thing Name and under Status the device should report as 'HEALTHY' 
 
 ## 17. Next Steps
-Now that your NXP i.MX8MQEVK has AWS IoT Greengrass v2 installed and it is connected to AWS IoT Core, you can use the Greengrass deployment mechanisms to install software over the air. If you want to explore Greengrass v2 and edge machine learning with Amazon SageMaker, please see [Greengrass v2 and Amazon SageMaker Edge Manager workshop](https://github.com/dhwalters423/greengrass-v2-sagemaker-edge-manager-python).
+Now that your NXP i.MX8M has AWS IoT Greengrass v2 installed and it is connected to AWS IoT Core, you can use the Greengrass deployment mechanisms to install software over the air. If you want to explore Greengrass v2 and edge machine learning with Amazon SageMaker, please see [Greengrass v2 and Amazon SageMaker Edge Manager workshop](https://github.com/dhwalters423/greengrass-v2-sagemaker-edge-manager-python).
