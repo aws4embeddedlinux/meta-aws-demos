@@ -6,7 +6,7 @@ The following guide will build a Yocto image on an AWS instance for the NXP i.MX
 * An AWS account
 * Host machine with a Unix terminal (Linux or Mac OS)
 * [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) installed and configured on host machine
-* i.MX8MQEVK or [MCIMX8M-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/evaluation-kit-for-the-i-mx-8m-applications-processor:MCIMX8M-EVK)
+* [MCIMX8M-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/evaluation-kit-for-the-i-mx-8m-applications-processor:MCIMX8M-EVK) or [8MPLUSLPD4-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/evaluation-kit-for-the-i-mx-8m-plus-applications-processor:8MPLUSLPD4-EVK)
 
 ## 0. Create Cloud9 environment
 
@@ -79,10 +79,10 @@ Follow step 4 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en
 ## 3. Initialize the build environment
 ``cd imx-yocto-bsp``
 
-To build the i.MX8MQEVK:
+### To build the i.MX8MQEVK:
 ``DISTRO=fsl-imx-wayland MACHINE=imx8mqevk source imx-setup-release.sh -b build-dir``
 
-To build the i.MX8MPEVK:
+### To build the i.MX8MPEVK:
 ``DISTRO=fsl-imx-wayland MACHINE=imx8mpevk source imx-setup-release.sh -b build-dir``
 
 ## 4. Clone meta-aws
