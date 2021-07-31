@@ -1,68 +1,64 @@
 # Demonstrations for the **[meta-aws](https://github.com/aws/meta-aws)** project
 
-[meta-aws](https://github.com/aws/meta-aws) is a [Yocto Project](https://www.yoctoproject.org/) Bitbake Metadata Layer. It accelerates building [Amazon Web Services](https://aws.amazon.com) (AWS) software you can install to [Embedded Linux](https://elinux.org/Main_Page). Customers use this to build IoT solutions on AWS.
+[meta-aws](https://github.com/aws/meta-aws) is a [Yocto
+Project](https://www.yoctoproject.org/) Bitbake Metadata Layer. It
+accelerates building [Amazon Web Services](https://aws.amazon.com)
+(AWS) software you can install to [Embedded
+Linux](https://elinux.org/Main_Page). Customers use this to build IoT
+solutions on AWS.
 
-In this repository, you will find [meta-aws](https://github.com/aws/meta-aws) demonstrations.  These demonstrations are both Poky (Yocto Project reference implementation) based and real hardware based.  Many times, the hardware will be representative of real use of hardware listed in the [AWS Device Catalog](https://devices.amazonaws.com).
+In this repository, you will find
+[meta-aws](https://github.com/aws/meta-aws) demonstrations.  These
+demonstrations are both Poky (Yocto Project reference implementation)
+based and real hardware based.  Many times, the hardware will be
+representative of real use of hardware listed in the [AWS Device
+Catalog](https://devices.amazonaws.com).
 
-The number of demonstrations will increase over time and your contribution is very welcome!
+The number of demonstrations will increase over time and your
+contribution is very welcome!
 
+## Demonstration environments
 
-<table><tr><td>Distro</td><td>MACHINE</td><td>Demo</td><td>zeus</td><td>dunfell</td><td>gatesgarth</td><td>hardknott</td></tr>
+Select your desired target environment.  For more information how this
+repository is structured see the next section.
 
-<tr>
-<td>up-squared</td>
-<td><a href="https://up-board.org/upsquared/development-kits/">up-squared</a></td>
-<td><a href="up_squared/greengrass/README.md">AWS IoT Greengrass</a></td>
-<td colspan="4">&nbsp;</td>
-</tr>
+These are listed in alphabetical order for ease of selection and
+should in no way infer preference.
 
-<tr>
-<td>poky</td>
-<td>raspberrypi4</td>
-<td><a href="raspberry_pi4/aws-iot-greengrass-v2/README.md">AWS IoT Greengrass v2</a></td>
-<td colspan="4">&nbsp;</td>
-</tr>
-
-<tr>
-<td>poky</td>
-<td>raspberrypi4-64</td>
-<td><a href="raspberrypi4-64/aws-iot-greengrass-v2/README.md">AWS IoT Greengrass</a></td>
-<td>&nbsp;</td>
-<td><img src="https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoibk5sbXVMVDlKZm05QVNhNHVSMVFpTFYwOE11SXlkS2luQUE2dGluL0RIa1pTbzEzdVJnWCtJTzQzOXVwZGU3UXJoM252R0Vld0EzY0w4ZXJHY1o1YzlZPSIsIml2UGFyYW1ldGVyU3BlYyI6Ilp4WGNEVVVtcE9XSmlEazYiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master"/></td>
-<td><img src="https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiQjdONVhQVnRNQmxuNWRGaGdUUDZsTGJ5emlhMmlrTlpNWDRHVURBYlRJcmxDTWVQK1EwMEhWWnZIc250UWxxbVFNZHRaRDhUNTd3bmpCa3dCaXFRK2t3PSIsIml2UGFyYW1ldGVyU3BlYyI6Ikxnb1RXcVJSVDFrTTRxeDkiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master"/></td>
-<td><img src="https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoidmlOeGpHU1Q2OW00UExNWXo0M3lnQlkyTDcxQ0k2VENkbGZQb2NsSWxWM2lvWjVuQ3kzV3E1UGVwR1dZaHJId1RHZHNVaU9sVFpRd1hqdzZrZEpUcGRNPSIsIml2UGFyYW1ldGVyU3BlYyI6Ilc2UHlkS1pnaEdtaE9EMGgiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master"/></td>
-</tr>
-
-<tr>
-<td>agl</td>
-<td>h3ulcb</td>
-<td><a href="https://www.renesas.com/br/en/solutions/automotive/adas/solution-kits/r-car-starter-kit.html">R-Car H3 Premier</a></td>
-<td colspan="4">&nbsp;</td>
-</tr>
+- [nxp/README.md](NXP)
+- [rpi_foundation/README.md](Raspberry Pi Foundation)
+- [renesas/README.md](Renesas)
+- [ti/README.md](Texas Instruments)
+- [up/README.md](UP Board)
+- [xilinx/README.md](Xilinx)
 
 
+## How this repository is organized
 
-<tr>
-<td>arago</td>
-<td>am57xx-evm<br/>(<a href ="http://www.ti.com/tool/TMDSIDK572">AM572x</a>)</td>
-<td><a href="am572x_idk/aws_iot_greengrass/README.md">AWS IoT Greengrass</a></td>
-<td colspan="4">&nbsp;</td>
-</tr>
+The demonstrations in this repository can be categorized as either an
+AWS service example or a use case example.  AWS service examples are
+usually setup as basic `local.conf` driven examples on existing
+reference distributions like Yocto Project's Poky. Use case examples
+are usually more complete with a reference distribution for a target
+EVB since they may have peripheral configuration specific to the use
+case.
 
-<tr>
-<td>arago</td>
-<td>am57xx-evm<br/>(<a href ="http://www.ti.com/tool/TMDSIDK574">TMDSIDK574</a>)</td>
-<td><a href="am574x_idk/aws_iot_greengrass/README.md">AWS IoT Greengrass</a></td>
-<td colspan="4">&nbsp;</td>
-</tr>
+Every example has the following properties.
 
-<tr>
-<td>arago</td>
-<td>j7-evm<br/>(<a href="http://www.ti.com/tool/TDA4VMXEVM">TDA4VMXEVM</a>)</td>
-<td><a href="TDA4VMXEVM/aws_iot_greengrass/README.md">AWS IoT Greengrass</a></td>
-<td colspan="4">&nbsp;</td>
-</tr>
+- Target operating environment (emulation, virtualization, or physical
+  evaluation or development board)
+- Included AWS device software
 
+Every example has a build status that is derived by an AWS CodeBuild
+outcome.
 
+- Target Yocto Project or Automotive Grade Linux release
+
+```text
+Main
+ \_Semiconductor, Device Manufacturer, or Emulator/Simulator
+   \_Device or Operating Environment, and bitness if applicable.
+     \_Software or Use Case page
+```
 
 © 2020-2021, Amazon Web Services, Inc. or its affiliates. All rights reserved.
