@@ -25,12 +25,12 @@ repository is structured see the next section.
 These are listed in alphabetical order for ease of selection and
 should in no way infer preference.
 
-- [nxp/README.md](NXP)
-- [rpi_foundation/README.md](Raspberry Pi Foundation)
-- [renesas/README.md](Renesas)
-- [ti/README.md](Texas Instruments)
-- [up/README.md](UP Board)
-- [xilinx/README.md](Xilinx)
+- [NXP](nxp/README.md)
+- [Raspberry Pi Foundation](rpi_foundation/README.md)
+- [Renesas](renesas/README.md)
+- [Texas Instruments](ti/README.md)
+- [UP Board](up/README.md)
+- [Xilinx](xilinx/README.md)
 
 
 ## How this repository is organized
