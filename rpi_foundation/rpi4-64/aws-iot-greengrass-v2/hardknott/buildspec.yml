@@ -23,13 +23,13 @@ phases:
       - cd $HOME/dist
       - $HOME/repo init -u
         https://github.com/aws-samples/meta-aws-demos
-          -m raspberrypi4-64/aws-iot-greengrass-v2/gatesgarth/repo.xml
+          -m rpi_foundation/rpi4-64/aws-iot-greengrass-v2/hardknott/repo.xml
       - $HOME/repo sync
       - export PATH=$HOME/dist/poky/scripts:$HOME/dist/poky/bitbake/bin:$PATH
       - export BUILDDIR=/build-output
-      - export BBPATH=${CODEBUILD_SRC_DIR}/raspberrypi4-64/aws-iot-greengrass-v2/gatesgarth
+      - export BBPATH=${CODEBUILD_SRC_DIR}/rpi_foundation/rpi4-64/aws-iot-greengrass-v2/hardknott
       - export BB_ENV_EXTRAWHITE=ALL_PROXY BBPATH_EXTRA BB_LOGCONFIG BB_NO_NETWORK BB_NUMBER_THREADS BB_SETSCENE_ENFORCE BB_SRCREV_POLICY DISTRO FTPS_PROXY FTP_PROXY GIT_PROXY_COMMAND HTTPS_PROXY HTTP_PROXY MACHINE NO_PROXY PARALLEL_MAKE SCREENDIR SDKMACHINE SOCKS5_PASSWD SOCKS5_USER SSH_AGENT_PID SSH_AUTH_SOCK STAMPS_DIR TCLIBC TCMODE all_proxy ftp_proxy ftps_proxy http_proxy https_proxy no_proxy
-      - sed -i -e "s,DIST,$HOME/dist," -e "s,CODEBUILD_SRC_DIR,${CODEBUILD_SRC_DIR}," ${CODEBUILD_SRC_DIR}/raspberrypi4-64/aws-iot-greengrass-v2/gatesgarth/conf/bblayers.conf
+      - sed -i -e "s,DIST,$HOME/dist," -e "s,CODEBUILD_SRC_DIR,${CODEBUILD_SRC_DIR}," ${CODEBUILD_SRC_DIR}/rpi_foundation/rpi4-64/aws-iot-greengrass-v2/hardknott/conf/bblayers.conf
       - bitbake core-image-minimal
 artifacts:
   s3-prefix: images
