@@ -171,8 +171,7 @@ the UART and Ethernet, and power up.
 
 Your image with IoT Greengrass is now up and running.  What's next?
 
-When you go through the [IoT Greengrass
-Tutorial](https://docs.aws.amazon.com/greengrass/latest/developerguide/gg-gs.html),
+When you go through the [Getting started tutorial](https://docs.aws.amazon.com/greengrass/v2/developerguide/getting-started.html),
 Do not run the Quick Start or Module 1.  You will need to follow the
 [Configure AWS IoT Greengrass on AWS
 IoT](https://docs.aws.amazon.com/greengrass/latest/developerguide/gg-config.html)
