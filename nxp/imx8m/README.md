@@ -118,6 +118,10 @@ IMAGE_INSTALL_append = " python3-grpcio"
 IMAGE_INSTALL_append = " python3-protobuf"
 IMAGE_INSTALL_append = " opencv"
 ```
+If you are building this image for the NXP i.MX 8M Plus EVK and want to perform machine learning inference on the Neural Processing Unit, you will need to add the following line to build libtim-vx:
+```
+IMAGE_INSTALL_append = " tim-vx"
+```
 
 local.conf should look similar to the following:
 ```
