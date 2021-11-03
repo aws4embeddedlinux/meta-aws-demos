@@ -71,7 +71,7 @@ The filesystem on /dev/nvme0n1p1 is now 131071739 (4k) blocks long.
 ```
 
 ## 1. Setup the build server / host environment.
-Follow step 3.1 and 3.2 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf) to install all of the necessary host dependencies on your Cloud9 instance.
+Follow step 3.2 and 3.3 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf) to install all of the necessary host dependencies on your Cloud9 instance.
 
 ## 2. Setup the i.MX Yocto project
 Follow step 4 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf)
@@ -110,13 +110,14 @@ Add support for the AWS IoT Device Python SDK v2 to build Python applications th
 IMAGE_INSTALL_append = " aws-iot-device-sdk-python-v2"
 ```
 
-**OPTIONAL:** Add the following dependencies for Amazon SageMaker Neo Deep Learning Runtime and Amazon SageMaker Edge Manager:
+**OPTIONAL:** Add the following dependencies for Amazon SageMaker Neo Deep Learning Runtime and Amazon SageMaker Edge Manager. You need these for the ML Operations with AWS IoT Greengrass v2 and SageMaker Edge Manager workshop:
 ```
 IMAGE_INSTALL_append = " python3-grpcio-tools"
 IMAGE_INSTALL_append = " python3-numpy"
 IMAGE_INSTALL_append = " python3-grpcio"
 IMAGE_INSTALL_append = " python3-protobuf"
 IMAGE_INSTALL_append = " opencv"
+IMAGE_INSTALL_append = " tim-vx"
 ```
 If you are building this image for the NXP i.MX 8M Plus EVK and want to perform machine learning inference on the Neural Processing Unit, you will need to add the following line to build libtim-vx:
 ```
