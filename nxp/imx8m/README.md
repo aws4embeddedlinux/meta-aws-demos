@@ -8,6 +8,8 @@ The following guide will build a Yocto image on an AWS instance for the NXP i.MX
 * [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) installed and configured on host machine
 * [MCIMX8M-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/evaluation-kit-for-the-i-mx-8m-applications-processor:MCIMX8M-EVK) or [8MPLUSLPD4-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/evaluation-kit-for-the-i-mx-8m-plus-applications-processor:8MPLUSLPD4-EVK)
 
+Instructions for both MacOS and Linux are provided as the host machine. 
+
 ## 0. Create Cloud9 environment
 
 Cloud9 is a cloud-managed IDE that we will use to build the Yocto image.
@@ -71,7 +73,7 @@ The filesystem on /dev/nvme0n1p1 is now 131071739 (4k) blocks long.
 ```
 
 ## 1. Setup the build server / host environment.
-Follow step 3.1 and 3.2 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf) to install all of the necessary host dependencies on your Cloud9 instance.
+Follow step 3.2 and 3.3 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf) to install all of the necessary host dependencies on your Cloud9 instance.
 
 ## 2. Setup the i.MX Yocto project
 Follow step 4 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf)
@@ -110,7 +112,7 @@ Add support for the AWS IoT Device Python SDK v2 to build Python applications th
 IMAGE_INSTALL_append = " aws-iot-device-sdk-python-v2"
 ```
 
-**OPTIONAL:** Add the following dependencies for Amazon SageMaker Neo Deep Learning Runtime and Amazon SageMaker Edge Manager:
+**OPTIONAL:** Add the following dependencies for Amazon SageMaker Neo Deep Learning Runtime and Amazon SageMaker Edge Manager. You need these for the ML Operations with AWS IoT Greengrass v2 and SageMaker Edge Manager workshop:
 ```
 IMAGE_INSTALL_append = " python3-grpcio-tools"
 IMAGE_INSTALL_append = " python3-numpy"
@@ -211,18 +213,20 @@ You can use S3 to upload the image from Cloud9 and distribute to any local machi
 
 [Create an S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) with default settings.
 
-The SD card image name should be similar to the following: imx-image-full-imx8mqevk-20201223010742.gg.rootfs.wic.bz2, 'imx8mqevk' should be replaced with 'imx8mpevk' if you are using the i.MX8MPlus
+The SD card image name should be similar to the following: imx-image-full-imx8mqevk-20201223010742.rootfs.wic.bz2, 'imx8mqevk' should be replaced with 'imx8mpevk' if you are using the i.MX8MPlus
 
-``aws s3 cp imx-yocto-bsp/build-dir/tmp/deploy/images/imx8mqebvk/imx-image-full-imx8mqevk-20201223010742.gg.rootfs.wic.bz2 s3://your-bucket-name``
+``aws s3 cp imx-yocto-bsp/build-dir/tmp/deploy/images/imx8mqevk/imx-image-full-imx8mqevk-20201223010742.rootfs.wic.bz2 s3://your-bucket-name``
 
 Pre sign the image.
 
-``aws s3 presign s3://your-bucket-name/imx-image-full-imx8mqevk-20201223010742.gg.rootfs.wic.bz2 --expires-in 604800``
+``aws s3 presign s3://your-bucket-name/imx-image-full-imx8mqevk-20201223010742.rootfs.wic.bz2 --expires-in 604800``
 
-The URL that is an output of this command will download the image to your local machine.
+The URL that is an output of this command will download the image to your local machine. You can also download the image directly from the Amazon S3 Console.
 
 ## 9. Prepare an SD card.
 You will need an SD card with at least 8GB space. The approximate image size uncompressed is 6.29 GB.
+
+### Instructions for MacOS:
 
 Insert the SD card to your local machine and determine onto which /dev/ it's been assigned. 
 
@@ -232,7 +236,20 @@ Format the disk and remove any partitions already present.
 
 ``sudo diskutil eraseDisk free itsfree /dev/<your disk>``
 
+### Instructions for Linux:
+
+Insert the SD card to your local machine and determine onto which /dev/ it's been assigned. 
+
+``lsblk``
+
+Format the disk and remove any partitions already present.
+
+``sudo dd if=/dev/zero of=/dev/<your disk> bs=1M``
+
+
 ## 10. Flash the image to an SD card
+
+### Instructions for MacOS:
 
 Decompress the image:
 
@@ -245,6 +262,20 @@ Flash the SD card. This process takes approximately 15 minutes:
 Unmount the SD card before proceeding:
 
 ``sudo diskutil unmountDisk <your disk>``
+
+### Instructions for Linux:
+
+Decompress the image:
+
+``bunzip2 -dk -f <image_name>.wic.bz2``
+
+Flash the SD card. This process takes approximately 15 minutes:
+
+``sudo dd if=<image name>.wic of=/dev/<your disk> bs=1m && sync``
+
+Unmount the SD card before proceeding:
+
+``sudo umount /dev/<your disk>``
 
 ## 11. Prepare the device
 
