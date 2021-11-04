@@ -221,7 +221,7 @@ Pre sign the image.
 
 ``aws s3 presign s3://your-bucket-name/imx-image-full-imx8mqevk-20201223010742.rootfs.wic.bz2 --expires-in 604800``
 
-The URL that is an output of this command will download the image to your local machine.
+The URL that is an output of this command will download the image to your local machine. You can also download the image directly from the Amazon S3 Console.
 
 ## 9. Prepare an SD card.
 You will need an SD card with at least 8GB space. The approximate image size uncompressed is 6.29 GB.
