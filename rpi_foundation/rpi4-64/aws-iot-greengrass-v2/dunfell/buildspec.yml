@@ -23,6 +23,7 @@ phases:
       - cd $HOME/dist
       - $HOME/repo init -u
         https://github.com/aws-samples/meta-aws-demos
+          -b patch-1
           -m rpi_foundation/rpi4-64/aws-iot-greengrass-v2/dunfell/repo.xml
       - $HOME/repo sync
       - export PATH=$HOME/dist/poky/scripts:$HOME/dist/poky/bitbake/bin:$PATH
