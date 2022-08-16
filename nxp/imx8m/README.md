@@ -104,25 +104,25 @@ BB_NUMBER_THREADS = "96"
 Add the Greengrass recipe to your build. This will build Greengrass v2.
 
 ```
-IMAGE_INSTALL_append = " greengrass-bin"
+IMAGE_INSTALL:append = " greengrass-bin"
 ```
 
 Add support for the AWS IoT Device Python SDK v2 to build Python applications that can interact with the Greengrass IPC:
 ```
-IMAGE_INSTALL_append = " aws-iot-device-sdk-python-v2"
+IMAGE_INSTALL:append = " aws-iot-device-sdk-python-v2"
 ```
 
 **OPTIONAL:** Add the following dependencies for Amazon SageMaker Neo Deep Learning Runtime and Amazon SageMaker Edge Manager. You need these for the ML Operations with AWS IoT Greengrass v2 and SageMaker Edge Manager workshop:
 ```
-IMAGE_INSTALL_append = " python3-grpcio-tools"
-IMAGE_INSTALL_append = " python3-numpy"
-IMAGE_INSTALL_append = " python3-grpcio"
-IMAGE_INSTALL_append = " python3-protobuf"
-IMAGE_INSTALL_append = " opencv"
+IMAGE_INSTALL:append = " python3-grpcio-tools"
+IMAGE_INSTALL:append = " python3-numpy"
+IMAGE_INSTALL:append = " python3-grpcio"
+IMAGE_INSTALL:append = " python3-protobuf"
+IMAGE_INSTALL:append = " opencv"
 ```
 If you are building this image for the NXP i.MX 8M Plus EVK and want to perform machine learning inference on the Neural Processing Unit, you will need to add the following line to build libtim-vx:
 ```
-IMAGE_INSTALL_append = " tim-vx"
+IMAGE_INSTALL:append = " tim-vx"
 ```
 
 local.conf should look similar to the following:
@@ -155,13 +155,13 @@ EXTRA_IMAGE_FEATURES += "package-management"
 PARALLEL_MAKE= "-j 96"
 BB_NUMBER_THREADS = "96"
 
-IMAGE_INSTALL_append = " greengrass-bin"
-IMAGE_INSTALL_append = " python3-grpcio-tools"
-IMAGE_INSTALL_append = " python3-numpy"
-IMAGE_INSTALL_append = " python3-grpcio"
-IMAGE_INSTALL_append = " python3-protobuf"
-IMAGE_INSTALL_append = " opencv"
-IMAGE_INSTALL_append = " aws-iot-device-sdk-python-v2"
+IMAGE_INSTALL:append = " greengrass-bin"
+IMAGE_INSTALL:append = " python3-grpcio-tools"
+IMAGE_INSTALL:append = " python3-numpy"
+IMAGE_INSTALL:append = " python3-grpcio"
+IMAGE_INSTALL:append = " python3-protobuf"
+IMAGE_INSTALL:append = " opencv"
+IMAGE_INSTALL:append = " aws-iot-device-sdk-python-v2"
 
 ```
 
