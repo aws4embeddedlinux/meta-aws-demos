@@ -1,12 +1,12 @@
 # Build AWS IoT Greengrass v2.0 on the NXP i.MX8MQEVK and i.MX8MPEVK
 
-The following guide will build a Yocto image on an AWS instance for the NXP i.MX8MQuad EVK or i.MX8MPlus EVK that contains AWS IoT Greengrass v. 2.0 and the dependencies for Amazon SageMaker Edge Manager and the Deep Learning Runtime.
+The following guide will build a Yocto image on an AWS instance for the NXP i.MX8MQuad EVK or i.MX8MPlus EVK that contains AWS IoT Greengrass v2 and the dependencies for Amazon SageMaker Edge Manager and the Deep Learning Runtime.
 
 **Requirements** :
 * An AWS account
 * Host machine with a Unix terminal (Linux or Mac OS)
 * [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) installed and configured on host machine
-* [MCIMX8M-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/evaluation-kit-for-the-i-mx-8m-applications-processor:MCIMX8M-EVK) or [8MPLUSLPD4-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/evaluation-kit-for-the-i-mx-8m-plus-applications-processor:8MPLUSLPD4-EVK)
+* [NXP i.MX 8MQuad Evaluation Kit](https://devices.amazonaws.com/detail/a3G0h000000OXqnEAG/MCIMX8M-EVK-Evaluation-Kit) or [NXP iMX8MPlus Evaluation Kit](https://devices.amazonaws.com/detail/a3G0h00000Akk1mEAB/NXP-iMX8MPlus-Evaluation-Kit)
 
 Instructions for both MacOS and Linux are provided as the host machine. 
 
@@ -843,4 +843,4 @@ To upload the component to the cloud and deploy to a fleet of devices, follow [U
 Fianally, to deploy your component to a fleet of devices, create a new deployment by following [Create deployments documentation](https://docs.aws.amazon.com/greengrass/v2/developerguide/create-deployments.html)
 
 ### Follow the SageMaker Edge Manager + Greengrass v2 workshop
-If you want to explore Greengrass v2 and edge machine learning with Amazon SageMaker, please see [Greengrass v2 and Amazon SageMaker Edge Manager workshop](https://github.com/dhwalters423/greengrass-v2-sagemaker-edge-manager-python).
+If you want to explore Greengrass v2 and edge machine learning with Amazon SageMaker, please see [Greengrass v2 and Amazon SageMaker Edge Manager workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/8d1c3528-8abb-4674-a2b9-d15fa593c392/en-US).
