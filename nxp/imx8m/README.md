@@ -88,9 +88,20 @@ Follow step 4 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en
 ``DISTRO=fsl-imx-wayland MACHINE=imx8mpevk source imx-setup-release.sh -b build-dir``
 
 ## 4. Clone meta-aws
+
+Check the Yocto version of the NXP i.MX BSP first to ensure version compatibility with meta-aws. This information is contained in the `imx-yocto-bsp/sources/poky/meta-poky/conf/distro/poky.conf` file.
+
+``cat ~/environment/imx-yocto-bsp/sources/poky/meta-poky/conf/distro/poky.conf | grep DISTRO_CODENAME``
+
+This will produce an output such as: `DISTRO_CODENAME = "kirkstone"`. Set the distro codename as an environment variable:
+
+``YOCTO_VERSION=kirkstone``
+
+Next, clone the meta-aws repository into the Yocto sources directory. 
+
 ``cd imx-yocto-bsp/sources``
 
-``git clone -b hardknott https://github.com/aws/meta-aws``
+``git clone -b $YOCTO_VERSION https://github.com/aws/meta-aws``
 
 ## 5. Setup your Yocto build
 Open ``imx-yocto-bsp/build-dir/conf/local.conf`` and add the following lines:
