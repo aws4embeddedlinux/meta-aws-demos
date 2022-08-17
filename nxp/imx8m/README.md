@@ -6,7 +6,7 @@ The following guide will build a Yocto image on an AWS instance for the NXP i.MX
 * An AWS account
 * Host machine with a Unix terminal (Linux or Mac OS)
 * [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) installed and configured on host machine
-* [NXP i.MX 8MQuad Evaluation Kit](https://devices.amazonaws.com/detail/a3G0h000000OXqnEAG/MCIMX8M-EVK-Evaluation-Kit) or [NXP iMX8MPlus Evaluation Kit](https://devices.amazonaws.com/detail/a3G0h00000Akk1mEAB/NXP-iMX8MPlus-Evaluation-Kit)
+* [NXP i.MX 8MQuad Evaluation Kit](https://devices.amazonaws.com/detail/a3G0h000000OXqnEAG/MCIMX8M-EVK-Evaluation-Kit) or [NXP i.MX8MPlus Evaluation Kit](https://devices.amazonaws.com/detail/a3G0h00000Akk1mEAB/NXP-iMX8MPlus-Evaluation-Kit)
 
 Instructions for both MacOS and Linux are provided as the host machine. 
 
