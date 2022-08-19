@@ -5,7 +5,7 @@ The following guide will build a Yocto image on an AWS instance for the NXP i.MX
 **Requirements** :
 * An AWS account
 * Host machine with a Unix terminal (Linux or Mac OS)
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) installed and configured on host machine
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) installed and configured on host machine and the build machine
 * [NXP i.MX 8MQuad Evaluation Kit](https://devices.amazonaws.com/detail/a3G0h000000OXqnEAG/MCIMX8M-EVK-Evaluation-Kit) or [NXP i.MX8MPlus Evaluation Kit](https://devices.amazonaws.com/detail/a3G0h00000Akk1mEAB/NXP-iMX8MPlus-Evaluation-Kit)
 
 Instructions for both MacOS and Linux are provided as the host machine. 
@@ -73,7 +73,7 @@ The filesystem on /dev/nvme0n1p1 is now 131071739 (4k) blocks long.
 ```
 
 ## 1. Setup the build server / host environment.
-Follow step 3.2 and 3.3 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf) to install all of the necessary host dependencies on your Cloud9 instance.
+Follow step 3.2 and 3.3 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf) to install all of the necessary host dependencies on your EC2 instance.
 
 ## 2. Setup the i.MX Yocto project
 Follow step 4 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf)
@@ -91,7 +91,7 @@ Follow step 4 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en
 
 Check the Yocto version of the NXP i.MX BSP first to ensure version compatibility with meta-aws. This information is contained in the `imx-yocto-bsp/sources/poky/meta-poky/conf/distro/poky.conf` file.
 
-``cat ~/environment/imx-yocto-bsp/sources/poky/meta-poky/conf/distro/poky.conf | grep DISTRO_CODENAME``
+``cat ~/imx-yocto-bsp/sources/poky/meta-poky/conf/distro/poky.conf | grep DISTRO_CODENAME``
 
 This will produce an output such as: `DISTRO_CODENAME = "kirkstone"`. Set the distro codename as an environment variable:
 
@@ -104,7 +104,7 @@ Next, clone the meta-aws repository into the Yocto sources directory.
 ``git clone -b $YOCTO_VERSION https://github.com/aws/meta-aws``
 
 ## 5. Setup your Yocto build
-Open ``imx-yocto-bsp/build-dir/conf/local.conf`` and add the following lines:
+Open ``imx-yocto-bsp/build-dir/conf/local.conf`` with a text editor (vim or nano) and add the following lines:
 
 Take advantage of processing power from your EC2 instance. PARALLEL_MAKE variable is passed as a direct argument to make. The [Yocto Project](https://www.yoctoproject.org/docs/1.4/ref-manual/ref-manual.html) recommends these variables be set to twice the number of cores on the build server. 
 ```
@@ -220,7 +220,7 @@ Wait approximately 30-40 minutes for the build to complete (assuming you are wor
 Subsequent builds for the same distro will take significantly less if the changes are incremental as long as you do not delete the build folder.
 
 ## 8. Download the image to a local machine
-You can use S3 to upload the image from Cloud9 and distribute to any local machine.
+You can use S3 to upload the image from EC2 and distribute to any local machine.
 
 [Create an S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) with default settings.
 
