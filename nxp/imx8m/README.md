@@ -10,69 +10,30 @@ The following guide will build a Yocto image on an AWS instance for the NXP i.MX
 
 Instructions for both MacOS and Linux are provided as the host machine. 
 
-## 0. Create Cloud9 environment
+## 0. Create EC2 environment
 
-Cloud9 is a cloud-managed IDE that we will use to build the Yocto image.
+Amazon Elastic Compute Cloud (Amazon EC2) provides scalable computing capacity in the AWS Cloud.
 
-### 0.1 Create Cloud9 IDE
+### 0.1 Create EC2 Instance
 
-Navigate to the AWS Management Console, and then to Cloud 9. Click on 'Create environment' with the following parameters:
-* Environment type: Create a new EC2 instance for environment (direct access)
+Navigate to the AWS Management Console, and then to EC2. Click on 'Instances' and then 'Launch instances' with the following parameters:
+* Name: YoctoBuildEnvironment
+* Appplication and OS Images: Ubuntu Server 20.04 LTS
 * Instance type: ``c5.12xlarge``, with this instance type, a clean build should take approximately 35 minutes to build. 
-* Platform: Ubuntu Server 18.04 LTS
+* Key pair name: Create new key pair. Be sure to download and keep this Key safe so that you can SSH to your instance.
+* Configure storage: 500 GiB gp3
+
+Click on 'Launch instance' when you have configured you are ready to launch your instance.
 
 c5.12xlarge is not available in all availability zones. If the creation fails, setup the environment again, and under 'Network settings (advanced)' change the Subnet to one of the recommended availability zones.
 
-### 0.2 Add Additional Storage
-Yocto builds require a large amount of storage and a high provisioned capacity for input/output of that storage device.
-
-Navigate to the EC2 Management Console, and click on 'Instances'.
-
-Look for your instance name that starts with 'aws-cloud9'. Click on it to open up the configuration pane on the bottom.
-Choose 'Storage' and then click on the Volume ID of the root volume.
-
-This will open up the Elastic Block Store console for that drive. Click on 'Actions' and 'Modify volume'. Change the volume to the following parameters:
-* Volume Type: General Purpose SSD (gp3)
-* Size: 500
-* Iops: 10000
-* Throughput: 500 MB/s
-
-Modifying the volume can take up to 45 minutes. Monitor the status under the 'State' column on the EBS dashboard.
-
-Next, we will extend the volume on the instance. Navigate to the Cloud9 Management Console, and choose 'Open IDE' next to your created Cloud9 environment. Open up a terminal in the IDE and run the following commands:
-
-``lsblk``
-
-You should see the following structure:
-```
-nvme0n1     259:0    0  500G  0 disk 
-└─nvme0n1p1 259:1    0   10G  0 part /
-```
-
-Grow the partition:
-
-```
-sudo growpart /dev/nvme0n1 1
-CHANGED: partition=1 start=2048 old: size=20969439 end=20971487 new: size=1048573919,end=1048575967
-```
-Ensure the partition is now being used fully:
-```
-lsblk
-nvme0n1     259:0    0  500G  0 disk 
-└─nvme0n1p1 259:1    0  500G  0 part /
-```
-Resize the filesystem on the partition:
-```
-sudo resize2fs /dev/nvme0n1p1
-resize2fs 1.44.1 (24-Mar-2018)
-Filesystem at /dev/nvme0n1p1 is mounted on /; on-line resizing required
-old_desc_blocks = 2, new_desc_blocks = 63
-
-
-The filesystem on /dev/nvme0n1p1 is now 131071739 (4k) blocks long.
-```
+### 0.2 SSH to your instance
+From the EC2 console, obtain your instance's Public IPv4 address. On your local machine, SSH to the instance:
+``ssh -i <PATH TO YOUR KEY> ubuntu@<Public IP Address>``
 
 ## 1. Setup the build server / host environment.
+Install and configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) on the host machine.
+
 Follow step 3.2 and 3.3 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf) to install all of the necessary host dependencies on your EC2 instance.
 
 ## 2. Setup the i.MX Yocto project
