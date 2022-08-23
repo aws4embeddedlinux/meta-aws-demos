@@ -1,79 +1,40 @@
 # Build AWS IoT Greengrass v2.0 on the NXP i.MX8MQEVK and i.MX8MPEVK
 
-The following guide will build a Yocto image on an AWS instance for the NXP i.MX8MQuad EVK or i.MX8MPlus EVK that contains AWS IoT Greengrass v. 2.0 and the dependencies for Amazon SageMaker Edge Manager and the Deep Learning Runtime.
+The following guide will build a Yocto image on an AWS instance for the NXP i.MX8MQuad EVK or i.MX8MPlus EVK that contains AWS IoT Greengrass v2 and the dependencies for Amazon SageMaker Edge Manager and the Deep Learning Runtime.
 
 **Requirements** :
 * An AWS account
 * Host machine with a Unix terminal (Linux or Mac OS)
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) installed and configured on host machine
-* [MCIMX8M-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/evaluation-kit-for-the-i-mx-8m-applications-processor:MCIMX8M-EVK) or [8MPLUSLPD4-EVK](https://www.nxp.com/design/development-boards/i-mx-evaluation-and-development-boards/evaluation-kit-for-the-i-mx-8m-plus-applications-processor:8MPLUSLPD4-EVK)
+* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) installed and configured on host machine and the build machine
+* [NXP i.MX 8MQuad Evaluation Kit](https://devices.amazonaws.com/detail/a3G0h000000OXqnEAG/MCIMX8M-EVK-Evaluation-Kit) or [NXP i.MX8MPlus Evaluation Kit](https://devices.amazonaws.com/detail/a3G0h00000Akk1mEAB/NXP-iMX8MPlus-Evaluation-Kit)
 
 Instructions for both MacOS and Linux are provided as the host machine. 
 
-## 0. Create Cloud9 environment
+## 0. Create EC2 environment
 
-Cloud9 is a cloud-managed IDE that we will use to build the Yocto image.
+Amazon Elastic Compute Cloud (Amazon EC2) provides scalable computing capacity in the AWS Cloud.
 
-### 0.1 Create Cloud9 IDE
+### 0.1 Create EC2 Instance
 
-Navigate to the AWS Management Console, and then to Cloud 9. Click on 'Create environment' with the following parameters:
-* Environment type: Create a new EC2 instance for environment (direct access)
+Navigate to the AWS Management Console, and then to EC2. Click on 'Instances' and then 'Launch instances' with the following parameters:
+* Name: YoctoBuildEnvironment
+* Appplication and OS Images: Ubuntu Server 20.04 LTS
 * Instance type: ``c5.12xlarge``, with this instance type, a clean build should take approximately 35 minutes to build. 
-* Platform: Ubuntu Server 18.04 LTS
+* Key pair name: Create new key pair. Be sure to download and keep this Key safe so that you can SSH to your instance.
+* Configure storage: 500 GiB gp3
+
+Click on 'Launch instance' when you have configured you are ready to launch your instance.
 
 c5.12xlarge is not available in all availability zones. If the creation fails, setup the environment again, and under 'Network settings (advanced)' change the Subnet to one of the recommended availability zones.
 
-### 0.2 Add Additional Storage
-Yocto builds require a large amount of storage and a high provisioned capacity for input/output of that storage device.
-
-Navigate to the EC2 Management Console, and click on 'Instances'.
-
-Look for your instance name that starts with 'aws-cloud9'. Click on it to open up the configuration pane on the bottom.
-Choose 'Storage' and then click on the Volume ID of the root volume.
-
-This will open up the Elastic Block Store console for that drive. Click on 'Actions' and 'Modify volume'. Change the volume to the following parameters:
-* Volume Type: General Purpose SSD (gp3)
-* Size: 500
-* Iops: 10000
-* Throughput: 500 MB/s
-
-Modifying the volume can take up to 45 minutes. Monitor the status under the 'State' column on the EBS dashboard.
-
-Next, we will extend the volume on the instance. Navigate to the Cloud9 Management Console, and choose 'Open IDE' next to your created Cloud9 environment. Open up a terminal in the IDE and run the following commands:
-
-``lsblk``
-
-You should see the following structure:
-```
-nvme0n1     259:0    0  500G  0 disk 
-└─nvme0n1p1 259:1    0   10G  0 part /
-```
-
-Grow the partition:
-
-```
-sudo growpart /dev/nvme0n1 1
-CHANGED: partition=1 start=2048 old: size=20969439 end=20971487 new: size=1048573919,end=1048575967
-```
-Ensure the partition is now being used fully:
-```
-lsblk
-nvme0n1     259:0    0  500G  0 disk 
-└─nvme0n1p1 259:1    0  500G  0 part /
-```
-Resize the filesystem on the partition:
-```
-sudo resize2fs /dev/nvme0n1p1
-resize2fs 1.44.1 (24-Mar-2018)
-Filesystem at /dev/nvme0n1p1 is mounted on /; on-line resizing required
-old_desc_blocks = 2, new_desc_blocks = 63
-
-
-The filesystem on /dev/nvme0n1p1 is now 131071739 (4k) blocks long.
-```
+### 0.2 SSH to your instance
+From the EC2 console, obtain your instance's Public IPv4 address. On your local machine, SSH to the instance:
+``ssh -i <PATH TO YOUR KEY> ubuntu@<Public IP Address>``
 
 ## 1. Setup the build server / host environment.
-Follow step 3.2 and 3.3 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf) to install all of the necessary host dependencies on your Cloud9 instance.
+Install and configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) on the host machine.
+
+Follow step 3.2 and 3.3 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf) to install all of the necessary host dependencies on your EC2 instance.
 
 ## 2. Setup the i.MX Yocto project
 Follow step 4 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf)
@@ -88,12 +49,23 @@ Follow step 4 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en
 ``DISTRO=fsl-imx-wayland MACHINE=imx8mpevk source imx-setup-release.sh -b build-dir``
 
 ## 4. Clone meta-aws
+
+Check the Yocto version of the NXP i.MX BSP first to ensure version compatibility with meta-aws. This information is contained in the `imx-yocto-bsp/sources/poky/meta-poky/conf/distro/poky.conf` file.
+
+``cat ~/imx-yocto-bsp/sources/poky/meta-poky/conf/distro/poky.conf | grep DISTRO_CODENAME``
+
+This will produce an output such as: `DISTRO_CODENAME = "kirkstone"`. Set the distro codename as an environment variable:
+
+``YOCTO_VERSION=kirkstone``
+
+Next, clone the meta-aws repository into the Yocto sources directory. 
+
 ``cd imx-yocto-bsp/sources``
 
-``git clone -b hardknott https://github.com/aws/meta-aws``
+``git clone -b $YOCTO_VERSION https://github.com/aws/meta-aws``
 
 ## 5. Setup your Yocto build
-Open ``imx-yocto-bsp/build-dir/conf/local.conf`` and add the following lines:
+Open ``imx-yocto-bsp/build-dir/conf/local.conf`` with a text editor (vim or nano) and add the following lines:
 
 Take advantage of processing power from your EC2 instance. PARALLEL_MAKE variable is passed as a direct argument to make. The [Yocto Project](https://www.yoctoproject.org/docs/1.4/ref-manual/ref-manual.html) recommends these variables be set to twice the number of cores on the build server. 
 ```
@@ -104,25 +76,25 @@ BB_NUMBER_THREADS = "96"
 Add the Greengrass recipe to your build. This will build Greengrass v2.
 
 ```
-IMAGE_INSTALL_append = " greengrass-bin"
+IMAGE_INSTALL:append = " greengrass-bin"
 ```
 
 Add support for the AWS IoT Device Python SDK v2 to build Python applications that can interact with the Greengrass IPC:
 ```
-IMAGE_INSTALL_append = " aws-iot-device-sdk-python-v2"
+IMAGE_INSTALL:append = " aws-iot-device-sdk-python-v2"
 ```
 
 **OPTIONAL:** Add the following dependencies for Amazon SageMaker Neo Deep Learning Runtime and Amazon SageMaker Edge Manager. You need these for the ML Operations with AWS IoT Greengrass v2 and SageMaker Edge Manager workshop:
 ```
-IMAGE_INSTALL_append = " python3-grpcio-tools"
-IMAGE_INSTALL_append = " python3-numpy"
-IMAGE_INSTALL_append = " python3-grpcio"
-IMAGE_INSTALL_append = " python3-protobuf"
-IMAGE_INSTALL_append = " opencv"
+IMAGE_INSTALL:append = " python3-grpcio-tools"
+IMAGE_INSTALL:append = " python3-numpy"
+IMAGE_INSTALL:append = " python3-grpcio"
+IMAGE_INSTALL:append = " python3-protobuf"
+IMAGE_INSTALL:append = " opencv"
 ```
 If you are building this image for the NXP i.MX 8M Plus EVK and want to perform machine learning inference on the Neural Processing Unit, you will need to add the following line to build libtim-vx:
 ```
-IMAGE_INSTALL_append = " tim-vx"
+IMAGE_INSTALL:append = " tim-vx"
 ```
 
 local.conf should look similar to the following:
@@ -155,13 +127,13 @@ EXTRA_IMAGE_FEATURES += "package-management"
 PARALLEL_MAKE= "-j 96"
 BB_NUMBER_THREADS = "96"
 
-IMAGE_INSTALL_append = " greengrass-bin"
-IMAGE_INSTALL_append = " python3-grpcio-tools"
-IMAGE_INSTALL_append = " python3-numpy"
-IMAGE_INSTALL_append = " python3-grpcio"
-IMAGE_INSTALL_append = " python3-protobuf"
-IMAGE_INSTALL_append = " opencv"
-IMAGE_INSTALL_append = " aws-iot-device-sdk-python-v2"
+IMAGE_INSTALL:append = " greengrass-bin"
+IMAGE_INSTALL:append = " python3-grpcio-tools"
+IMAGE_INSTALL:append = " python3-numpy"
+IMAGE_INSTALL:append = " python3-grpcio"
+IMAGE_INSTALL:append = " python3-protobuf"
+IMAGE_INSTALL:append = " opencv"
+IMAGE_INSTALL:append = " aws-iot-device-sdk-python-v2"
 
 ```
 
@@ -209,7 +181,7 @@ Wait approximately 30-40 minutes for the build to complete (assuming you are wor
 Subsequent builds for the same distro will take significantly less if the changes are incremental as long as you do not delete the build folder.
 
 ## 8. Download the image to a local machine
-You can use S3 to upload the image from Cloud9 and distribute to any local machine.
+You can use S3 to upload the image from EC2 and distribute to any local machine.
 
 [Create an S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html) with default settings.
 
@@ -832,4 +804,4 @@ To upload the component to the cloud and deploy to a fleet of devices, follow [U
 Fianally, to deploy your component to a fleet of devices, create a new deployment by following [Create deployments documentation](https://docs.aws.amazon.com/greengrass/v2/developerguide/create-deployments.html)
 
 ### Follow the SageMaker Edge Manager + Greengrass v2 workshop
-If you want to explore Greengrass v2 and edge machine learning with Amazon SageMaker, please see [Greengrass v2 and Amazon SageMaker Edge Manager workshop](https://github.com/dhwalters423/greengrass-v2-sagemaker-edge-manager-python).
+If you want to explore Greengrass v2 and edge machine learning with Amazon SageMaker, please see [Greengrass v2 and Amazon SageMaker Edge Manager workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/8d1c3528-8abb-4674-a2b9-d15fa593c392/en-US).
