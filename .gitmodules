@@ -1,0 +1,64 @@
+[submodule "poky"]
+	path = poky
+	url = git://git.yoctoproject.org/poky
+	branch = kirkstone
+[submodule "meta-virtualization"]
+	path = meta-virtualization
+	url = git://git.yoctoproject.org/meta-virtualization
+	branch = kirkstone
+[submodule "meta-openembedded"]
+	path = meta-openembedded
+	url = https://github.com/openembedded/meta-openembedded.git
+	branch = kirkstone
+[submodule "meta-aws"]
+	path = meta-aws
+	url = https://github.com/aws4embeddedlinux/meta-aws.git
+	branch = kirkstone
+[submodule "meta-freescale"]
+	path = meta-freescale
+	url = https://github.com/Freescale/meta-freescale.git
+	branch = kirkstone
+[submodule "meta-raspberrypi"]
+	path = meta-raspberrypi
+	url = https://github.com/agherzan/meta-raspberrypi.git
+	branch = kirkstone
+[submodule "meta-java"]
+	path = meta-java
+	url = https://github.com/meta-java/meta-java.git
+	branch = kirkstone
+[submodule "meta-variscite-bsp"]
+	path = meta-variscite-bsp
+	url = https://github.com/varigit/meta-variscite-bsp.git
+	branch = kirkstone
+[submodule "meta-freescale-distro"]
+	path = meta-freescale-distro
+	url = https://github.com/Freescale/meta-freescale-distro.git
+	branch = kirkstone
+[submodule "meta-variscite-sdk"]
+	path = meta-variscite-sdk
+	url = https://github.com/varigit/meta-variscite-sdk.git
+	branch = kirkstone
+[submodule "meta-qt5"]
+	path = meta-qt5
+	url = https://github.com/meta-qt5/meta-qt5.git
+	branch = kirkstone
+[submodule "meta-security"]
+	path = meta-security
+	url = https://github.com/ni/meta-security.git
+	branch = nilrt/master/kirkstone
+[submodule "meta-selinux"]
+	path = meta-selinux
+	url = https://github.com/ni/meta-selinux.git
+	branch = nilrt/master/kirkstone
+[submodule "meta-spdxscanner"]
+	path = meta-spdxscanner
+	url = https://git.yoctoproject.org/meta-spdxscanner/
+	branch = master
+[submodule "meta-clang"]
+	path = meta-clang
+	url = https://github.com/kraj/meta-clang.git
+	branch = kirkstone
+[submodule "meta-python2"]
+	path = meta-python2
+	url = https://git.openembedded.org/meta-python2
+	branch = kirkstone

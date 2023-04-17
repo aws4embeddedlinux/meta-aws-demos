@@ -1,0 +1,4 @@
+CONF_VERSION = "2"
+DISTRO ?= "poky"
+
+require ${OEROOT}/../meta-aws-demos/conf/devices/${BUILD_DEVICE}/config.conf

@@ -1,0 +1,40 @@
+#! /bin/sh
+
+if [ -n "$BASH_SOURCE" ]; then
+    THIS_SCRIPT=$BASH_SOURCE
+elif [ -n "$ZSH_NAME" ]; then
+    THIS_SCRIPT=$0
+else
+    THIS_SCRIPT="$(pwd)/oe-init-build-env"
+    if [ ! -e "$THIS_SCRIPT" ]; then
+        echo "Error: $THIS_SCRIPT doesn't exist!" >&2
+        echo "Please run this script in oe-init-build-env's directory." >&2
+        exit 1
+    fi
+fi
+
+ROOT_DIR=$(realpath $(dirname $THIS_SCRIPT))
+
+export TEMPLATECONF="$ROOT_DIR/meta-aws-demos/conf/templates/ami-demo"
+
+if [ -n "$1" ]; then
+    BUILDDIR=$(realpath "$1")
+else
+    BUILDDIR=$ROOT_DIR/build
+fi
+
+get_devices() {
+    (
+    cd $ROOT_DIR/meta-aws-demos/conf/devices
+    for f in *; do
+        if [ -e $f/config.conf ]; then
+            echo $f
+        fi
+    done
+    )
+}
+
+cd $(dirname $THIS_SCRIPT)/poky
+. oe-init-build-env "$BUILDDIR"
+
+export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} BUILD_DEVICE"
