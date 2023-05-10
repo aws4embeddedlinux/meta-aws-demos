@@ -1,200 +1,34 @@
-# AWS IoT Greengrass for the Texas Instruments Jacinto7 TDA4VMXEVM
-
-**DISCLAIMER** This walk-through currently uses the arago
-configuration for the `zeus` branch.  This branch will not be used for
-the TI Processor SDK.
-
-In this tutorial, you will build the Embedded Linux image using the
-Yocto Project delivered as part of the Texas Instruments Processor SDK
-for Linux.
-
-You may perform the build steps on an EC2 instance, copy the image
-locally, and then flash the MicroSD locally.  The steps in this
-tutorial expects you are working on a local workstation.
-
-## Preparation
-
-You will need to complete all preparation steps to complete all the
-sections in this tutorial successfully.
-
-### Provisioning script (optional)
-
-For convenience, a Vagrantfile, provisioning script (`bootstrap.sh`) and build script (`starsdkbuild.sh`) are available to create a virtual machine under [Vagrant](https://vagrantup.com).
-
-#### Vagrant setup of SDK (optional)
-
-1. Download and install a Virtual Machine technology (such as [Virtual Box](https://www.virtualbox.org/)).
-
-*NB* - the Vagranfile here has been developed and tested with Virtual Box.
-
-2. Download and install [Vagrant](https://vagrantup.com).
-
-3. From the `TDA4VMXEVM` directory, start Vagrant with
-
-   ```bash
-   vagrant up
-   ```
-
-Vagrant will download an Ubuntu 16.04 virtual machine and run the provisioning script `bootstrap.sh` to 
-
-* Download cross-compiling toolchains
-* Clone the TI SDK from the git repo
-* Setup the SDK for development with meta-aws
-* Clone the meta-aws layer into the SDK tree
-
-This will take some time, but once the command is finished, connect to the virtual machine with
-
-   ```bash
-   vagrant ssh
-   ```
-
-4. The build can be initiated with
-
-   ```bash
-   cd /vagrant
-   ./startsdkbuild.sh
-   ```
-
-   *By default, the current host directory is shared on the guest as `/vagrant`.*
-
-### Setup with script (optional)
-
-If you choose *NOT* to use Vagrant (for example a Cloud9/EC2 instance, stand alone box, or other configuration), the `bootstrap.sh` script can be used to set up the SDK to be ready to build.
-
-1. Run the provisioning script
-
-   ```bash
-   bootstrap.sh
-   ```
-
-2. As with Vagrant, the provisioning script will 
-
-* Download cross-compiling toolchains
-* Clone the TI SDK from the git repo
-* Setup the SDK for development with meta-aws
-* Clone the meta-aws layer into the SDK tree
-
-3. The build can be initiated with
-
-   ```bash
-   startsdkbuild.sh
-   ```
-
-*The configuration of the virtual machine can be configured to limit processor and/or memory utilization, forward ports, share directories, etc by modifying `Vagrantfile`*
-
-### Manual setup and configuration
-
-
-1. [Download and install the TI Processor SDK for Linux
-   (Automotive)](http://www.ti.com/tool/PROCESSOR-SDK-DRA8X-TDA4X).
-   **Note** we will be using the flash utilities and boot files but
-   will not be using the Arago source tree from the distribution.
-2. Download the appropriate compiler for [the Arm / GNU compiler
-version
-9-2-2019-12](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a/downloads/9-2-2019-12).
-Unpack to your $HOME directory or some other directory you will use
-later.  Later in this tutorial you will see I put them into
-$BASEDIR/toolchains.
-3. An [AWS Account](https://aws.amazon.com/free) and an [AWS Identity
-   and Access Management (IAM)](https://aws.amazon.com/iam/) with
-   authorization to run the [IoT Greengrass
-   Tutorial](https://docs.aws.amazon.com/greengrass/latest/developerguide/gg-gs.html)
-   in the context of your logged in [IAM
-   User](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_identity-management.html).
-
-## Build and flash the image
-
-The build and flash instructions are very similar to what is in the
-Texas Instruments documentation for [Processor SDK for Linux Section
-1.2.2.2](http://software-dl.ti.com/processor-sdk-linux/esd/docs/latest/linux/Overview_Building_the_SDK.html#build-steps)
-with some minor modifications to include IoT Greengrass.
-
-1. Open a terminal window on your workstation.  Clone the Arago
-   distribution to your workstation.  **NOTE**
-
-   For the sake of this tutorial, the variable `BASE` refers to the
-   build environment parent directory.  For many people, this will be
-   `$HOME`.  If you are using another partition as the base directory,
-   please set it accordingly.
-
-   ```bash
-   export BASEDIR=$HOME
-   ```
-
-   Clone TI's Arago SDK and use the **zeus** environment.
-
-   ```bash
-   cd $BASEDIR
-   git clone git://arago-project.org/git/projects/oe-layersetup.git tisdk
-   ```
-
-2. Source the Yocto environment script.  This tutorial was written
-   using the latest Processor SDK Linux Automotive at the time which was at version 06\_02\_00.
-
-   ```bash
-   cd $BASEDIR/tisdk
-   ./oe-layertool-setup.sh -f configs/arago-zeus-config.txt
-   cd build
-   . conf/setenv
-   ```
-
-3. Copy the `local.conf` we will use for this demonstration to your `conf` directory.
-
-   ```bash
-   wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/TDA4VMXEVM/aws_iot_greengrass/j7-evm_iot_greengrass.conf
-   mv j7-evm_iot_greengrass.conf \
-      $BASEDIR/tisdk/build/conf/j7-evm_iot_greengrass.conf
-   ```
-
-4. The TI Processor SDK includes the meta-aws project in the source
-   tree automatically. In this case, we are using the Arago project so
-   we must clone it out specifically.  To get the latest aligned
-   version of IoT Greengrass, ensure that the repository is up to date
-   and use the `zeus` branch.  At the version of the SDK used, the
-   `zeus` Yocto Project is supported by the TI SDK.
-
-   ```bash
-   cd $BASEDIR/tisdk/sources
-   git clone -b zeus https://github.com/aws/meta-aws
-   
-   ```
-
-5. Add the `meta-aws` and `meta-java` layers to the build.
-
-   ```text
-   /src/tisdk/build/conf$ diff bblayers.conf.1 bblayers.conf 30a31,32
- 	> /src/tisdk/sources/meta-aws \
-   ```
-
-6. Ensure the toolchain is configured in your terminal's environment.
-
-   ```bash
-   export TOOLCHAIN_PATH_ARMV7=$BASEDIR/toolchains/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf
-   export TOOLCHAIN_PATH_ARMV8=$BASEDIR/toolchains/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu
-   ```
-7. Build the image.
+# THIS TUTORIAL IS OUTDATED - WIP!
+# AWS IoT Greengrass for the Texas Instruments AM572x Industrial Development Kit
+1. Build the image.
 
    ```bash
    cd $BASEDIR/tisdk/build
    . conf/setenv
-   bitbake -r conf/j7-evm_iot_greengrass.conf arago-base-tisdk-image
+   bitbake -r conf/am572x_iot_greengrass.conf arago-base-tisdk-image
    ```
 
-   After building, the images will be in the following directory. List
-   the directory to get the current name of the root filesystem.
+   After building, the images will be in the following directory.
 
    ```bash
-   ls $BASEDIR/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/j7-evm
+   $BASEDIR/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/am57xx-evm
    ```
 
-8. Use the TI flashing tools to flash the image.  In this version of
+1. Change directory and then create a boot partition archive.
+
+   ```bash
+   cd $BASEDIR/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/am57xx-evm
+   tar -chJf u-boot.tar.xz MLO u-boot.img zImage
+   ```
+
+1. Use the TI flashing tools to flash the image.  In this version of
    the SDK, the flashing tool is in this directory.
 
    ```bash
-   cd $HOME/ti-processor-sdk-linux-automotive-j7-evm-06_02_00/bin
+   cd $HOME/ti-processor-sdk-linux-am57xx-evm-06.02.00.81/bin
    ```
 
-9. Because the tool must access peripherals as `root`, we must run with the sudo command.
+1. Because the tool must access peripherals as `root`, we must run with the sudo command.
 
     ```bash
     sudo ./create-sdcard.sh
@@ -207,17 +41,17 @@ with some minor modifications to include IoT Greengrass.
     boot files:
 
     ```bash
-   /home/rpcme/ti-processor-sdk-linux-automotive-j7-evm-06_02_00/board-support/prebuilt-images/boot-j7-evm.tar.gz
+    /home/UID/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/am57xx-evm/u-boot.tar.xz
     ```
 
     And the fully qualified path for the rootfs (your time and date will vary ):
 
     ```bash
-    /src/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/j7-evm/arago-base-tisdk-image-j7-evm-20200529171915.rootfs.tar.xz 
+    /home/UID/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/am57xx-evm/arago-base-tisdk-image-am57xx-evm-20200409163450.rootfs.tar.xz
     ```
-11. Unmount the microSD card from your workstation.
+1. Unmount the microSD card from your workstation.
 
-12. Boot the system as normal (turn on with SW3, reset with SW2),
+1. Boot the system as normal (turn on with SW3, reset with SW2),
     using a 115200N81 connection speed.  There has been mixed results
     using `screen` and `minicom`.  Best results have been demonstrated
     on `picocom` on Linux and `TeraTerm` on Windows.
@@ -246,14 +80,14 @@ the target device.
 Tester](https://docs.aws.amazon.com/greengrass/latest/developerguide/device-tester-for-greengrass-ug.html)
 requires additional additional software.  To build the image for IDT,
 please use the
-[j7-evm\_iot\_greengrass\_idt.conf](j7-evm_iot_greengrass_idt.conf)
+[am572x\_iot\_greengrass\_idt.conf](am572x_iot_greengrass_idt.conf)
 file.  You will need to install package =ntp= for use of =ntpd= or
 else Greengrass OTA testing will fail due to potential system time
 mismatch causing the SSL handshake during =wget= invocation to fail. 
 
 ```bash
-wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/j7-evm_idk/aws_iot_greengrass/j7-evm_iot_greengrass_idt.conf
-mv j7-evm_iot_greengrass_idt.conf $BASEDIR/tisdk/build/conf/j7-evm_iot_greengrass_idt.conf
+wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/am572x_idk/aws_iot_greengrass/am572x_iot_greengrass_idt.conf
+mv am572x_iot_greengrass_idt.conf $BASEDIR/tisdk/build/conf/am572x_iot_greengrass_idt.conf
 ```
 
 If you would also like to perform IDT tests for Stream Manager and
@@ -261,8 +95,8 @@ Connectors (which requires Docker), use the following configuration
 file:
 
 ```bash
-wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/TDA4VMXEVM/aws_iot_greengrass/j7-evm_iot_greengrass_idt_full.conf
-mv j7-evm_iot_greengrass_idt.conf $BASEDIR/tisdk/build/conf/j7-evm_iot_greengrass_idt_full.conf
+wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/am572x_idk/aws_iot_greengrass/am572x_iot_greengrass_idt_full.conf
+mv am572x_iot_greengrass_idt.conf $BASEDIR/tisdk/build/conf/am572x_iot_greengrass_idt_full.conf
 ```
 
 If you are building the **full** version, then you will need to add
@@ -328,23 +162,6 @@ rm -rf $BASEDIR/gcc-arm-8.3-2019.03-x86_64-arm-linux-gnueabihf
 rm -rf $BASEDIR/gcc-arm-8.3-2019.03-x86_64-aarch64-linux-gnu
 rm -rf $BASEDIR/tisdk
 ```
-
-### Vagrant cleanup (optional)
-
-To stop the vagrant virtual machine, log out of the vagrant ssh shell if already logged in, then
-   ```bash
-   vagrant halt
-   ```
-This will stop the vagrnat virtual machine, which can be restarted at any time with `vagrant up`.
-
-*NB* - the provisioning script (`boothstrap.sh`) is only run on the first creation of the virtual machine, subsequent calls to start the VM, will not re-provision.
-
-To remove the Vagrant virtual machine completely
-   ```bash
-   vagrant destroy
-   ```
-
-
 
 # Notes
 
@@ -522,7 +339,7 @@ Choose now [1/2] : 2
 
 ################################################################################
 
-Enter path for Boot Partition : /home/rpcme/ti-processor-sdk-linux-automotive-j7-evm-06_02_00/board-support/prebuilt-images/boot-j7-evm.tar.gz
+Enter path for Boot Partition : /home/me/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/am57xx-evm/u-boot.tar.xz
 
 File exists
 
@@ -558,7 +375,7 @@ Reusing kernel and dt files from the rootfs's boot directory
 
 ################################################################################
 
-Enter path for Rootfs Partition : /src/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/j7-evm/arago-base-tisdk-image-j7-evm-20200529171915.rootfs.tar.xz 
+Enter path for Rootfs Partition : /home/me/tisdk/build/arago-tmp-external-arm-toolchain/deploy/images/am57xx-evm/arago-base-tisdk-image-am57xx-evm-20200411233748.rootfs.tar.xz
 
 File exists
 

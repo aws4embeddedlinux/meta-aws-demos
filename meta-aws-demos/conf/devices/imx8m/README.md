@@ -1,70 +1,9 @@
 # Build AWS IoT Greengrass v2.0 on the NXP i.MX8MQEVK and i.MX8MPEVK
+# THIS TUTORIAL IS OUTDATED - WIP!
 
 The following guide will build a Yocto image on an AWS instance for the NXP i.MX8MQuad EVK or i.MX8MPlus EVK that contains AWS IoT Greengrass v2 and the dependencies for Amazon SageMaker Edge Manager and the Deep Learning Runtime.
 
-**Requirements** :
-* An AWS account
-* Host machine with a Unix terminal (Linux or Mac OS)
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) installed and configured on host machine and the build machine
-* [NXP i.MX 8MQuad Evaluation Kit](https://devices.amazonaws.com/detail/a3G0h000000OXqnEAG/MCIMX8M-EVK-Evaluation-Kit) or [NXP i.MX8MPlus Evaluation Kit](https://devices.amazonaws.com/detail/a3G0h00000Akk1mEAB/NXP-iMX8MPlus-Evaluation-Kit)
-
-Instructions for both MacOS and Linux are provided as the host machine. 
-
-## 0. Create EC2 environment
-
-Amazon Elastic Compute Cloud (Amazon EC2) provides scalable computing capacity in the AWS Cloud.
-
-### 0.1 Create EC2 Instance
-
-Navigate to the AWS Management Console, and then to EC2. Click on 'Instances' and then 'Launch instances' with the following parameters:
-* Name: YoctoBuildEnvironment
-* Appplication and OS Images: Ubuntu Server 20.04 LTS
-* Instance type: ``c5.12xlarge``, with this instance type, a clean build should take approximately 35 minutes to build. 
-* Key pair name: Create new key pair. Be sure to download and keep this Key safe so that you can SSH to your instance.
-* Configure storage: 500 GiB gp3
-
-Click on 'Launch instance' when you have configured you are ready to launch your instance.
-
-c5.12xlarge is not available in all availability zones. If the creation fails, setup the environment again, and under 'Network settings (advanced)' change the Subnet to one of the recommended availability zones.
-
-### 0.2 SSH to your instance
-From the EC2 console, obtain your instance's Public IPv4 address. On your local machine, SSH to the instance:
-``ssh -i <PATH TO YOUR KEY> ubuntu@<Public IP Address>``
-
-## 1. Setup the build server / host environment.
-Install and configure the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html) on the host machine.
-
-Follow step 3.2 and 3.3 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf) to install all of the necessary host dependencies on your EC2 instance.
-
-## 2. Setup the i.MX Yocto project
-Follow step 4 in the [i.MX Yocto Project User Guide](https://www.nxp.com/docs/en/user-guide/IMX_YOCTO_PROJECT_USERS_GUIDE.pdf)
-
-## 3. Initialize the build environment
-``cd imx-yocto-bsp``
-
-### To build the i.MX8MQEVK:
-``DISTRO=fsl-imx-wayland MACHINE=imx8mqevk source imx-setup-release.sh -b build-dir``
-
-### To build the i.MX8MPEVK:
-``DISTRO=fsl-imx-wayland MACHINE=imx8mpevk source imx-setup-release.sh -b build-dir``
-
-## 4. Clone meta-aws
-
-Check the Yocto version of the NXP i.MX BSP first to ensure version compatibility with meta-aws. This information is contained in the `imx-yocto-bsp/sources/poky/meta-poky/conf/distro/poky.conf` file.
-
-``cat ~/imx-yocto-bsp/sources/poky/meta-poky/conf/distro/poky.conf | grep DISTRO_CODENAME``
-
-This will produce an output such as: `DISTRO_CODENAME = "kirkstone"`. Set the distro codename as an environment variable:
-
-``YOCTO_VERSION=kirkstone``
-
-Next, clone the meta-aws repository into the Yocto sources directory. 
-
-``cd imx-yocto-bsp/sources``
-
-``git clone -b $YOCTO_VERSION https://github.com/aws/meta-aws``
-
-## 5. Setup your Yocto build
+1. Setup your Yocto build
 Open ``imx-yocto-bsp/build-dir/conf/local.conf`` with a text editor (vim or nano) and add the following lines:
 
 Take advantage of processing power from your EC2 instance. PARALLEL_MAKE variable is passed as a direct argument to make. The [Yocto Project](https://www.yoctoproject.org/docs/1.4/ref-manual/ref-manual.html) recommends these variables be set to twice the number of cores on the build server. 
