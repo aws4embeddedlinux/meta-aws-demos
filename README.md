@@ -1,6 +1,41 @@
-# meta-aws Demo Repository
+# Demonstrations for the **[meta-aws](https://github.com/aws/meta-aws)** project
 
-This repository builds meta-aws demos
+[meta-aws](https://github.com/aws/meta-aws) is a [Yocto
+Project](https://www.yoctoproject.org/) Bitbake Metadata Layer. It
+accelerates building [Amazon Web Services](https://aws.amazon.com)
+(AWS) software you can install to [Embedded
+Linux](https://elinux.org/Main_Page). Customers use this to build IoT
+solutions on AWS.
+
+In this repository, you will find
+[meta-aws](https://github.com/aws/meta-aws) demonstrations.  These
+demonstrations are both Poky (Yocto Project reference implementation)
+based and real hardware based.  Many times, the hardware will be
+representative of real use of hardware listed in the [AWS Device
+Catalog](https://devices.amazonaws.com).
+
+The number of demonstrations will increase over time and your
+contribution is very welcome!
+
+## Demonstration environments
+
+Select your desired target environment.  For more information how this
+repository is structured see the next section.
+
+These are listed in alphabetical order for ease of selection and
+should in no way infer preference.
+
+- `agl-renesas` / [AGL + Renesas](meta-aws-demos/conf/devices/agl-renesas/README.md)
+- `agl-rpi` / [AGL + Raspberry Pi Foundation](meta-aws-demos/conf/devices/agl-rpi/README.md)
+- `dart-mx8m` / [variscite](meta-aws-demos/conf/devices/dart-mx8m/README.md)
+- `ec2-arm64` / [AWS EC2](meta-aws-demos/conf/devices/ec2-arm64/README.md)
+- `ec2-x86-64` / [AWS EC2](meta-aws-demos/conf/devices/ec2-x86-64/README.md)
+- `imx8m` / [NXP](meta-aws-demos/conf/devices/imx8m/README.md)
+- `qemu` / [qemux86-64](meta-aws-demos/conf/devices/qemu/README.md)
+- `rpi4-32` / [Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-32/README.md)
+- `rpi4-64` / [Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-64/README.md)
+- `ti-am572x-idk` / [Texas Instruments](meta-aws-demos/conf/devices/ti-am572x-idk/README.md)
+- `xilinx-zcu104-zynqmp` / [Xilinx](meta-aws-demos/conf/devices/xilinx-zcu104-zynqmp/README.md)
 
 ## Quick Start
 
@@ -35,14 +70,13 @@ Next, initialize the build environment, optionally specifying the build director
 . init-build-env [BUILDDIR]
 ```
 
-Finally, the images can be built with:
+Finally, the images can be built - details in linked readme for each BUILD_DEVICE:
 
 ```bash
 bitbake core-image-minimal
 ```
-
-
-To build for a different device, set the `BUILD_DEVICE` environment variable,
+s
+To build for a different device, set the `BUILD_DEVICE` (see [here](#Demonstration-environments)) environment variable,
 like so:
 
 ```bash

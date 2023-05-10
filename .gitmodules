@@ -62,3 +62,51 @@
 	path = meta-python2
 	url = https://git.openembedded.org/meta-python2
 	branch = kirkstone
+[submodule "meta-flutter"]
+	path = meta-flutter
+	url = https://github.com/meta-flutter/meta-flutter.git
+	branch = kirkstone
+[submodule "meta-agl"]
+	path = meta-agl
+	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl
+	branch = master
+[submodule "meta-agl-demo"]
+	path = meta-agl-demo
+	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-demo
+	branch = master
+[submodule "meta-agl-devel"]
+	path = meta-agl-devel
+	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-devel
+	branch = master
+[submodule "meta-codechecker"]
+	path = meta-codechecker
+	url = https://github.com/dl9pf/meta-codechecker
+	branch = master
+[submodule "meta-xilinx-tools"]
+	path = meta-xilinx-tools
+	url = https://git.yoctoproject.org/meta-xilinx-tools
+	branch = kirkstone-next
+[submodule "meta-xilinx"]
+	path = meta-xilinx
+	url = https://github.com/Xilinx/meta-xilinx.git
+	branch = kirkstone-next
+[submodule "meta-ti"]
+	path = meta-ti
+	url = https://git.yoctoproject.org/meta-ti
+	branch = kirkstone
+[submodule "meta-arm"]
+	path = meta-arm
+	url = https://git.yoctoproject.org/meta-arm
+	branch = kirkstone
+[submodule "meta-renesas"]
+	path = meta-renesas
+	url = https://github.com/renesas-rcar/meta-renesas.git
+	branch = kirkstone-dev
+[submodule "meta-rcar"]
+	path = meta-rcar
+	url = https://github.com/CogentEmbedded/meta-rcar.git
+	branch = kirkstone-Yocto-v5.9.0
+[submodule "meta-agl-refhw"]
+	path = meta-agl-refhw
+	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-refhw
+	branch = master
