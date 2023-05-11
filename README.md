@@ -75,7 +75,6 @@ Finally, the images can be built - details in linked readme for each BUILD_DEVIC
 ```bash
 bitbake core-image-minimal
 ```
-s
 To build for a different device, set the `BUILD_DEVICE` (see [here](#Demonstration-environments)) environment variable,
 like so:
 

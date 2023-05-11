@@ -110,3 +110,11 @@
 	path = meta-agl-refhw
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-refhw
 	branch = master
+[submodule "meta-variscite-hab"]
+	path = meta-variscite-hab
+	url = https://github.com/varigit/meta-variscite-hab.git
+	branch = kirkstone
+[submodule "meta-freescale-ml"]
+	path = meta-freescale-ml
+	url = https://github.com/Freescale/meta-freescale-ml.git
+	branch = kirkstone
