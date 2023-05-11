@@ -15,7 +15,7 @@ fi
 
 ROOT_DIR=$(realpath $(dirname $THIS_SCRIPT))
 
-export TEMPLATECONF="$ROOT_DIR/meta-aws-demos/conf/templates/ami-demo"
+export TEMPLATECONF="$ROOT_DIR/meta-aws-demos/conf/templates/default"
 
 if [ -n "$1" ]; then
     BUILDDIR=$(realpath "$1")
