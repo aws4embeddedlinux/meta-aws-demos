@@ -1,5 +1,12 @@
 # Build AWS IoT Greengrass v2.0 on the NXP i.MX8MQEVK and i.MX8MPEVK
-# THIS TUTORIAL IS OUTDATED - WIP!
+
+The whole image can be build with this
+```bash
+export BUILD_DEVICE=imx8m
+bitbake imx-image-full
+```
+
+# BE CARFUL THIS TUTORIAL IS OUTDATED, at least for the build instructions!
 
 The following guide will build a Yocto image on an AWS instance for the NXP i.MX8MQuad EVK or i.MX8MPlus EVK that contains AWS IoT Greengrass v2 and the dependencies for Amazon SageMaker Edge Manager and the Deep Learning Runtime.
 

@@ -6,10 +6,10 @@ is the default BUILD_DEVICE
 
 * Build the image 
 
-```
+```bash
 bitbake aws-greengrass-test-image
 ```
 * Run this image in QEMU. (root password disabled)
-```
+```bash
 runqemu slirp nographic
 ```

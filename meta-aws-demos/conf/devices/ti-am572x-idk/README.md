@@ -1,4 +1,13 @@
-# THIS TUTORIAL IS OUTDATED - WIP!
+# ti-am572x-idk
+
+The whole image can be build with this
+```bash
+export BUILD_DEVICE=ti-am572x-idk
+bitbake aws-greengrass-test-image
+```
+
+# BE CARFUL THIS TUTORIAL IS OUTDATED, at least for the build instructions!
+
 # AWS IoT Greengrass for the Texas Instruments AM572x Industrial Development Kit
 1. Build the image.
 

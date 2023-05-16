@@ -25,18 +25,18 @@ repository is structured see the next section.
 These are listed in alphabetical order for ease of selection and
 should in no way infer preference.
 
-- `agl-renesas` / [AGL + Renesas](meta-aws-demos/conf/devices/agl-renesas/README.md)
-- `agl-rpi` / [AGL + Raspberry Pi Foundation](meta-aws-demos/conf/devices/agl-rpi/README.md)
-- `dart-mx8m` / [variscite](meta-aws-demos/conf/devices/dart-mx8m/README.md)
-- `ec2-arm64` / [AWS EC2](meta-aws-demos/conf/devices/ec2-arm64/README.md)
-- `ec2-x86-64` / [AWS EC2](meta-aws-demos/conf/devices/ec2-x86-64/README.md)
-- `imx8m` / [NXP](meta-aws-demos/conf/devices/imx8m/README.md)
-- `qemu` / [qemux86-64](meta-aws-demos/conf/devices/qemu/README.md)
-- `rpi4-32` / [Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-32/README.md)
-- `rpi4-64` / [Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-64/README.md)
-- `rpi4-64-fleetprovisoning` / [Greengrass Nucelus Fleetprovisoning Demo](meta-aws-demos/conf/devices/rpi4-64-fleetprovisoning/README.md)
-- `ti-am572x-idk` / [Texas Instruments](meta-aws-demos/conf/devices/ti-am572x-idk/README.md)
-- `xilinx-zcu104-zynqmp` / [Xilinx](meta-aws-demos/conf/devices/xilinx-zcu104-zynqmp/README.md)
+- [`agl-renesas` / AGL + Renesas](meta-aws-demos/conf/devices/agl-renesas/README.md)
+- [`agl-rpi` / AGL + Raspberry Pi Foundation](meta-aws-demos/conf/devices/agl-rpi/README.md)
+- [`dart-mx8m` / variscite](meta-aws-demos/conf/devices/dart-mx8m/README.md)
+- [`ec2-arm64` / AWS EC2](meta-aws-demos/conf/devices/ec2-arm64/README.md)
+- [`ec2-x86-64` / AWS EC2](meta-aws-demos/conf/devices/ec2-x86-64/README.md)
+- [`imx8m` / NXP](meta-aws-demos/conf/devices/imx8m/README.md)
+- [`qemu` / qemux86-64](meta-aws-demos/conf/devices/qemu/README.md)
+- [`rpi4-32` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-32/README.md)
+- [`rpi4-64` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-64/README.md)
+- [`rpi4-64-fleetprovisoning` / Greengrass Nucelus Fleetprovisoning Demo](meta-aws-demos/conf/devices/rpi4-64-fleetprovisoning/README.md)
+- [`ti-am572x-idk` / Texas Instruments](meta-aws-demos/conf/devices/ti-am572x-idk/README.md)
+- [`xilinx-zcu104-zynqmp` / Xilinx](meta-aws-demos/conf/devices/xilinx-zcu104-zynqmp/README.md)
 
 ## Quick Start
 

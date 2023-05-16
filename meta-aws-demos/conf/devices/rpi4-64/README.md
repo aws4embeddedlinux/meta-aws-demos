@@ -2,8 +2,8 @@
 1. Build the image.
 
    ```bash
-   export BUILD_DEVICE=rpi4-64
-   bitbake core-image-minimal
+   export BUILD_DEVICE=rpi4-64   
+   bitbake aws-greengrass-test-image
    ```
 
    After building, the images will be in the following directory.
