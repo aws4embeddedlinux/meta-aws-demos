@@ -102,10 +102,6 @@
 	path = layers/bsp/meta-renesas
 	url = https://github.com/renesas-rcar/meta-renesas.git
 	branch = kirkstone-dev
-[submodule "meta-rcar"]
-	path = layers/bsp/meta-rcar
-	url = https://github.com/CogentEmbedded/meta-rcar.git
-	branch = kirkstone-Yocto-v5.9.0
 [submodule "meta-agl-refhw"]
 	path = layers/agl/meta-agl-refhw
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-refhw
