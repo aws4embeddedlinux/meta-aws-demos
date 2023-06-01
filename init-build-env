@@ -1,4 +1,5 @@
 #! /bin/sh
+set -exuo pipefail
 
 if [ -n "$BASH_SOURCE" ]; then
     THIS_SCRIPT=$BASH_SOURCE
