@@ -114,3 +114,6 @@
 	path = layers/bsp/meta-freescale-ml
 	url = https://github.com/Freescale/meta-freescale-ml.git
 	branch = kirkstone
+[submodule "layers/bsp/meta-alb"]
+	path = layers/bsp/meta-alb
+	url = https://github.com/nxp-auto-linux/meta-alb.git
