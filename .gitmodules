@@ -53,7 +53,7 @@
 [submodule "meta-spdxscanner"]
 	path = layers/sw/meta-spdxscanner
 	url = https://git.yoctoproject.org/meta-spdxscanner/
-	branch = master
+	branch = kirkstone 
 [submodule "meta-clang"]
 	path = layers/sw/meta-clang
 	url = https://github.com/kraj/meta-clang.git
