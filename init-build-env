@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /bin/bash
 set -exuo pipefail
 
 if [ -n "$BASH_SOURCE" ]; then
