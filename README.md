@@ -18,6 +18,7 @@ The number of demonstrations will increase over time and your
 contribution is very welcome!
 
 ## Demonstration environments
+## Devices
 
 Select your desired target environment.  For more information how this
 repository is structured see the next section.
@@ -25,6 +26,7 @@ repository is structured see the next section.
 These are listed in alphabetical order for ease of selection and
 should in no way infer preference.
 
+- [`agl-nxp-goldbox` / AGL + NXP Goldbox](meta-aws-demos/conf/devices/agl-nxp-goldbox/README.md)
 - [`agl-renesas` / AGL + Renesas](meta-aws-demos/conf/devices/agl-renesas/README.md)
 - [`agl-rpi` / AGL + Raspberry Pi Foundation](meta-aws-demos/conf/devices/agl-rpi/README.md)
 - [`dart-mx8m` / variscite](meta-aws-demos/conf/devices/dart-mx8m/README.md)
@@ -37,6 +39,11 @@ should in no way infer preference.
 - [`rpi4-64-fleetprovisoning` / Greengrass Nucelus Fleetprovisoning Demo](meta-aws-demos/conf/devices/rpi4-64-fleetprovisoning/README.md)
 - [`ti-am572x-idk` / Texas Instruments](meta-aws-demos/conf/devices/ti-am572x-idk/README.md)
 - [`xilinx-zcu104-zynqmp` / Xilinx](meta-aws-demos/conf/devices/xilinx-zcu104-zynqmp/README.md)
+
+
+## Images
+Generally you can build all images for all Devices, but some combinations do not work or do not make sense!
+- [aws-biga-image](meta-aws-demos/recipes-core/images/aws-biga-image/README.md)
 
 ## Quick Start
 
