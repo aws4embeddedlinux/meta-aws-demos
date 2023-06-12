@@ -17,4 +17,4 @@ GGV2_THING_GROUP = "EmbeddedLinuxFleet"
 ```
 
 Tested on following devices:
-- [`agl-nxp-goldbox` / AGL + NXP Goldbox](meta-aws-demos/conf/devices/agl-nxp-goldbox/README.md)
+- [`agl-nxp-goldbox` / AGL + NXP Goldbox](/meta-aws-demos/conf/devices/agl-nxp-goldbox/README.md)
