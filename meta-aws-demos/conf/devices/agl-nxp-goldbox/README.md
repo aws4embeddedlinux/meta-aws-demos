@@ -14,7 +14,7 @@ bitbake aws-biga-image
 ```
 
 Tested images:
-- [aws-biga-image](meta-aws-demos/recipes-core/images/aws-biga-image/README.md)
+- [aws-biga-image](/meta-aws-demos/recipes-core/images/aws-biga-image/README.md)
 
 
 
