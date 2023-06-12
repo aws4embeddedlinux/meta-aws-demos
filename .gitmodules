@@ -69,15 +69,15 @@
 [submodule "meta-agl"]
 	path = layers/agl/meta-agl
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl
-	branch = master
+	branch = octopus
 [submodule "meta-agl-demo"]
 	path = layers/agl/meta-agl-demo
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-demo
-	branch = master
+	branch = octopus
 [submodule "meta-agl-devel"]
 	path = layers/agl/meta-agl-devel
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-devel
-	branch = master
+	branch = octopus
 [submodule "meta-codechecker"]
 	path = layers/sw/meta-codechecker
 	url = https://github.com/dl9pf/meta-codechecker
@@ -89,7 +89,7 @@
 [submodule "meta-xilinx"]
 	path = layers/bsp/meta-xilinx
 	url = https://github.com/Xilinx/meta-xilinx.git
-	branch = kirkstone-next
+	update = checkout
 [submodule "meta-ti"]
 	path = layers/bsp/meta-ti
 	url = https://git.yoctoproject.org/meta-ti
@@ -105,7 +105,7 @@
 [submodule "meta-agl-refhw"]
 	path = layers/agl/meta-agl-refhw
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-refhw
-	branch = master
+	branch = octopus
 [submodule "meta-variscite-hab"]
 	path = layers/bsp/meta-variscite-hab
 	url = https://github.com/varigit/meta-variscite-hab.git
@@ -117,3 +117,5 @@
 [submodule "layers/bsp/meta-alb"]
 	path = layers/bsp/meta-alb
 	url = https://github.com/nxp-auto-linux/meta-alb.git
+	branch = release/bsp36.0_srm_0.2-4.0
+
