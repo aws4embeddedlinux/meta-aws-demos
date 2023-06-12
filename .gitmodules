@@ -2,120 +2,150 @@
 	path = poky
 	url = git://git.yoctoproject.org/poky
 	branch = kirkstone
+	shallow = true
 [submodule "meta-virtualization"]
 	path = layers/sw/meta-virtualization
 	url = git://git.yoctoproject.org/meta-virtualization
 	branch = kirkstone
+	shallow = true
 [submodule "meta-openembedded"]
 	path = layers/sw/meta-openembedded
 	url = https://github.com/openembedded/meta-openembedded.git
 	branch = kirkstone
+	shallow = true
 [submodule "meta-aws"]
 	path = layers/sw/meta-aws
 	url = https://github.com/aws4embeddedlinux/meta-aws.git
 	branch = kirkstone
+	shallow = true
 [submodule "meta-freescale"]
 	path = layers/bsp/meta-freescale
 	url = https://github.com/Freescale/meta-freescale.git
 	branch = kirkstone
+	shallow = true
 [submodule "meta-raspberrypi"]
 	path = layers/bsp/meta-raspberrypi
 	url = https://github.com/agherzan/meta-raspberrypi.git
 	branch = kirkstone
+	shallow = true
 [submodule "meta-java"]
 	path = layers/sw/meta-java
 	url = https://github.com/meta-java/meta-java.git
 	branch = kirkstone
+	shallow = true
 [submodule "meta-variscite-bsp"]
 	path = layers/bsp/meta-variscite-bsp
 	url = https://github.com/varigit/meta-variscite-bsp.git
 	branch = kirkstone
+	shallow = true
 [submodule "meta-freescale-distro"]
 	path = layers/bsp/meta-freescale-distro
 	url = https://github.com/Freescale/meta-freescale-distro.git
 	branch = kirkstone
+	shallow = true
 [submodule "meta-variscite-sdk"]
 	path = layers/bsp/meta-variscite-sdk
 	url = https://github.com/varigit/meta-variscite-sdk.git
 	branch = kirkstone
+	shallow = true
 [submodule "meta-qt5"]
 	path = layers/sw/meta-qt5
 	url = https://github.com/meta-qt5/meta-qt5.git
 	branch = kirkstone
+	shallow = true
 [submodule "meta-security"]
 	path = layers/sw/meta-security
 	url = https://github.com/ni/meta-security.git
 	branch = nilrt/master/kirkstone
+	shallow = true
 [submodule "meta-selinux"]
 	path = layers/sw/meta-selinux
 	url = https://github.com/ni/meta-selinux.git
 	branch = nilrt/master/kirkstone
+	shallow = true
 [submodule "meta-spdxscanner"]
 	path = layers/sw/meta-spdxscanner
 	url = https://git.yoctoproject.org/meta-spdxscanner/
-	branch = kirkstone 
+	branch = kirkstone
+	shallow = true
 [submodule "meta-clang"]
 	path = layers/sw/meta-clang
 	url = https://github.com/kraj/meta-clang.git
 	branch = kirkstone
+	shallow = true
 [submodule "meta-python2"]
 	path = layers/sw/meta-python2
 	url = https://git.openembedded.org/meta-python2
 	branch = kirkstone
+	# this is not supported: shallow = true
 [submodule "meta-flutter"]
 	path = layers/sw/meta-flutter
 	url = https://github.com/meta-flutter/meta-flutter.git
 	branch = kirkstone
+	shallow = true
 [submodule "meta-agl"]
 	path = layers/agl/meta-agl
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl
 	branch = octopus
+	shallow = true
 [submodule "meta-agl-demo"]
 	path = layers/agl/meta-agl-demo
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-demo
 	branch = octopus
+	shallow = true
 [submodule "meta-agl-devel"]
 	path = layers/agl/meta-agl-devel
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-devel
 	branch = octopus
+	shallow = true
 [submodule "meta-codechecker"]
 	path = layers/sw/meta-codechecker
 	url = https://github.com/dl9pf/meta-codechecker
 	branch = master
+	shallow = true
 [submodule "meta-xilinx-tools"]
 	path = layers/bsp/meta-xilinx-tools
 	url = https://git.yoctoproject.org/meta-xilinx-tools
 	branch = kirkstone-next
+	shallow = true
 [submodule "meta-xilinx"]
 	path = layers/bsp/meta-xilinx
 	url = https://github.com/Xilinx/meta-xilinx.git
 	update = checkout
+	shallow = true
 [submodule "meta-ti"]
 	path = layers/bsp/meta-ti
 	url = https://git.yoctoproject.org/meta-ti
 	branch = kirkstone
+	shallow = true
 [submodule "meta-arm"]
 	path = layers/bsp/meta-arm
 	url = https://git.yoctoproject.org/meta-arm
 	branch = kirkstone
+	shallow = true
 [submodule "meta-renesas"]
 	path = layers/bsp/meta-renesas
 	url = https://github.com/renesas-rcar/meta-renesas.git
 	branch = kirkstone-dev
+	shallow = true
 [submodule "meta-agl-refhw"]
 	path = layers/agl/meta-agl-refhw
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-refhw
 	branch = octopus
+	shallow = true
 [submodule "meta-variscite-hab"]
 	path = layers/bsp/meta-variscite-hab
 	url = https://github.com/varigit/meta-variscite-hab.git
 	branch = kirkstone
+	shallow = true
 [submodule "meta-freescale-ml"]
 	path = layers/bsp/meta-freescale-ml
 	url = https://github.com/Freescale/meta-freescale-ml.git
 	branch = kirkstone
+	shallow = true
 [submodule "layers/bsp/meta-alb"]
 	path = layers/bsp/meta-alb
 	url = https://github.com/nxp-auto-linux/meta-alb.git
 	branch = release/bsp36.0_srm_0.2-4.0
+	shallow = true
 
