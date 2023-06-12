@@ -2,7 +2,7 @@
 
 ```bash
 export BUILD_DEVICE=agl-renesas
-bitbake aws-greengrass-test-image
+bitbake aws-biga-image
 ```
 
 # BE CARFUL - THIS TUTORIAL IS OUTDATED, at least for the build instructions!

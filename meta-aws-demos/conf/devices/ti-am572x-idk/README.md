@@ -3,7 +3,7 @@
 The whole image can be build with this
 ```bash
 export BUILD_DEVICE=ti-am572x-idk
-bitbake aws-greengrass-test-image
+bitbake aws-biga-image
 ```
 
 # BE CARFUL THIS TUTORIAL IS OUTDATED, at least for the build instructions!

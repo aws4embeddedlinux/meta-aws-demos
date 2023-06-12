@@ -5,5 +5,5 @@ https://dev.to/iotbuilders/fleet-provisioning-for-embedded-linux-devices-with-aw
 
 ```bash
 export BUILD_DEVICE=rpi4-64-fleetprovisoning
-bitbake aws-greengrass-test-image
+bitbake aws-biga-image
 ```

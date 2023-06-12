@@ -7,7 +7,7 @@ is the default BUILD_DEVICE
 * Build the image 
 
 ```bash
-bitbake aws-greengrass-test-image
+bitbake aws-biga-image
 ```
 * Run this image in QEMU. (root password disabled)
 ```bash

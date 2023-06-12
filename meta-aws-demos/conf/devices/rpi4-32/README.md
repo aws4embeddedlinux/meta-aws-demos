@@ -3,7 +3,7 @@
 
    ```bash
    export BUILD_DEVICE=rpi4-32
-   bitbake aws-greengrass-test-image
+   bitbake aws-biga-image
    ```
 
    After building, the images will be in the following directory.
