@@ -1,5 +1,4 @@
-#! /bin/bash
-set -exo pipefail
+#!/bin/bash
 
 if [ -n "$BASH_SOURCE" ]; then
     THIS_SCRIPT=$BASH_SOURCE
