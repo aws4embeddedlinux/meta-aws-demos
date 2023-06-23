@@ -12,4 +12,4 @@ IMAGE_ROOTFS_SIZE ?= "8192"
 
 ### AWS ###
 
-IMAGE_INSTALL =+ "greengrass-bin"
+IMAGE_INSTALL:append = "greengrass-bin greengrass-bin-ptest"
