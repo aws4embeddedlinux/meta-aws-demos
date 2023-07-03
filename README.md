@@ -37,6 +37,7 @@ should in no way infer preference.
 - [`rpi4-32` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-32/README.md)
 - [`rpi4-64` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-64/README.md)
 - [`rpi4-64-fleetprovisoning` / Greengrass Nucelus Fleetprovisoning Demo](meta-aws-demos/conf/devices/rpi4-64-fleetprovisoning/README.md)
+- [`phytec` /phytec](meta-aws-demos/conf/devices/phytec/README.md)
 - [`ti-am572x-idk` / Texas Instruments](meta-aws-demos/conf/devices/ti-am572x-idk/README.md)
 - [`xilinx-zcu104-zynqmp` / Xilinx](meta-aws-demos/conf/devices/xilinx-zcu104-zynqmp/README.md)
 
