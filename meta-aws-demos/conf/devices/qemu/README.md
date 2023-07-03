@@ -2,7 +2,7 @@
 
 is the default BUILD_DEVICE
 
-## build an qemux86-64 image with greengrass-bin and aws-iot-device-client installed
+## build an qemux86-64 image with greengrass-bin installed
 
 * Build the image 
 
