@@ -53,9 +53,11 @@ To try out this project in QEMU, run the following commands:
 ```
 git submodule update --init --recursive
 . init-build-env
+export BUILD_DEVICE=qemu
 bitbake core-image-minimal
 runqemu slirp nographic
 ```
+Please consider also those build host [requirements](https://docs.yoctoproject.org/ref-manual/system-requirements.html#required-packages-for-the-build-host).
 
 ## Building
 
