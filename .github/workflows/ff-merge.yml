@@ -17,6 +17,7 @@ jobs:
       with:
         ref: ${{ github.event.inputs.branch }}
         path: meta-aws-demos
+        submodules: true
 
     - name: merge ${{ github.event.inputs.branch }}-next into ${{ github.event.inputs.branch }}
       working-directory: meta-aws-demos
