@@ -43,7 +43,7 @@ should in no way infer preference.
 
 
 ## Images
-Generally you can build all images for all Devices, but some combinations do not work or do not make sense!
+Generally you can build all images for all "Devices", but some combinations do not work or do not make sense!
 - [aws-biga-image](meta-aws-demos/recipes-core/images/aws-biga-image/README.md)
 
 ## Quick Start
