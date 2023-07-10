@@ -115,7 +115,6 @@ the product is selected
 `config.conf`: This is the file that will be required in `local.conf` when the
 product is selected
 
-
 ## Why choose build configurations this way?
 
 `TEMPLATECONF` is a great mechanism for initially populating build
