@@ -58,7 +58,7 @@ bitbake core-image-minimal
 runqemu slirp nographic
 ```
 
-Please consider also those build host [requirements](https://docs.yoctoproject.org/ref-manual/system-requirements.html#required-packages-for-the-build-host).
+Please consider also this build host [requirements](https://docs.yoctoproject.org/ref-manual/system-requirements.html#required-packages-for-the-build-host).
 
 ## Building
 
