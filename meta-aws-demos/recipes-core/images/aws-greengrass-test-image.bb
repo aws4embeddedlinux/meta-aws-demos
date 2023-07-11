@@ -13,3 +13,4 @@ IMAGE_ROOTFS_SIZE ?= "8192"
 ### AWS ###
 
 IMAGE_INSTALL =+ "greengrass-bin"
+
