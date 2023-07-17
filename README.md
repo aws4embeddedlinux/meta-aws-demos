@@ -43,7 +43,7 @@ should in no way infer preference.
 
 
 ## Images
-Generally you can build all images for all Devices, but some combinations do not work or do not make sense!
+Generally you can build all images for all "Devices", but some combinations do not work or do not make sense!
 - [aws-biga-image](meta-aws-demos/recipes-core/images/aws-biga-image/README.md)
 
 ## Quick Start
@@ -53,9 +53,12 @@ To try out this project in QEMU, run the following commands:
 ```
 git submodule update --init --recursive
 . init-build-env
+export BUILD_DEVICE=qemu
 bitbake core-image-minimal
 runqemu slirp nographic
 ```
+
+Please consider also this build host [requirements](https://docs.yoctoproject.org/ref-manual/system-requirements.html#required-packages-for-the-build-host).
 
 ## Building
 
@@ -111,7 +114,6 @@ the product is selected
 
 `config.conf`: This is the file that will be required in `local.conf` when the
 product is selected
-
 
 ## Why choose build configurations this way?
 
