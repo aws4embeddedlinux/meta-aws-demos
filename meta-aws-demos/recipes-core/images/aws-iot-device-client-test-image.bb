@@ -9,7 +9,3 @@ LICENSE = "MIT"
 inherit core-image
 
 IMAGE_ROOTFS_SIZE ?= "8192"
-
-### AWS ###
-
-IMAGE_INSTALL =+ "aws-iot-device-client"
