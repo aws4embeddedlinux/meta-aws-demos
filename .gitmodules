@@ -117,7 +117,7 @@
 [submodule "layers/bsp/meta-alb"]
 	path = layers/bsp/meta-alb
 	url = https://github.com/nxp-auto-linux/meta-alb.git
-	branch = release/bsp36.0_srm_0.2-4.0
+	branch = release/bsp37.0-4.0
 [submodule "layers/bsp/meta-ampliphy"]
 	path = layers/bsp/meta-ampliphy
 	url = https://github.com/phytec/meta-ampliphy.git
