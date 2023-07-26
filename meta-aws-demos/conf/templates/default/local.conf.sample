@@ -3,6 +3,4 @@ DISTRO ?= "poky"
 
 INHERIT += "rm_work"
 
-BB_DANGLINGAPPENDS_WARNONLY = "1"
-
 require ${OEROOT}/../meta-aws-demos/conf/devices/${BUILD_DEVICE}/config.conf
