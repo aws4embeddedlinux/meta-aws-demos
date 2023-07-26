@@ -1,0 +1,35 @@
+Index: kernel-source/arch/arm64/boot/dts/freescale/s32g.dtsi
+===================================================================
+--- kernel-source.orig/arch/arm64/boot/dts/freescale/s32g.dtsi
++++ kernel-source/arch/arm64/boot/dts/freescale/s32g.dtsi
+@@ -1217,7 +1217,7 @@
+ };
+ 
+ &stm0 {
+-	status = "okay";
++	status = "disable";
+ };
+ 
+ &stm1 {
+Index: kernel-source/arch/arm64/boot/dts/freescale/s32gxxxa-rdb.dtsi
+===================================================================
+--- kernel-source.orig/arch/arm64/boot/dts/freescale/s32gxxxa-rdb.dtsi
++++ kernel-source/arch/arm64/boot/dts/freescale/s32gxxxa-rdb.dtsi
+@@ -169,7 +169,7 @@
+ };
+ 
+ &llce_can0 {
+-	status = "okay";
++	status = "disable";
+ };
+ 
+ &llce_can1 {
+@@ -239,7 +239,7 @@
+ &can0 {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&can0_pins>;
+-	status = "okay";
++	status = "disable";
+ };
+ 
+ &can1 {
