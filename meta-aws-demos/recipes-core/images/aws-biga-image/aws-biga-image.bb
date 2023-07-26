@@ -13,3 +13,10 @@ IMAGE_ROOTFS_SIZE ?= "8192"
 ### AWS ###
 
 IMAGE_INSTALL =+ "greengrass-bin"
+
+# IPCSHM ?= "ipc-shm"
+# IMAGE_INSTALL:append:s32g = " ${IPCSHM} "
+# IMAGE_INSTALL:append:s32r45evb = " ${IPCSHM} "
+
+### test
+# IMAGE_INSTALL =+ "gg-obs"
