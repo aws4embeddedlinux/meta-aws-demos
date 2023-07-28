@@ -19,4 +19,4 @@ IMAGE_INSTALL =+ "greengrass-bin"
 # IMAGE_INSTALL:append:s32r45evb = " ${IPCSHM} "
 
 ### test
-# IMAGE_INSTALL =+ "gg-obs"
+# IMAGE_INSTALL =+ "gg-obs-ipc gg-obs-pub-can-data gg-obs-pub-rtos-app-data gg-obs-pub-rtos-os-data ipc-shm-us"

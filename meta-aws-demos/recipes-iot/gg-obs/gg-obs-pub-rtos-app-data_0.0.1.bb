@@ -7,7 +7,6 @@ LIC_FILES_CHKSUM = ""
 DEPENDS = "\
     aws-iot-device-sdk-cpp-v2 \
     fmt \
-    ipc-shm \
     "
 
 ### develop
