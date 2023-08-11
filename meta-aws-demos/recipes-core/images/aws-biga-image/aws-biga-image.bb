@@ -20,3 +20,9 @@ IMAGE_INSTALL =+ "greengrass-bin"
 
 ### test
 # IMAGE_INSTALL =+ "gg-obs-ipc gg-obs-pub-can-data gg-obs-pub-rtos-app-data gg-obs-pub-rtos-os-data ipc-shm-us"
+
+# allow obs to run
+IMAGE_INSTALL =+ "aws-iot-device-sdk-cpp-v2 python3-pyserial fmt"
+
+# 500MB
+IMAGE_ROOTFS_EXTRA_SPACE = "524288"
