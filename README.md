@@ -127,3 +127,9 @@ configuration directly in the template files, the template files instead
 `require` a file that is checked into source control. By doing this, users will
 automatically get the correct build configuration when changing revisions, but
 can still override anything they want in their `local.conf`
+
+## Updating submodules to latest version of specified branch is easy.
+The following will update upstream submodule changes recursively:
+```bash
+git submodule update --remote --init --recursive
+```
