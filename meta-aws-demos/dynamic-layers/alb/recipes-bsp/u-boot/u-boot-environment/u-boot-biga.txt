@@ -1,0 +1,50 @@
+
+baudrate=115200
+boot_fdt=try
+boot_mtd=booti
+bootargs=root=/dev/ram rw earlycon loglevel=7
+bootcmd 'dcache off; mw.q 0x34000000 0x0 0x100000; fatload mmc 0:1 0x80000000 rtos.image; cp.q 0x80000000 0x34300000 0x60000; startm7 0x34401000; pfeng stop; mmc dev ${mmcdev}; if mmc rescan; then if run loadimage; then run mmcboot; else run netboot; fi; else run netboot;fi'
+bootdelay=2
+bootscript=echo Running bootscript from mmc ...; source
+console=ttyLF0
+ethact=eth_pfeng
+fdt_addr=0x83000000
+fdt_enable_hs400es=fdt addr ${fdt_addr}; fdt rm /soc/mmc no-1-8-v; fdt resize;
+fdt_file=s32g274a-rdb2.dtb
+fdt_high=0xffffffffffffffff
+fdt_override=;
+flashboot=echo Booting from flash...; run flashbootargs;mtd read Kernel ${loadaddr};mtd read DTB ${fdt_addr};mtd read Rootfs ${ramdisk_addr};${boot_mtd} ${loadaddr} ${ramdisk_addr} ${fdt_addr};
+flashbootargs=setenv bootargs console=${console},${baudrate} root=/dev/ram rw earlycon nohz=off coherent_pool=64M;setenv flashsize 0x04000000;
+hwconfig=serdes0:mode=pcie,clock=ext;pcie0:mode=rc;serdes1:mode=xpcs0&xpcs1,clock=ext,fmhz=125;xpcs1_0:speed=2G5
+image=Image
+initrd_high=0xffffffffffffffff
+ipaddr=10.0.0.100
+jtagboot=echo Booting using jtag...; ${boot_mtd} ${loadaddr} ${ramdisk_addr} ${fdt_addr}
+jtagsdboot=echo Booting loading Linux with ramdisk from SD...; run loadimage; run loadramdisk; run loadfdt;${boot_mtd} ${loadaddr} ${ramdisk_addr} ${fdt_addr}
+loadaddr=0x80000000
+loadbootscript=fatload mmc ${mmcdev}:${mmcpart} ${loadaddr} ${script};
+loadfdt=fatload mmc ${mmcdev}:${mmcpart} ${fdt_addr} ${fdt_file}; run fdt_override;
+loadimage=fatload mmc ${mmcdev}:${mmcpart} ${loadaddr} ${image}
+loadtftpfdt=tftp ${fdt_addr} ${fdt_file};
+loadtftpimage=tftp ${loadaddr} ${image};
+mmcargs=setenv bootargs console=${console},${baudrate} root=${mmcroot} earlycon nohz=off coherent_pool=64M
+mmcboot=echo Booting from mmc ...; run mmcargs; if run loadfdt; then ${boot_mtd} ${loadaddr} - ${fdt_addr}; else echo WARN: Cannot load the DT; fi;
+mmcdev=0
+mmcpart=1
+mmcroot=/dev/mmcblk0p2 rootwait rw
+netargs=setenv bootargs console=${console},${baudrate} root=/dev/nfs ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp earlycon nohz=off coherent_pool=64M
+netboot=echo Booting from net ...; run netargs; if test ${ip_dyn} = yes; then setenv get_cmd dhcp; else setenv get_cmd tftp; fi; ${get_cmd} ${image}; if test ${boot_fdt} = yes || test ${boot_fdt} = try; then if ${get_cmd} ${fdt_addr} ${fdt_file}; then ${boot_mtd} ${loadaddr} - ${fdt_addr}; else if test ${boot_fdt} = try; then ${boot_mtd}; else echo WARN: Cannot load the DT; fi; fi; else ${boot_mtd}; fi;
+netmask=255.255.255.0
+nfsboot=echo Booting from net using tftp and nfs...; run nfsbootargs;run loadtftpimage; run loadtftpfdt;${boot_mtd} ${loadaddr} - ${fdt_addr};
+nfsbootargs=setenv bootargs console=${console},${baudrate} root=/dev/nfs rw ip=${ipaddr}:${serverip}::${netmask}::eth0:off nfsroot=${serverip}:/tftpboot/rfs,nolock,v3,tcp earlycon nohz=off coherent_pool=64M
+pfe1addr=00:01:be:be:ef:22
+pfe2addr=00:01:be:be:ef:33
+pfeaddr=00:01:be:be:ef:11
+pfeng_mode=enable,sgmii,none,rgmii
+pfengemac=0
+ramdisk_addr=0x90000000
+s32cc_gmac_mode=enable
+script=boot.scr
+serverip=10.0.0.1
+update_sd_firmware=if test ${ip_dyn} = yes; then setenv get_cmd dhcp; else setenv get_cmd tftp; fi; if mmc dev ${mmcdev}; then if ${get_cmd} ${update_sd_firmware_filename}; then setexpr fw_sz ${filesize} / 0x200; setexpr fw_sz ${fw_sz} - 7; setexpr loadaddr ${loadaddr} + 0x1000; mmc write ${loadaddr} 0x8 ${fw_sz}; fi; fi
+update_sd_firmware_filename=fip.s32

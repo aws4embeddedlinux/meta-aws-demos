@@ -15,8 +15,8 @@ COMPATIBLE_MACHINE = "s32g"
 
 # Deploy FW for u-boot
 do_deploy() {
-	install -d ${DEPLOY_DIR_IMAGE}
-	install -m 0644 rtosPROD.elf ${DEPLOY_DIR_IMAGE}/rtos.image
+	install -d ${DEPLOYDIR}
+	install -m 0644 rtosPROD.elf ${DEPLOYDIR}/rtos.image
 }
 
 addtask do_deploy after do_install
