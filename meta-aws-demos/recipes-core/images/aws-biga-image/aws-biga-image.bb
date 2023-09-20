@@ -26,3 +26,6 @@ IMAGE_INSTALL =+ "aws-iot-device-sdk-cpp-v2 python3-pyserial fmt"
 
 # 500MB
 IMAGE_ROOTFS_EXTRA_SPACE = "524288"
+
+# Enable deployment of rtos firmware to 'sdcard' image
+SDCARDIMAGE_BOOT_EXTRA_FILES:append:s32g = " install-rtos-image:rtos.image"
