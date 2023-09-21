@@ -3,7 +3,7 @@ baudrate=115200
 boot_fdt=try
 boot_mtd=booti
 bootargs=root=/dev/ram rw earlycon loglevel=7
-bootcmd 'dcache off; mw.q 0x34000000 0x0 0x100000; fatload mmc 0:1 0x80000000 rtos.image; cp.q 0x80000000 0x34300000 0x60000; startm7 0x34401000; pfeng stop; mmc dev ${mmcdev}; if mmc rescan; then if run loadimage; then run mmcboot; else run netboot; fi; else run netboot;fi'
+bootcmd=dcache off; mw.q 0x34000000 0x0 0x100000; fatload mmc 0:1 0x80000000 rtos.image; cp.q 0x80000000 0x34300000 0x60000; startm7 0x34401000; pfeng stop; mmc dev ${mmcdev}; if mmc rescan; then if run loadimage; then run mmcboot; else run netboot; fi; else run netboot;fi
 bootdelay=2
 bootscript=echo Running bootscript from mmc ...; source
 console=ttyLF0
