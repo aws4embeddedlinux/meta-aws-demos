@@ -1,12 +1,11 @@
 SUMMARY = "A image to test meta-aws software"
+inherit core-image
 
 IMAGE_INSTALL = "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
 
 IMAGE_LINGUAS = " "
 
 LICENSE = "MIT"
-
-inherit core-image
 
 IMAGE_ROOTFS_SIZE ?= "8192"
 
@@ -32,3 +31,7 @@ SDCARDIMAGE_BOOT_EXTRA_FILES:append:s32g = " install-rtos-image:rtos.image"
 
 # use  this env config u-boot config for the sdcard
 UBOOT_ENV_NAME:s32g = "u-boot-biga"
+
+EXTRA_IMAGE_FEATURES += "debug-tweaks"
+
+INIT_MANAGER = "systemd"
