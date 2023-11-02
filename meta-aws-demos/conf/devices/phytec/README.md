@@ -2,6 +2,6 @@
 
 The whole image can be build with this
 ```bash
-export BUILD_DEVICE=phytec
+export DEMO
 bitbake aws-biga-image
 ```

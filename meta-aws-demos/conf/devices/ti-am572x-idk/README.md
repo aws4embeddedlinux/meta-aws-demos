@@ -2,7 +2,7 @@
 
 The whole image can be build with this
 ```bash
-export BUILD_DEVICE=ti-am572x-idk
+export DEMO=ti-am572x-idk
 bitbake aws-biga-image
 ```
 
@@ -92,7 +92,7 @@ please use the
 [am572x\_iot\_greengrass\_idt.conf](am572x_iot_greengrass_idt.conf)
 file.  You will need to install package =ntp= for use of =ntpd= or
 else Greengrass OTA testing will fail due to potential system time
-mismatch causing the SSL handshake during =wget= invocation to fail. 
+mismatch causing the SSL handshake during =wget= invocation to fail.
 
 ```bash
 wget https://raw.githubusercontent.com/aws-samples/meta-aws-demos/master/am572x_idk/aws_iot_greengrass/am572x_iot_greengrass_idt.conf
@@ -289,10 +289,10 @@ Superblock backups stored on blocks:
 	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
 	4096000
 
-Allocating group tables: done                            
-Writing inode tables: done                            
+Allocating group tables: done
+Writing inode tables: done
 Creating journal (32768 blocks): done
-Writing superblocks and filesystem accounting information: done   
+Writing superblocks and filesystem accounting information: done
 
 
 

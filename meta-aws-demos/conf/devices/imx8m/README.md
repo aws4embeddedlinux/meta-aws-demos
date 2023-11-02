@@ -2,7 +2,7 @@
 
 The whole image can be build with this
 ```bash
-export BUILD_DEVICE=imx8m
+export DEMO=imx8m
 bitbake imx-image-full
 ```
 
@@ -13,7 +13,7 @@ The following guide will build a Yocto image on an AWS instance for the NXP i.MX
 1. Setup your Yocto build
 Open ``imx-yocto-bsp/build-dir/conf/local.conf`` with a text editor (vim or nano) and add the following lines:
 
-Take advantage of processing power from your EC2 instance. PARALLEL_MAKE variable is passed as a direct argument to make. The [Yocto Project](https://www.yoctoproject.org/docs/1.4/ref-manual/ref-manual.html) recommends these variables be set to twice the number of cores on the build server. 
+Take advantage of processing power from your EC2 instance. PARALLEL_MAKE variable is passed as a direct argument to make. The [Yocto Project](https://www.yoctoproject.org/docs/1.4/ref-manual/ref-manual.html) recommends these variables be set to twice the number of cores on the build server.
 ```
 PARALLEL_MAKE = "-j 96"
 BB_NUMBER_THREADS = "96"
@@ -105,7 +105,7 @@ DHCP=no
 Address=192.168.1.106/24
 Gateway=192.168.1.1
 EOF
-cp 80-wired.network  ${IMAGE_ROOTFS}/etc/systemd/network 
+cp 80-wired.network  ${IMAGE_ROOTFS}/etc/systemd/network
 }
 
 ROOTFS_POSTINSTALL_COMMAND += " set_static_ip; "
@@ -146,7 +146,7 @@ You will need an SD card with at least 8GB space. The approximate image size unc
 
 ### Instructions for MacOS:
 
-Insert the SD card to your local machine and determine onto which /dev/ it's been assigned. 
+Insert the SD card to your local machine and determine onto which /dev/ it's been assigned.
 
 ``diskutil list``
 
@@ -156,7 +156,7 @@ Format the disk and remove any partitions already present.
 
 ### Instructions for Linux:
 
-Insert the SD card to your local machine and determine onto which /dev/ it's been assigned. 
+Insert the SD card to your local machine and determine onto which /dev/ it's been assigned.
 
 ``lsblk``
 
@@ -529,8 +529,8 @@ In this section, you create a token exchange IAM role and an AWS IoT role alias 
         ]
       }
       ```
-**Note**  
-This access policy doesn't allow access to component artifacts in S3 buckets\. To deploy custom components that define artifacts in Amazon S3, you must add permissions to the role to allow your core device to retrieve component artifacts\. For more information, see [Allow access to S3 buckets for component artifacts](device-service-role.md#device-service-role-access-s3-bucket)\.  
+**Note**
+This access policy doesn't allow access to component artifacts in S3 buckets\. To deploy custom components that define artifacts in Amazon S3, you must add permissions to the role to allow your core device to retrieve component artifacts\. For more information, see [Allow access to S3 buckets for component artifacts](device-service-role.md#device-service-role-access-s3-bucket)\.
 If you don't yet have an S3 bucket for component artifacts, you can add these permissions later after you create a bucket\.
 
    1. Create the IAM policy from the policy document\.
@@ -585,7 +585,7 @@ If you don't yet have an S3 bucket for component artifacts, you can add these pe
      "roleAliasArn": "arn:aws:iot:us-west-2:123456789012:rolealias/GreengrassCoreTokenExchangeRoleAlias"
    }
    ```
-**Note**  
+**Note**
 To create a role alias, you must have permission to pass the token exchange IAM role to AWS IoT\. If you receive an error when you try to create a role alias, check that your AWS user has this permission\. For more information, see [Granting a user permissions to pass a role to an AWS service](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_passrole.html) in the *AWS Identity and Access Management User Guide*\.
 
 1. Create and attach an AWS IoT policy that allows your Greengrass core device to use the role alias to assume the token exchange role\. If you have set up a Greengrass core device before, you can attach its role alias AWS IoT policy instead of creating a new one\. Do the following:
@@ -682,7 +682,7 @@ First, remove the default configurations:
    ```
    rm /greengrass/v2/config/*
    ```
-   
+
 Next, create a new configuration:
 
    ```
@@ -719,8 +719,8 @@ Next, create a new configuration:
    + Replace the `iotDataEndpoint` with your AWS IoT data endpoint\.
    + Replace the `iotCredEndpoint` with your AWS IoT credentials endpoint\.
 
-**Note**  
-In this configuration file, you can customize other nucleus configuration options such as the ports and network proxy to use, as shown in the following example\. For more information, see [Greengrass nucleus configuration](greengrass-nucleus-component.md#greengrass-nucleus-component-configuration)\.  
+**Note**
+In this configuration file, you can customize other nucleus configuration options such as the ports and network proxy to use, as shown in the following example\. For more information, see [Greengrass nucleus configuration](greengrass-nucleus-component.md#greengrass-nucleus-component-configuration)\.
 
 ## 16. Start Greengrass
 Greengrass should already be running using the systemctl service. After configuring Greengrass with the correct connection information, restart Greengrass:
@@ -737,10 +737,10 @@ tail -f /greengrass/v2/logs/greengrass.log
 If your setup has been successful, you will be able to view the device in the AWS IoT Management Console.
 1. Open up the AWS IoT Core Management Console
 2. Click on 'Greengrass' and then 'Core Devices'
-3. Look for your Thing Name and under Status the device should report as 'HEALTHY' 
+3. Look for your Thing Name and under Status the device should report as 'HEALTHY'
 
 ## 17. Next Steps
-Now that your NXP i.MX8M has AWS IoT Greengrass v2 installed and it is connected to AWS IoT Core, you can use the Greengrass deployment mechanisms to install software over the air. 
+Now that your NXP i.MX8M has AWS IoT Greengrass v2 installed and it is connected to AWS IoT Core, you can use the Greengrass deployment mechanisms to install software over the air.
 
 ### Create a Hello World Component
 To create your first Hello World component and run it locally on your i.MX8M device, follow the [documentation](https://docs.aws.amazon.com/greengrass/v2/developerguide/create-components.html).

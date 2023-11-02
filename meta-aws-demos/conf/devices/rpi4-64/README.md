@@ -2,7 +2,7 @@
 1. Build the image.
 
    ```bash
-   export BUILD_DEVICE=rpi4-64   
+   export DEMO=rpi4-64
    bitbake aws-biga-image
    ```
 
@@ -20,11 +20,11 @@
 
 2. Image the target device using `dd`.  You can also use an imaging
    tool you are comfortable with. **BE SUPER CAREFUL**
-   
-   First identify the device using `lsblk` and then set it to the 
-   output variable. This will help you confirm that this is really 
+
+   First identify the device using `lsblk` and then set it to the
+   output variable. This will help you confirm that this is really
    the target device you want to image. **BE SUPER CAREFUL**
-   
+
    ```bash
    lsblk
    #DEVICE=<IDENTIFIED DEVICE, i.e.>
@@ -37,8 +37,7 @@
    In my case, I use the UART to communicate with the Raspberry Pi.  I
    then remove the remark for the `init_uart_baud` and
    `init_uart_clock` properties.
-   
+
 
 4. Eject the SD Card, insert the SD Card to the Raspberry Pi, connect
 the UART and Ethernet, and power up.
-

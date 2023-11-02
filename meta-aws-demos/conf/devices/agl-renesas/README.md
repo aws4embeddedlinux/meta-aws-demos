@@ -1,7 +1,7 @@
 # agl-renesas
 
 ```bash
-export BUILD_DEVICE=agl-renesas
+export DEMO=agl-renesas
 bitbake aws-biga-image
 ```
 
@@ -58,7 +58,7 @@ tasks.
 
 1. Launch the EC2 instance with the Ubuntu 18.04 AMI.
 2. Login to the EC2 instance with `ssh` and prepare system updates.
-   
+
    ```bash
    sudo apt-get update
    sudo apt-get -y upgrade
@@ -66,15 +66,15 @@ tasks.
 3. In the EC2 instance terminal, perform steps on the [Downloading AGL
    Software](https://docs.automotivelinux.org/en/master/#0_Getting_Started/2_Building_AGL_Image/2_Downloading_AGL_Software/)
        page.
-   
+
    The command line steps we used are here.  Please reference the
    documentation if you would like an explanation of steps.
-   
+
    ```bash
    export AGL_TOP=$HOME/AGL
    echo 'export AGL_TOP=$HOME/AGL' >> $HOME/.bashrc
    mkdir -p $AGL_TOP
-   
+
    mkdir -p $HOME/bin
    export PATH=$HOME/bin:$PATH
    echo 'export PATH=$HOME/bin:$PATH' >> $HOME/.bashrc
@@ -97,7 +97,7 @@ tasks.
    proprietary drivers by following the download instructions in the
    section [Downloading Proprietary
    Drivers](https://docs.automotivelinux.org/en/master/#0_Getting_Started/2_Building_AGL_Image/5_3_RCar_Gen_3/#1-downloading-proprietary-drivers).
-   
+
    To identify the drivers you will need, invoke this command within
    the EC2 build ennvironment.
 
@@ -105,7 +105,7 @@ tasks.
    grep -rn ZIP_.= $AGL_TOP/jellyfish/meta-agl/meta-agl-bsp/meta-rcar-gen3/scripts/setup_mm_packages.sh
    ```
    At the time of writing, the command output:
-   
+
    ```text
    3:ZIP_1="R-Car_Gen3_Series_Evaluation_Software_Package_for_Linux-weston8-20191206.zip"
    4:ZIP_2="R-Car_Gen3_Series_Evaluation_Software_Package_of_Linux_Drivers-weston8-20191021.zip"
@@ -116,25 +116,25 @@ tasks.
    Please follow the rest of the steps to download from Renesas to
    your workstation (in this case it is for YP3.1 Dunfell), upload to
    the EC2 instance, and then configure.
-   
+
    We did not try the non-MMP v4.1.0 version.
 
    From your workstation, upload the files. Replace the 'x' characters
    with real values according to your situation.
-   
+
    ```bash
     scp -i ~/.ssh/xxx.pem ~/Downloads/R-Car*.zip ubuntu@xx.xxx.xxx.xxx:
    ```
-   
+
    This is how we handled the placement of the files:
-   
+
    ```bash
    ssh -i ~/.ssh/xxx.pem ubuntu@xx.xxx.xxx.xxx:
    mkdir XDG_DOWNLOAD_DIR
    mv R*zip XDG_DOWNLOAD_DIR
    export XDG_DOWNLOAD_DIR=$HOME/XDG_DOWNLOAD_DIR
    chmod a+x $XDG_DOWNLOAD_DIR/*.zip
-   
+
    ```
 
 4. In our build, we will be building for the AGL telematics demo in
@@ -156,24 +156,24 @@ section of the AGL documentation.
 
 5. At this point, the base image is configured but we need to add AWS
    IoT Greengrass.
-   
+
    ```bash
    cd $AGL_TOP/jellyfish
    git clone -b dunfell https://github.com/aws/meta-aws
    bitbake-layers add-layer $AGL_TOP/jellyfish/meta-aws
    ```
 6. Edit the passwd and group file in meta-agl-profile-core to overcome
-   https://github.com/aws/meta-aws/issues/75 
+   https://github.com/aws/meta-aws/issues/75
 
 7. Add the following to local.conf by invoking this command.
-   
+
    ```bash
    echo "IMAGE_INSTALL_append = \"greengrass openssh ntp\"" >> \
     $AGL_TOP/jellyfish/h3ulcb/conf/local.conf
    echo "MACHINE_FEATURES_append = \" multimedia\"" >> $AGL_TOP/jellyfish/h3ulcb/conf/local.conf
    echo "DISTRO_FEATURES_append = \" use_eva_pkg"\" >> $AGL_TOP/jellyfish/h3ulcb/conf/local.conf
    ```
-   
+
 8. Invoke the build.
 
    ```bash
@@ -183,7 +183,7 @@ section of the AGL documentation.
 9. Download files.  The dtb and Image files are in /boot in the
    tarball. Because of this, the Image and dtb load from the root file
    system.
-   
+
    The .srec file download and application to QuickFlash or QSPI has
    to be done only once and is here for visibility.  For iterative
    builds, downloading the .tar.bz2 is sufficient.
@@ -207,7 +207,7 @@ done
 10. Partition the microSD card which only has to be done once per
     microSD card.  Essentially, you will delete all partitions and
     create one large partition.
-    
+
     **WARNING** Make sure you are using the microSD card you intend to
     partition by checking the device first with `lsblk`!
 
@@ -244,7 +244,7 @@ done
     need to change the U-Boot commands accordingly.  This has to be
     done only when you desire to change the boot target and any
     variant (kernel, dtb, etc).
-    
+
     1. Connect over USB with your favorite terminal tool at
        115200/8/N/1.
     2. Press SW8 to reboot the device and press the space bar to stop
