@@ -1,11 +1,12 @@
-# ec2-biga
+# biga-ec2
+run biga demo on ec2
 
-A configuration to build a Biga EC2 image.
-
-## Build the image
-
+Build image
 ```bash
-export BUILD_DEVICE=ec2-biga
-bitbake core-image-minimal
+export DEMO=biga
+# e.g.
+bitbake aws-biga-image
 ```
 
+Tested images:
+- [aws-biga-image](/meta-aws-demos/recipes-core/images/aws-biga-image/README.md)

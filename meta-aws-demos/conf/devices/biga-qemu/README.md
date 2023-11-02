@@ -1,15 +1,12 @@
-# qemu x86-64
+# biga-qemu
+run biga demo on qemu
 
-is the default DEMO
-
-## build an qemux86-64 image with greengrass-bin installed
-
-* Build the image
-
+Build image
 ```bash
+export DEMO=biga
+# e.g.
 bitbake aws-biga-image
 ```
-* Run this image in QEMU. (root password disabled)
-```bash
-runqemu slirp nographic
-```
+
+Tested images:
+- [aws-biga-image](/meta-aws-demos/recipes-core/images/aws-biga-image/README.md)
