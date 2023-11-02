@@ -130,3 +130,7 @@
 	path = layers/sw/meta-rauc
 	url = https://github.com/rauc/meta-rauc.git
 	branch = kirkstone
+[submodule "layers/sw/meta-ros"]
+	path = layers/sw/meta-ros
+	url = git@github.com:DRK-512/meta-ros.git
+    branch = kirkstone
