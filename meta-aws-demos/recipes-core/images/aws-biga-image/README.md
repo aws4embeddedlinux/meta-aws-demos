@@ -12,9 +12,9 @@ GGV2_CRED_EP     = "xxx.iot.<your aws region>.amazonaws.com"
 GGV2_REGION      = "<your aws region>"
 GGV2_THING_NAME  = "ELThing"
 # we got this from the cloudformation
-GGV2_TES_RALIAS  = "GGTokenExchangeRoleAlias" 
+GGV2_TES_RALIAS  = "GGTokenExchangeRoleAlias"
 GGV2_THING_GROUP = "EmbeddedLinuxFleet"
 ```
 
 Tested on following devices:
-- [`agl-nxp-goldbox` / AGL + NXP Goldbox](/meta-aws-demos/conf/devices/agl-nxp-goldbox/README.md)
+- [`biga` / NXP Goldbox](/meta-aws-demos/conf/devices/biga/README.md)

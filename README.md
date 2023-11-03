@@ -26,7 +26,9 @@ repository is structured see the next section.
 These are listed in alphabetical order for ease of selection and
 should in no way infer preference.
 
-- [`agl-nxp-goldbox` / AGL + NXP Goldbox](meta-aws-demos/conf/devices/agl-nxp-goldbox/README.md)
+- [`biga` / AGL + NXP Goldbox](meta-aws-demos/conf/devices/biga/README.md)
+- [`biga-ec` / ec2 ami](meta-aws-demos/conf/devices/biga/README.md)
+- [`biga` / qemu with virtual CAN support](meta-aws-demos/conf/devices/biga/README.md)
 - [`agl-renesas` / AGL + Renesas](meta-aws-demos/conf/devices/agl-renesas/README.md)
 - [`agl-rpi` / AGL + Raspberry Pi Foundation](meta-aws-demos/conf/devices/agl-rpi/README.md)
 - [`dart-mx8m` / variscite](meta-aws-demos/conf/devices/dart-mx8m/README.md)

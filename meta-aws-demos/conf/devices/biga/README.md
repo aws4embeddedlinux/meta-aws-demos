@@ -1,5 +1,5 @@
 # biga
-run on goldbox - https://www.nxp.com/design/designs/goldbox-for-vehicle-networking-development-platform:GOLDBOX
+biga demo run on goldbox - https://www.nxp.com/design/designs/goldbox-for-vehicle-networking-development-platform:GOLDBOX
 
 Additional necessary packages to build:
 ```bash
