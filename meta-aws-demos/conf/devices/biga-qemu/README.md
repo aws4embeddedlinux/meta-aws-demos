@@ -34,6 +34,7 @@ cansend vcan0 123#00FFAA5501020304
 
 ## additional information
 https://www.pragmaticlinux.com/2021/10/how-to-create-a-virtual-can-interface-on-linux/
+https://github.com/samoshkin/tmux-config#nested-tmux-sessions
 
 
 ## Tested images:
