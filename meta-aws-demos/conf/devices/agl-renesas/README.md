@@ -2,7 +2,7 @@
 
 ```bash
 export DEMO=agl-renesas
-bitbake aws-biga-image
+bitbake aws-demo-image
 ```
 
 # BE CARFUL - THIS TUTORIAL IS OUTDATED, at least for the build instructions!

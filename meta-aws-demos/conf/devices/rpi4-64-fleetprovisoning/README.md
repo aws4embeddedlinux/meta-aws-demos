@@ -5,5 +5,5 @@ https://dev.to/iotbuilders/fleet-provisioning-for-embedded-linux-devices-with-aw
 
 ```bash
 export DEMO=rpi4-64-fleetprovisoning
-bitbake aws-biga-image
+bitbake aws-demo-image
 ```

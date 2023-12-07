@@ -3,5 +3,5 @@
 The whole image can be build with this
 ```bash
 export DEMO
-bitbake aws-biga-image
+bitbake aws-demo-image
 ```
