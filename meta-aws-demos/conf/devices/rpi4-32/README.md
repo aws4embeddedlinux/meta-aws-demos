@@ -3,7 +3,7 @@
 
    ```bash
    export DEMO=rpi4-32
-   bitbake aws-biga-image
+   bitbake aws-demo-image
    ```
 
    After building, the images will be in the following directory.

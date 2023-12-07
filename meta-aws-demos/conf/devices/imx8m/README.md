@@ -64,7 +64,6 @@ PACKAGECONFIG_append_pn-qemu-system-native = " sdl"
 CONF_VERSION = "1"
 
 DL_DIR ?= "${BSPDIR}/downloads/"
-ACCEPT_FSL_EULA = "1"
 
 # Switch to Debian packaging and include package-management in the image
 PACKAGE_CLASSES = "package_deb"

@@ -3,7 +3,7 @@
 The whole image can be build with this
 ```bash
 export DEMO=ti-am572x-idk
-bitbake aws-biga-image
+bitbake aws-demo-image
 ```
 
 # BE CARFUL THIS TUTORIAL IS OUTDATED, at least for the build instructions!

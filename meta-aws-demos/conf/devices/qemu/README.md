@@ -7,7 +7,7 @@ is the default DEMO
 * Build the image
 
 ```bash
-bitbake aws-biga-image
+bitbake aws-demo-image
 ```
 * Run this image in QEMU. (root password disabled)
 ```bash
