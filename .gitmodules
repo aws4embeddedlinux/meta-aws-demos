@@ -132,5 +132,5 @@
 	branch = kirkstone
 [submodule "layers/sw/meta-ros"]
 	path = layers/sw/meta-ros
-	url = git@github.com:DRK-512/meta-ros.git
-    branch = kirkstone
+	url = https://github.com/DRK-512/meta-ros.git
+	branch = kirkstone

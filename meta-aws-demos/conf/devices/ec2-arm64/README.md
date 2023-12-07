@@ -4,10 +4,10 @@ Shows [ec2 AMI generation](https://github.com/aws4embeddedlinux/meta-aws/blob/ma
 
 ## build an ec2-arm64 image with greengrass-bin installed and create an EC2 AMI
 
-* Build the image 
+* Build the image
 
 ```bash
-export BUILD_DEVICE=ec2-arm64
+export DEMO=ec2-arm64
 bitbake aws-biga-image
 ```
 * Upload this image to your ec2 account (follow instructions to set this up before!)

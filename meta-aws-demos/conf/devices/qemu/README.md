@@ -1,10 +1,10 @@
 # qemu x86-64
 
-is the default BUILD_DEVICE
+is the default DEMO
 
 ## build an qemux86-64 image with greengrass-bin installed
 
-* Build the image 
+* Build the image
 
 ```bash
 bitbake aws-biga-image

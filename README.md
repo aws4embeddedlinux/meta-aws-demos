@@ -20,13 +20,15 @@ contribution is very welcome!
 ## Demonstration environments
 ## Devices
 
-Select your desired target environment.  For more information how this
+Select your desired demo environment.  For more information how this
 repository is structured see the next section.
 
 These are listed in alphabetical order for ease of selection and
 should in no way infer preference.
 
-- [`agl-nxp-goldbox` / AGL + NXP Goldbox](meta-aws-demos/conf/devices/agl-nxp-goldbox/README.md)
+- [`biga` / AGL + NXP Goldbox](meta-aws-demos/conf/devices/biga/README.md)
+- [`biga-ec` / ec2 ami](meta-aws-demos/conf/devices/biga/README.md)
+- [`biga` / qemu with virtual CAN support](meta-aws-demos/conf/devices/biga/README.md)
 - [`agl-renesas` / AGL + Renesas](meta-aws-demos/conf/devices/agl-renesas/README.md)
 - [`agl-rpi` / AGL + Raspberry Pi Foundation](meta-aws-demos/conf/devices/agl-rpi/README.md)
 - [`dart-mx8m` / variscite](meta-aws-demos/conf/devices/dart-mx8m/README.md)
@@ -43,7 +45,7 @@ should in no way infer preference.
 
 
 ## Images
-Generally you can build all images for all "Devices", but some combinations do not work or do not make sense!
+Generally you can build all images for all "Demos", but some combinations do not work or do not make sense!
 - [aws-biga-image](meta-aws-demos/recipes-core/images/aws-biga-image/README.md)
 
 ## Quick Start
@@ -53,7 +55,7 @@ To try out this project in QEMU, run the following commands:
 ```
 git submodule update --init --recursive
 . init-build-env
-export BUILD_DEVICE=qemu
+export DEMO=qemu
 bitbake core-image-minimal
 runqemu slirp nographic
 ```
@@ -82,26 +84,26 @@ Next, initialize the build environment, optionally specifying the build director
 . init-build-env [BUILDDIR]
 ```
 
-Finally, the images can be built - details in linked readme for each BUILD_DEVICE:
+Finally, the images can be built - details in linked readme for each DEMO:
 
 ```bash
 bitbake core-image-minimal
 ```
-To build for a different device, set the `BUILD_DEVICE` (see [here](#Demonstration-environments)) environment variable,
+To build for a different device, set the `DEMO` (see [here](#Demonstration-environments)) environment variable,
 like so:
 
 ```bash
-export BUILD_DEVICE=ec2-arm64
+export DEMO=ec2-arm64
 bitbake core-image-minimal
 ```
 
 For a list of all possible devices, see `meta-aws-demos/conf/devices`
 
-The `init-build-env` script adds a helper function called `get_devices` which
+The `init-build-env` script adds a helper function called `get_demos` which
 will list all devices that can be configured. This can be used to build all devices with:
 
 ```bash
-for d in $(get_devices); do BUILD_DEVICE=$d bitbake core-image-minimal; done
+for d in $(get_demos); do DEMO=$d bitbake core-image-minimal; done
 ```
 
 ## Adding new platforms

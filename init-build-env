@@ -23,7 +23,7 @@ else
     BUILDDIR=$ROOT_DIR/build
 fi
 
-get_devices() {
+get_demos() {
     (
     cd $ROOT_DIR/meta-aws-demos/conf/devices
     for f in *; do
@@ -37,4 +37,4 @@ get_devices() {
 cd $(dirname $THIS_SCRIPT)/poky
 . oe-init-build-env "$BUILDDIR"
 
-export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} BUILD_DEVICE"
+export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} DEMO"

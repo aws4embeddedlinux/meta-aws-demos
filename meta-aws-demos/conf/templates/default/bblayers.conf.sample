@@ -1,7 +1,7 @@
-BUILD_DEVICE ?= "qemu"
+DEMO ?= "qemu"
 
 OEROOT = "##OEROOT##"
-require ##OEROOT##/../meta-aws-demos/conf/devices/${BUILD_DEVICE}/layers.conf
+require ##OEROOT##/../meta-aws-demos/conf/devices/${DEMO}/layers.conf
 
 # Add an local layers here (and for devtool)
 BBLAYERS += ""
