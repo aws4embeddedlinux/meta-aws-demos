@@ -4,31 +4,26 @@
 Project](https://www.yoctoproject.org/) Bitbake Metadata Layer. It
 accelerates building [Amazon Web Services](https://aws.amazon.com)
 (AWS) software you can install to [Embedded
-Linux](https://elinux.org/Main_Page). Customers use this to build IoT
+Linux](https://elinux.org/Main_Page). You can use this to build IoT
 solutions on AWS.
 
 In this repository, you will find
 [meta-aws](https://github.com/aws/meta-aws) demonstrations.  These
-demonstrations are both Poky (Yocto Project reference implementation)
-based and real hardware based.  Many times, the hardware will be
-representative of real use of hardware listed in the [AWS Device
+demonstrations are based on both Poky (the Yocto Project reference implementation)
+and real hardware.  Many times, the hardware will be
+representative of actual uses of hardware listed in the [AWS Device
 Catalog](https://devices.amazonaws.com).
 
 The number of demonstrations will increase over time and your
-contribution is very welcome!
+contributions are very welcome!
 
 ## Demonstration environments
 ## Devices
 
-Select your desired demo environment.  For more information how this
-repository is structured see the next section.
+Select your desired target environment.  (For more information on how this
+repository is structured see the next section.) These are listed below in
+alphabetical order for ease of selection; no preference should be inferred.
 
-These are listed in alphabetical order for ease of selection and
-should in no way infer preference.
-
-- [`biga` / AGL + NXP Goldbox](meta-aws-demos/conf/devices/biga/README.md)
-- [`biga-ec` / ec2 ami](meta-aws-demos/conf/devices/biga/README.md)
-- [`biga` / qemu with virtual CAN support](meta-aws-demos/conf/devices/biga/README.md)
 - [`agl-renesas` / AGL + Renesas](meta-aws-demos/conf/devices/agl-renesas/README.md)
 - [`agl-rpi` / AGL + Raspberry Pi Foundation](meta-aws-demos/conf/devices/agl-rpi/README.md)
 - [`dart-mx8m` / variscite](meta-aws-demos/conf/devices/dart-mx8m/README.md)
@@ -46,7 +41,7 @@ should in no way infer preference.
 
 ## Images
 Generally you can build all images for all "Demos", but some combinations do not work or do not make sense!
-- [aws-biga-image](meta-aws-demos/recipes-core/images/aws-biga-image/README.md)
+- [aws-demo-image](meta-aws-demos/recipes-core/images/aws-demo-image/README.md)
 
 ## Quick Start
 
@@ -60,7 +55,7 @@ bitbake core-image-minimal
 runqemu slirp nographic
 ```
 
-Please consider also this build host [requirements](https://docs.yoctoproject.org/ref-manual/system-requirements.html#required-packages-for-the-build-host).
+Please also consider these build host [requirements](https://docs.yoctoproject.org/ref-manual/system-requirements.html#required-packages-for-the-build-host).
 
 ## Building
 
@@ -78,7 +73,7 @@ diffing of submodule history with:
 git config diff.submodule log
 ```
 
-Next, initialize the build environment, optionally specifying the build directory:
+Next, initialize the build environment, and optionally specify the build directory:
 
 ```bash
 . init-build-env [BUILDDIR]
@@ -97,7 +92,7 @@ export DEMO=ec2-arm64
 bitbake core-image-minimal
 ```
 
-For a list of all possible devices, see `meta-aws-demos/conf/devices`
+For a list of all possible devices, see `meta-aws-demos/conf/devices`.
 
 The `init-build-env` script adds a helper function called `get_demos` which
 will list all devices that can be configured. This can be used to build all devices with:
@@ -119,8 +114,8 @@ product is selected
 
 ## Why choose build configurations this way?
 
-`TEMPLATECONF` is a great mechanism for initially populating build
-configuration, but it has a few short comings that arise because it will only
+`TEMPLATECONF` is a great mechanism for initially populating a build
+configuration, but it has a few shortcomings that arise because it will only
 write the files if they don't already exist. Because of this, it's not suitable
 to _share_ device configuration because users won't automatically get the new
 configuration for a build when they change revisions in the repository. The
