@@ -18,7 +18,7 @@ The number of demonstrations will increase over time and your
 contributions are very welcome!
 
 ## Demonstration environments
-## Devices
+## Demos
 
 Select your desired target environment.  (For more information on how this
 repository is structured see the next section.) These are listed below in
@@ -51,7 +51,7 @@ To try out this project in QEMU, run the following commands:
 git submodule update --init --recursive
 . init-build-env
 export DEMO=qemu
-bitbake core-image-minimal
+bitbake aws-demo-image
 runqemu slirp nographic
 ```
 
@@ -82,14 +82,14 @@ Next, initialize the build environment, and optionally specify the build directo
 Finally, the images can be built - details in linked readme for each DEMO:
 
 ```bash
-bitbake core-image-minimal
+bitbake aws-demo-image
 ```
 To build for a different device, set the `DEMO` (see [here](#Demonstration-environments)) environment variable,
 like so:
 
 ```bash
 export DEMO=ec2-arm64
-bitbake core-image-minimal
+bitbake aws-demo-image
 ```
 
 For a list of all possible devices, see `meta-aws-demos/conf/devices`.
