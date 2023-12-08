@@ -6,6 +6,9 @@ export DEMO=imx8m
 bitbake imx-image-full
 ```
 
+> [!NOTE]
+> this demo will require to accept the EULA in the config manually.
+
 # BE CARFUL THIS TUTORIAL IS OUTDATED, at least for the build instructions!
 
 The following guide will build a Yocto image on an AWS instance for the NXP i.MX8MQuad EVK or i.MX8MPlus EVK that contains AWS IoT Greengrass v2 and the dependencies for Amazon SageMaker Edge Manager and the Deep Learning Runtime.
