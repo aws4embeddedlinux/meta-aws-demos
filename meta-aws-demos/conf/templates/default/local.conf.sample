@@ -1,4 +1,8 @@
 CONF_VERSION ?= "2"
 DISTRO ?= "poky"
 
-require ${OEROOT}/../meta-aws-demos/conf/devices/${DEMO}/config.conf
+# mandatory
+require ${OEROOT}/../meta-aws-demos/conf/devices/${DEVICE}/config.conf
+
+# optional
+include ${OEROOT}/../meta-aws-demos/recipes-core/images/${IMAGE}/config.conf

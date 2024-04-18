@@ -2,7 +2,7 @@
 
 The whole image can be build with this (not working when your host machine is arm64!)
 ```bash
-export DEMO=xilinx-zcu104-zynqmp
+export DEVICE=xilinx-zcu104-zynqmp
 bitbake aws-demo-image
 runqemu slirp nographic
 

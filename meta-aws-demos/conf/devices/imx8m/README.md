@@ -2,7 +2,7 @@
 
 The whole image can be build with this
 ```bash
-export DEMO=imx8m
+export DEVICE=imx8m
 bitbake imx-image-full
 ```
 

@@ -2,7 +2,7 @@
 
 The whole image can be build with this
 ```bash
-export DEMO=ti-am572x-idk
+export DEVICE=ti-am572x-idk
 bitbake aws-demo-image
 ```
 

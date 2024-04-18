@@ -9,7 +9,7 @@ solutions on AWS.
 
 In this repository, you will find
 [meta-aws](https://github.com/aws/meta-aws) demonstrations.  These
-demonstrations are based on both Poky (the Yocto Project reference implementation)
+demos are based on both Poky (the Yocto Project reference implementation)
 and real hardware.  Many times, the hardware will be
 representative of actual uses of hardware listed in the [AWS Device
 Catalog](https://devices.amazonaws.com).
@@ -18,11 +18,12 @@ The number of demonstrations will increase over time and your
 contributions are very welcome!
 
 ## Demonstration environments
-## Demos
+The DEMOs consist of a combination of a DEVICE, which represent a hardware and an IMAGE showcasing a use-case.
 
-Select your desired target environment.  (For more information on how this
-repository is structured see the next section.) These are listed below in
-alphabetical order for ease of selection; no preference should be inferred.
+## Device
+
+Select your desired target environment.  These are listed below in
+alphabetical order for ease of selection, no preference should be inferred.
 
 - [`agl-renesas` / AGL + Renesas](meta-aws-demos/conf/devices/agl-renesas/README.md)
 - [`agl-rpi` / AGL + Raspberry Pi Foundation](meta-aws-demos/conf/devices/agl-rpi/README.md)
@@ -30,28 +31,37 @@ alphabetical order for ease of selection; no preference should be inferred.
 - [`ec2-arm64` / AWS EC2](meta-aws-demos/conf/devices/ec2-arm64/README.md)
 - [`ec2-x86-64` / AWS EC2](meta-aws-demos/conf/devices/ec2-x86-64/README.md)
 - [`imx8m` / NXP](meta-aws-demos/conf/devices/imx8m/README.md)
-- [`qemu` / qemux86-64](meta-aws-demos/conf/devices/qemu/README.md)
+- [`qemu-arm64`](meta-aws-demos/conf/devices/qemu-arm64/README.md)
+- [`qemu-x86-64`](meta-aws-demos/conf/devices/qemu-x86-64/README.md)
 - [`rpi4-32` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-32/README.md)
 - [`rpi4-64` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-64/README.md)
 - [`rpi4-64-fleetprovisoning` / Greengrass Nucelus Fleetprovisoning Demo](meta-aws-demos/conf/devices/rpi4-64-fleetprovisoning/README.md)
-- [`phytec` /phytec](meta-aws-demos/conf/devices/phytec/README.md)
+- [`phytec` / phytec](meta-aws-demos/conf/devices/phytec/README.md)
 - [`ti-am572x-idk` / Texas Instruments](meta-aws-demos/conf/devices/ti-am572x-idk/README.md)
 - [`xilinx-zcu104-zynqmp` / Xilinx](meta-aws-demos/conf/devices/xilinx-zcu104-zynqmp/README.md)
 
-
 ## Images
-Generally you can build all images for all "Demos", but some combinations do not work or do not make sense!
+Generally you can build all images for all "Devices", but some combinations do not work or do not make sense!
+
 - [aws-demo-image](meta-aws-demos/recipes-core/images/aws-demo-image/README.md)
+- [aws-greengrass-test-image](meta-aws-demos/recipes-core/images/aws-greengrass-test-image/README.md)
+- [aws-iot-device-client-test-image](meta-aws-demos/recipes-core/images/aws-iot-device-client-test-image/README.md)
+- [aws-webrtc-demo-image](meta-aws-demos/recipes-core/images/aws-webrtc-demo-image/README.md)
+
+> [!IMPORTANT]
+> Be careful some of the images require additional local.conf entries, those config.conf files are located in the respective image.
+> They are automatically included if the correct environment variable (IMAGE + DEVICE) is set!
 
 ## Quick Start
 
 To try out this project in QEMU, run the following commands:
 
-```
+```bash
 git submodule update --init --recursive
 . init-build-env
-export DEMO=qemu
-bitbake aws-demo-image
+export DEVICE=[DEVICE]
+export IMAGE=[IMAGE]
+bitbake $IMAGE
 runqemu slirp nographic
 ```
 
@@ -84,21 +94,22 @@ Finally, the images can be built - details in linked readme for each DEMO:
 ```bash
 bitbake aws-demo-image
 ```
-To build for a different device, set the `DEMO` (see [here](#Demonstration-environments)) environment variable,
+To build for a different device, set the `DEVICE` (see [here](#Demonstration-environments)) and `IMAGE` environment variable,
 like so:
 
 ```bash
 export DEMO=ec2-arm64
-bitbake aws-demo-image
+export IMAGE=aws-demo-image
+bitbake $IMAGE
 ```
 
 For a list of all possible devices, see `meta-aws-demos/conf/devices`.
 
-The `init-build-env` script adds a helper function called `get_demos` which
+The `init-build-env` script adds a helper function called `get_devices` which
 will list all devices that can be configured. This can be used to build all devices with:
 
 ```bash
-for d in $(get_demos); do DEMO=$d bitbake core-image-minimal; done
+for d in $(get_devices); do for i in $(get_images); do DEVICE=$d IMAGE=$i bitbake $i; done; done
 ```
 
 ## Adding new platforms

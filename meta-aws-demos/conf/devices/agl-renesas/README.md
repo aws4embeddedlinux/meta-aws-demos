@@ -1,7 +1,7 @@
 # agl-renesas
 
 ```bash
-export DEMO=agl-renesas
+export DEVICE=agl-renesas
 bitbake aws-demo-image
 ```
 

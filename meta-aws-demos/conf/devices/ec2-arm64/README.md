@@ -7,7 +7,7 @@ Shows [ec2 AMI generation](https://github.com/aws4embeddedlinux/meta-aws/blob/ma
 * Build the image
 
 ```bash
-export DEMO=ec2-arm64
+export DEVICE=ec2-arm64
 bitbake aws-demo-image
 ```
 * Upload this image to your ec2 account (follow instructions to set this up before!)

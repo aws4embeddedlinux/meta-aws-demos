@@ -2,7 +2,7 @@
 1. Build the image.
 
    ```bash
-   export DEMO=rpi4-32
+   export DEVICE=rpi4-32
    bitbake aws-demo-image
    ```
 
