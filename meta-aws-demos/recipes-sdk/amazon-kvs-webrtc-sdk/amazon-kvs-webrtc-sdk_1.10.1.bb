@@ -17,15 +17,14 @@ DEPENDS += "\
 "
 
 PROVIDES += "aws/amazon-kvs-webrtc-sdk"
-
 BRANCH = "master"
 SRC_URI = "\
-    git://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-c.git;protocol=https;branch=${BRANCH} \
+    git://github.com/ActoryOu/amazon-kinesis-video-streams-webrtc-sdk-c.git;protocol=https;branch=${BRANCH} \
     file://run-ptest \
     file://ptest_result.py \
 "
 
-SRCREV = "f1073439213db4aa4b4b7cc1423609d920dd5489"
+SRCREV = "0ae9ec6b80deff9df724555927fb6595a23054f1"
 
 S = "${WORKDIR}/git"
 
@@ -44,9 +43,9 @@ PACKAGECONFIG[static] = "-DBUILD_SHARED_LIBS=OFF,-DBUILD_SHARED_LIBS=ON,"
 
 do_configure[network] = "1"
 
-do_install:append () {
-    install ${B}/libkvsWebRtcThreadpool.so ${D}${libdir}
-}
+#do_install:append () {
+#    install ${B}/libkvsWebRtcThreadpool.so ${D}${libdir}
+#}
 
 FILES:${PN} += "\
     ${libdir} \
