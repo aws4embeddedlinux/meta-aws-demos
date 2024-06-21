@@ -180,23 +180,23 @@ services:
             iotCredEndpoint: `aws --output text iot describe-endpoint --endpoint-type iot:CredentialProvider`
 EOF
 
-
-cat << EOF
+# Creating an example how the certs and config get onto the image
+set +u
+cat << EOF > $NEW_GG_CORE_DEVICE/copy_certs_to_image.sh
+#!/bin/bash
 # cmd to copy config and certs in an qemu image
-wic rm tmp/deploy/images/qemuarm64/aws-greengrass-test-image-qemuarm64.ext4:1/greengrass/v2/device.pem.crt 
-wic cp ../../$NEW_GG_CORE_DEVICE/device.pem.crt tmp/deploy/images/qemuarm64/aws-greengrass-test-image-qemuarm64.ext4:1/greengrass/v2/
-sync
-e2fsck -y tmp/deploy/images/qemuarm64/aws-greengrass-test-image-qemuarm64.ext4 -E journal_only 
-wic rm tmp/deploy/images/qemuarm64/aws-greengrass-test-image-qemuarm64.ext4:1/greengrass/v2/private.pem.key
-wic cp ../../$NEW_GG_CORE_DEVICE/private.pem.key tmp/deploy/images/qemuarm64/aws-greengrass-test-image-qemuarm64.ext4:1/greengrass/v2/
-sync
-e2fsck -y tmp/deploy/images/qemuarm64/aws-greengrass-test-image-qemuarm64.ext4 -E journal_only 
-wic rm tmp/deploy/images/qemuarm64/aws-greengrass-test-image-qemuarm64.ext4:1/greengrass/v2/AmazonRootCA1.pem
-wic cp ../../$NEW_GG_CORE_DEVICE/AmazonRootCA1.pem tmp/deploy/images/qemuarm64/aws-greengrass-test-image-qemuarm64.ext4:1/greengrass/v2/
-sync
-e2fsck -y tmp/deploy/images/qemuarm64/aws-greengrass-test-image-qemuarm64.ext4 -E journal_only 
-wic rm tmp/deploy/images/qemuarm64/aws-greengrass-test-image-qemuarm64.ext4:1/greengrass/v2/config/config.yaml
-wic cp ../../$NEW_GG_CORE_DEVICE/config.yaml tmp/deploy/images/qemuarm64/aws-greengrass-test-image-qemuarm64.ext4:1/greengrass/v2/config/
-sync
-e2fsck -y tmp/deploy/images/qemuarm64/aws-greengrass-test-image-qemuarm64.ext4 -E journal_only 
+MACHINE="qemuarm64"
+#TAKEN from env IMAGE="aws-greengrass-test-image"
+
+# wic cp does not overwrite
+wic --debug rm tmp/deploy/images/\${MACHINE}/\${IMAGE}-\${MACHINE}.ext4:1/greengrass/v2/device.pem.crt 
+wic --debug cp $NEW_GG_CORE_DEVICE/device.pem.crt tmp/deploy/images/\${MACHINE}/\${IMAGE}-\${MACHINE}.ext4:1/greengrass/v2/
+wic --debug rm tmp/deploy/images/\${MACHINE}/\${IMAGE}-\${MACHINE}.ext4:1/greengrass/v2/private.pem.key
+wic --debug cp $NEW_GG_CORE_DEVICE/private.pem.key tmp/deploy/images/\${MACHINE}/\${IMAGE}-\${MACHINE}.ext4:1/greengrass/v2/
+wic --debug rm tmp/deploy/images/\${MACHINE}/\${IMAGE}-\${MACHINE}.ext4:1/greengrass/v2/AmazonRootCA1.pem
+wic --debug cp $NEW_GG_CORE_DEVICE/AmazonRootCA1.pem tmp/deploy/images/\${MACHINE}/\${IMAGE}-\${MACHINE}.ext4:1/greengrass/v2/
+wic --debug rm tmp/deploy/images/\${MACHINE}/\${IMAGE}-\${MACHINE}.ext4:1/greengrass/v2/config/config.yaml
+wic --debug cp $NEW_GG_CORE_DEVICE/config.yaml tmp/deploy/images/\${MACHINE}/\${IMAGE}-\${MACHINE}.ext4:1/greengrass/v2/config/
 EOF
+
+echo copy config and certs:\$ bash $NEW_GG_CORE_DEVICE/copy_certs_to_image.sh
