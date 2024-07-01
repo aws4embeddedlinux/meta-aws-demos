@@ -35,7 +35,6 @@ alphabetical order for ease of selection, no preference should be inferred.
 - [`qemu-x86-64`](meta-aws-demos/conf/devices/qemu-x86-64/README.md)
 - [`rpi4-32` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-32/README.md)
 - [`rpi4-64` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-64/README.md)
-- [`rpi4-64-fleetprovisoning` / Greengrass Nucelus Fleetprovisoning Demo](meta-aws-demos/conf/devices/rpi4-64-fleetprovisoning/README.md)
 - [`phytec` / phytec](meta-aws-demos/conf/devices/phytec/README.md)
 - [`ti-am572x-idk` / Texas Instruments](meta-aws-demos/conf/devices/ti-am572x-idk/README.md)
 - [`xilinx-zcu104-zynqmp` / Xilinx](meta-aws-demos/conf/devices/xilinx-zcu104-zynqmp/README.md)
@@ -50,24 +49,23 @@ Generally you can build all images for all "Devices", but some combinations do n
 
 > [!IMPORTANT]
 > Be careful some of the images require additional local.conf entries, those config.conf files are located in the respective image.
-> They are automatically included if the correct environment variable (IMAGE + DEVICE) is set!
+> They are automatically included if the correct environment variables (IMAGE + DEVICE) are set!
 
 ## Quick Start
 
-To try out this project in QEMU, run the following commands:
+To try out this project in QEMU (default device is `qemu-arm64`), run the following commands:
 
 ```bash
 git submodule update --init --recursive
 . init-build-env
-export DEVICE=[DEVICE]
-export IMAGE=[IMAGE]
+export IMAGE=aws-demo-image
 bitbake $IMAGE
 runqemu slirp nographic
 ```
 
 Please also consider these build host [requirements](https://docs.yoctoproject.org/ref-manual/system-requirements.html#required-packages-for-the-build-host).
 
-## Building
+## Setup
 
 This repository uses submodules and a simple wrapper script to set the default
 `TEMPLATECONF` that allows users to select the device they want to build. The
@@ -77,11 +75,7 @@ first step is to clone down the submodules:
 git submodule update --init --recursive
 ```
 
-*NOTE:* When dealing with submodules, it is highly recommended to enable
-diffing of submodule history with:
-```bash
-git config diff.submodule log
-```
+## Building
 
 Next, initialize the build environment, and optionally specify the build directory:
 
@@ -89,13 +83,16 @@ Next, initialize the build environment, and optionally specify the build directo
 . init-build-env [BUILDDIR]
 ```
 
-Finally, the images can be built - details in linked readme for each DEMO:
+Finally, the images can be built - details in linked readme for each DEMO. Default device is `qemu-arm64`:
 
 ```bash
-bitbake aws-demo-image
+export DEVICE=[DEVICE]
+export IMAGE=[IMAGE]
+bitbake $IMAGE
 ```
+
 To build for a different device, set the `DEVICE` (see [here](#Demonstration-environments)) and `IMAGE` environment variable,
-like so:
+like this:
 
 ```bash
 export DEMO=ec2-arm64
