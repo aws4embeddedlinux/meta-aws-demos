@@ -35,6 +35,7 @@ alphabetical order for ease of selection, no preference should be inferred.
 - [`qemu-x86-64`](meta-aws-demos/conf/devices/qemu-x86-64/README.md)
 - [`rpi4-32` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-32/README.md)
 - [`rpi4-64` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi4-64/README.md)
+- [`rpi5` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/rpi5/README.md)
 - [`phytec` / phytec](meta-aws-demos/conf/devices/phytec/README.md)
 - [`ti-am572x-idk` / Texas Instruments](meta-aws-demos/conf/devices/ti-am572x-idk/README.md)
 - [`xilinx-zcu104-zynqmp` / Xilinx](meta-aws-demos/conf/devices/xilinx-zcu104-zynqmp/README.md)
