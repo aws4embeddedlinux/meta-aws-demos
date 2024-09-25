@@ -1,21 +1,21 @@
-# AWS IoT Greengrass Nucelus for the Raspberry Pi 4
+# AWS IoT Greengrass Nucelus for the Raspberry Pi 64
 1. Build the image.
 
    ```bash
-   export DEVICE=rpi4-64
+   export DEVICE=raspberrypi-64
    bitbake aws-demo-image
    ```
 
    After building, the images will be in the following directory.
 
    ```bash
-   ls tmp/deploy/images/raspberrypi4-64/*sdimg
+   ls tmp/deploy/images/raspberrypi-armv8/*sdimg
    ```
 
     Where my image happens to be:
 
     ```bash
-    FILE=tmp/deploy/images/raspberrypi4-64/core-image-minimal-raspberrypi4-64.rpi-sdimg
+    FILE=tmp/deploy/images/raspberrypi-armv8/core-image-minimal-raspberrypi-armv8.rpi-sdimg
     ```
 
 2. Image the target device using `dd`.  You can also use an imaging
@@ -32,12 +32,6 @@
    sudo dd if=$FILE of=$DEVICE bs=1m
    ```
 
-3. Modify config.txt
 
-   In my case, I use the UART to communicate with the Raspberry Pi.  I
-   then remove the remark for the `init_uart_baud` and
-   `init_uart_clock` properties.
-
-
-4. Eject the SD Card, insert the SD Card to the Raspberry Pi, connect
+3. Eject the SD Card, insert the SD Card to the Raspberry Pi, connect
 the UART and Ethernet, and power up.

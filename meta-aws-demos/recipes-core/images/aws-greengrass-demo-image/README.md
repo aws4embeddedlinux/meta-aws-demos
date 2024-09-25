@@ -1,5 +1,5 @@
-# aws-greengrass-test-image
-A image to use test greengrass-bin
+# aws-greengrass-demo-image
+A image to use demo greengrass-bin
 
 ## Fleet Provisioning for Embedded Linux Devices with AWS IoT Greengrass
 this blog post:

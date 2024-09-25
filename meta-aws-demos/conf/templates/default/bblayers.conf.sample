@@ -1,8 +1,8 @@
-DEVICE ?= "qemu-arm64"
-IMAGE ?= "aws-demo-image"
-
 OEROOT = "##OEROOT##"
 require ##OEROOT##/../meta-aws-demos/conf/devices/${DEVICE}/layers.conf
+
+# optional
+include ##OEROOT##/../meta-aws-demos/recipes-core/images/${IMAGE}/layers.conf
 
 # Add an local layers here (and for devtool)
 BBLAYERS += ""
