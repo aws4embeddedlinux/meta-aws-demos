@@ -1,119 +1,107 @@
 [submodule "poky"]
 	path = poky
 	url = git://git.yoctoproject.org/poky
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-virtualization"]
 	path = layers/sw/meta-virtualization
 	url = git://git.yoctoproject.org/meta-virtualization
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-openembedded"]
 	path = layers/sw/meta-openembedded
 	url = https://github.com/openembedded/meta-openembedded.git
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-aws"]
 	path = layers/sw/meta-aws
 	url = https://github.com/aws4embeddedlinux/meta-aws.git
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-freescale"]
 	path = layers/bsp/meta-freescale
 	url = https://github.com/Freescale/meta-freescale.git
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-raspberrypi"]
 	path = layers/bsp/meta-raspberrypi
 	url = https://github.com/agherzan/meta-raspberrypi.git
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-java"]
 	path = layers/sw/meta-java
 	url = https://github.com/meta-java/meta-java.git
-	branch = kirkstone
-[submodule "meta-variscite-bsp"]
-	path = layers/bsp/meta-variscite-bsp
-	url = https://github.com/varigit/meta-variscite-bsp.git
-	branch = kirkstone
+	branch = scarthgap
+[submodule "meta-variscite-bsp-imx"]
+	path = layers/bsp/meta-variscite-bsp-imx
+	url = https://github.com/varigit/meta-variscite-bsp-imx.git
+	branch = scarthgap_6.6.23-2.0.0_var01
 [submodule "meta-freescale-distro"]
 	path = layers/bsp/meta-freescale-distro
 	url = https://github.com/Freescale/meta-freescale-distro.git
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-variscite-sdk"]
 	path = layers/bsp/meta-variscite-sdk
 	url = https://github.com/varigit/meta-variscite-sdk.git
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-qt5"]
 	path = layers/sw/meta-qt5
 	url = https://github.com/meta-qt5/meta-qt5.git
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-security"]
 	path = layers/sw/meta-security
 	url = https://github.com/ni/meta-security.git
-	branch = nilrt/master/kirkstone
+	branch = nilrt/master/next
 [submodule "meta-selinux"]
 	path = layers/sw/meta-selinux
 	url = https://github.com/ni/meta-selinux.git
-	branch = nilrt/master/kirkstone
+	branch = nilrt/master/next
 [submodule "meta-spdxscanner"]
 	path = layers/sw/meta-spdxscanner
 	url = https://git.yoctoproject.org/meta-spdxscanner/
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-clang"]
 	path = layers/sw/meta-clang
 	url = https://github.com/kraj/meta-clang.git
-	branch = kirkstone
-[submodule "meta-python2"]
-	path = layers/sw/meta-python2
-	url = https://git.openembedded.org/meta-python2
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-flutter"]
 	path = layers/sw/meta-flutter
 	url = https://github.com/meta-flutter/meta-flutter.git
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-agl"]
 	path = layers/agl/meta-agl
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl
-	branch = octopus
+	branch = ricefish
 [submodule "meta-agl-demo"]
 	path = layers/agl/meta-agl-demo
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-demo
-	branch = octopus
+	branch = ricefish
 [submodule "meta-agl-devel"]
 	path = layers/agl/meta-agl-devel
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-devel
-	branch = octopus
-[submodule "meta-codechecker"]
-	path = layers/sw/meta-codechecker
-	url = https://github.com/dl9pf/meta-codechecker
-	branch = master
+	branch = ricefish
 [submodule "meta-xilinx-tools"]
 	path = layers/bsp/meta-xilinx-tools
 	url = https://git.yoctoproject.org/meta-xilinx-tools
-	branch = kirkstone-next
+	branch = scarthgap
 [submodule "meta-xilinx"]
 	path = layers/bsp/meta-xilinx
 	url = https://github.com/Xilinx/meta-xilinx.git
-	branch = kirkstone-next
+	branch = scarthgap
 [submodule "meta-ti"]
 	path = layers/bsp/meta-ti
 	url = https://git.yoctoproject.org/meta-ti
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-arm"]
 	path = layers/bsp/meta-arm
 	url = https://git.yoctoproject.org/meta-arm
-	branch = kirkstone
+	branch = scarthgap
 [submodule "meta-renesas"]
 	path = layers/bsp/meta-renesas
 	url = https://github.com/renesas-rcar/meta-renesas.git
-	branch = kirkstone-dev
+	branch = scarthgap-dev
 [submodule "meta-agl-refhw"]
 	path = layers/agl/meta-agl-refhw
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-refhw
-	branch = octopus
-[submodule "meta-variscite-hab"]
-	path = layers/bsp/meta-variscite-hab
-	url = https://github.com/varigit/meta-variscite-hab.git
-	branch = kirkstone
+	branch = ricefish
 [submodule "meta-freescale-ml"]
 	path = layers/bsp/meta-freescale-ml
 	url = https://github.com/Freescale/meta-freescale-ml.git
-	branch = kirkstone
+	branch = master
 [submodule "layers/bsp/meta-alb"]
 	path = layers/bsp/meta-alb
 	url = https://github.com/nxp-auto-linux/meta-alb.git
@@ -121,16 +109,16 @@
 [submodule "layers/bsp/meta-ampliphy"]
 	path = layers/bsp/meta-ampliphy
 	url = https://github.com/phytec/meta-ampliphy.git
-	branch = kirkstone
+	branch = scarthgap
 [submodule "layers/bsp/meta-phytec"]
 	path = layers/bsp/meta-phytec
 	url = https://github.com/phytec/meta-phytec.git
-	branch = kirkstone
+	branch = scarthgap
 [submodule "layers/sw/meta-rauc"]
 	path = layers/sw/meta-rauc
 	url = https://github.com/rauc/meta-rauc.git
-	branch = kirkstone
+	branch = scarthgap
 [submodule "layers/sw/meta-ros"]
 	path = layers/sw/meta-ros
-	url = https://github.com/DRK-512/meta-ros.git
-	branch = kirkstone
+	url = https://github.com/ros/meta-ros.git
+	branch = scarthgap
