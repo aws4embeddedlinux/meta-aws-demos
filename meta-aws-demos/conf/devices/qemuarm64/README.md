@@ -1,8 +1,8 @@
-# qemu x86-arm64
+# qemuarm64
 
 is the default DEVICE
 
-## build an qemux86-64 image with greengrass-bin installed
+## build an qemuarm64 image
 
 * Build the image
 

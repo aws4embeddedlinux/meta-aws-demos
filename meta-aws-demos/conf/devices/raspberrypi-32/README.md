@@ -1,21 +1,21 @@
-# AWS IoT Greengrass Nucelus for the Raspberry Pi 5
+# AWS IoT Greengrass Nucelus for the Raspberry Pi 32bit
 1. Build the image.
 
    ```bash
-   export DEVICE=rpi5
+   export DEVICE=raspberrypi4-32
    bitbake aws-demo-image
    ```
 
    After building, the images will be in the following directory.
 
    ```bash
-   ls tmp/deploy/images/raspberrypi5/*sdimg
+   ls tmp/deploy/images/raspberrypi-armv7/*sdimg
    ```
 
     Where my image happens to be:
 
     ```bash
-    FILE=tmp/deploy/images/raspberrypi5/core-image-minimal-raspberrypi5.rpi-sdimg
+    FILE=tmp/deploy/images/raspberrypi-armv7/core-image-minimal-raspberrypi-armv7.rpi-sdimg
     ```
 
 2. Image the target device using `dd`.  You can also use an imaging

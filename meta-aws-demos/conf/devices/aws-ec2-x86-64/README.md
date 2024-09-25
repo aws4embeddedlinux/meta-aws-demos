@@ -1,4 +1,4 @@
-# ec2-x86-64
+# aws-ec2-x86-64
 
 Shows [ec2 AMI generation](https://github.com/aws4embeddedlinux/meta-aws/blob/master/scripts/ec2-ami/README.md) features.
 
