@@ -98,10 +98,6 @@
 	path = layers/agl/meta-agl-refhw
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-refhw
 	branch = octopus
-[submodule "meta-variscite-hab"]
-	path = layers/bsp/meta-variscite-hab
-	url = https://github.com/varigit/meta-variscite-hab.git
-	branch = kirkstone
 [submodule "meta-freescale-ml"]
 	path = layers/bsp/meta-freescale-ml
 	url = https://github.com/Freescale/meta-freescale-ml.git

@@ -1,0 +1,91 @@
+name: build
+on:
+  workflow_dispatch:
+    inputs:
+      clean:
+        description: 'clean sstate + downloads dir, force download + rebuild of everything'
+        type: boolean
+        required: false
+        default: false
+
+  push:
+    branches:
+      - master-next
+jobs:
+  clean:
+    runs-on: codebuild-meta-aws-demos-private2-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+    - name: clean sstate-cache + downloads
+      if: inputs.clean
+      shell: bash
+      run:
+        rm -rf /sstate-cache/*
+        rm -rf /downloads/*
+
+
+  build:
+    needs: clean
+    strategy:
+      fail-fast: false
+      matrix:
+        device:
+          - qemuarm64
+          - qemux86-64
+          - aws-ec2-arm64
+          - aws-ec2-x86-64
+          - raspberrypi-32
+          - raspberrypi-64
+        image:
+          - aws-greengrass-demo-image
+    runs-on: codebuild-meta-aws-demos-private2-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: checkout meta-aws-demos branch to build
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: build
+        shell: bash
+        run: |
+           apt-get -y install sudo jq gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev xterm python3-subunit mesa-common-dev zstd liblz4-tool iproute2 rsync locales inotify-tools
+           chown yoctouser /sstate-cache
+           chown yoctouser /downloads
+           chown -R yoctouser .
+           env
+           sudo -u yoctouser bash -c '\
+            whoami && \
+            id && \
+            . init-build-env &&
+            export SSTATE_DIR=/sstate-cache && \
+            export DL_DIR=/downloads && \
+            export BB_ENV_PASSTHROUGH_ADDITIONS="$BB_ENV_PASSTHROUGH_ADDITIONS SSTATE_DIR DL_DIR" && \
+            export DEVICE=${{ matrix.device }}  && \
+            export IMAGE=${{ matrix.image }} && \
+            bitbake $IMAGE '
+      - name: Generate readme
+        run: |
+             mkdir ${{ github.workspace }}/zipfile/
+             echo "Please flash the image onto a SD card and then mount the fat boot partition and copy the CertsAndConfig zip into it." > ${{ github.workspace }}/zipfile/readme.txt
+             echo "You can add the ip address to the cmdline.txt file: ip=192.168.0.69::192.168.0.1:255.255.255.0:rpi:eth0:off" >> ${{ github.workspace }}/zipfile/readme.txt
+             cat readme-license-text.txt >> ${{ github.workspace }}/zipfile/readme.txt
+      - name: cp image (raspberrypi) to zip dir
+        if:  startsWith(matrix.device, 'raspberrypi')
+        shell: bash
+        run: |
+          cp ${{ github.workspace }}/build/tmp/deploy/images/${{ matrix.device }}/${{ matrix.image }}-${{ matrix.device }}.rootfs.rpi-sdimg ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.img
+          ls -la ${{ github.workspace }}/zipfile/
+      - name: cp image (aws-ec2) to zip dir
+        if: startsWith(matrix.device, 'aws-ec2')
+        shell: bash
+        run: |
+          cp ${{ github.workspace }}/build/tmp/deploy/images/${{ matrix.device }}/${{ matrix.image }}-${{ matrix.device }}.rootfs.wic.vhd ${{ github.workspace }}/zipfile/
+          cp ${{ github.workspace }}/build/tmp/deploy/images/${{ matrix.device }}/${{ matrix.image }}-${{ matrix.device }}.rootfs.testdata.json ${{ github.workspace }}/zipfile/
+          cp -r ${{ github.workspace }}/layers/sw/meta-aws/scripts/ec2-ami/* ${{ github.workspace }}/zipfile/
+          ls -la ${{ github.workspace }}/zipfile/
+      - name: Create and save zipfile
+        if:  startsWith(matrix.device, 'raspberrypi') || startsWith(matrix.device, 'aws-ec2')
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.image }}_${{ matrix.device }}
+          path: |
+            ${{ github.workspace }}/zipfile/*
+          retention-days: 1
