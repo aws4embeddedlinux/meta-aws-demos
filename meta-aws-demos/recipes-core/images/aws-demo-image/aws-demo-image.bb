@@ -29,7 +29,6 @@ IMAGE_INSTALL =+ "\
     aws-iot-device-sdk-python-v2 \
     aws-iot-fleetwise-edge \
     aws-iot-securetunneling-localproxy \
-    aws-lc \
     aws-sdk-cpp \
     corretto-11-bin \
     firecracker-bin \

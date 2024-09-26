@@ -42,6 +42,14 @@
 	path = layers/sw/meta-qt5
 	url = https://github.com/meta-qt5/meta-qt5.git
 	branch = scarthgap
+[submodule "meta-security"]
+	path = layers/sw/meta-security
+	url = https://github.com/ni/meta-security.git
+	branch = nilrt/master/next
+[submodule "meta-selinux"]
+	path = layers/sw/meta-selinux
+	url = https://github.com/ni/meta-selinux.git
+	branch = nilrt/master/next
 [submodule "meta-spdxscanner"]
 	path = layers/sw/meta-spdxscanner
 	url = https://git.yoctoproject.org/meta-spdxscanner/
@@ -89,7 +97,11 @@
 [submodule "meta-agl-refhw"]
 	path = layers/agl/meta-agl-refhw
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-refhw
-	branch = ricefish
+	branch = octopus
+[submodule "meta-variscite-hab"]
+	path = layers/bsp/meta-variscite-hab
+	url = https://github.com/varigit/meta-variscite-hab.git
+	branch = kirkstone
 [submodule "meta-freescale-ml"]
 	path = layers/bsp/meta-freescale-ml
 	url = https://github.com/Freescale/meta-freescale-ml.git
@@ -110,3 +122,4 @@
 	path = layers/sw/meta-ros
 	url = https://github.com/ros/meta-ros.git
 	branch = scarthgap
+

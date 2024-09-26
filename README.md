@@ -25,7 +25,6 @@ The DEMOs consist of a combination of a DEVICE, which represent a hardware and a
 Select your desired target environment.  These are listed below in
 alphabetical order for ease of selection, no preference should be inferred.
 
-- [`agl-renesas` / AGL + Renesas](meta-aws-demos/conf/devices/agl-renesas/README.md)
 - [`agl-rpi` / AGL + Raspberry Pi Foundation](meta-aws-demos/conf/devices/agl-rpi/README.md)
 - [`dart-mx8m` / variscite](meta-aws-demos/conf/devices/dart-mx8m/README.md)
 - [`aws-ec2-arm64` / AWS EC2](meta-aws-demos/conf/devices/aws-ec2-arm64/README.md)
@@ -35,7 +34,7 @@ alphabetical order for ease of selection, no preference should be inferred.
 - [`qemux86-64`](meta-aws-demos/conf/devices/qemux86-64/README.md)
 - [`raspberrypi-32` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/raspberrypi-32/README.md)
 - [`raspberrypi-64` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/raspberrypi-64/README.md)
-- [`phytec` / phytec](meta-aws-demos/conf/devices/phytec/README.md)
+- [`phyboard-mira-imx6-15` / phytec](meta-aws-demos/conf/devices/phyboard-mira-imx6-15/README.md)
 - [`ti-am572x-idk` / Texas Instruments](meta-aws-demos/conf/devices/ti-am572x-idk/README.md)
 - [`xilinx-zcu104-zynqmp` / Xilinx](meta-aws-demos/conf/devices/xilinx-zcu104-zynqmp/README.md)
 
