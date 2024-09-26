@@ -13,7 +13,7 @@ on:
       - master-next
 jobs:
   clean:
-    runs-on: codebuild-meta-aws-demos-private2-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-meta-aws-demos-public-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
     - name: clean sstate-cache + downloads
       if: inputs.clean
@@ -37,7 +37,7 @@ jobs:
           - raspberrypi-64
         image:
           - aws-greengrass-demo-image
-    runs-on: codebuild-meta-aws-demos-private2-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-meta-aws-demos-public-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: checkout meta-aws-demos branch to build
         uses: actions/checkout@v4
