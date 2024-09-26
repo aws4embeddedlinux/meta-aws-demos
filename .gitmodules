@@ -98,10 +98,6 @@
 	path = layers/agl/meta-agl-refhw
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-refhw
 	branch = octopus
-[submodule "meta-freescale-ml"]
-	path = layers/bsp/meta-freescale-ml
-	url = https://github.com/Freescale/meta-freescale-ml.git
-	branch = master
 [submodule "layers/bsp/meta-ampliphy"]
 	path = layers/bsp/meta-ampliphy
 	url = https://github.com/phytec/meta-ampliphy.git
