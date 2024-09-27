@@ -1,9 +1,6 @@
 CONF_VERSION ?= "2"
 DISTRO ?= "poky"
 
-DEVICE ?= "qemuarm64"
-IMAGE ?= "aws-demo-image"
-
 # mandatory
 require ${OEROOT}/../meta-aws-demos/conf/devices/${DEVICE}/config.conf
 

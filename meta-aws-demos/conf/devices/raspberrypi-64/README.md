@@ -32,6 +32,5 @@
    sudo dd if=$FILE of=$DEVICE bs=1m
    ```
 
-
 3. Eject the SD Card, insert the SD Card to the Raspberry Pi, connect
 the UART and Ethernet, and power up.
