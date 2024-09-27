@@ -26,13 +26,12 @@ Select your desired target environment.  These are listed below in
 alphabetical order for ease of selection, no preference should be inferred.
 
 - [`agl-rpi` / AGL + Raspberry Pi Foundation](meta-aws-demos/conf/devices/agl-rpi/README.md)
-- [`dart-mx8m` / variscite](meta-aws-demos/conf/devices/dart-mx8m/README.md)
 - [`aws-ec2-arm64` / AWS EC2](meta-aws-demos/conf/devices/aws-ec2-arm64/README.md)
 - [`aws-ec2-x86-64` / AWS EC2](meta-aws-demos/conf/devices/aws-ec2-x86-64/README.md)
 - [`imx8m` / NXP](meta-aws-demos/conf/devices/imx8m/README.md)
 - [`qemuarm64`](meta-aws-demos/conf/devices/qemuarm64/README.md)
 - [`qemux86-64`](meta-aws-demos/conf/devices/qemux86-64/README.md)
-- [`raspberrypi-32` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/raspberrypi-32/README.md)
+- [`raspberrypi2` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/raspberrypi2/README.md)
 - [`raspberrypi-64` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/raspberrypi-64/README.md)
 - [`phyboard-mira-imx6-15` / phytec](meta-aws-demos/conf/devices/phyboard-mira-imx6-15/README.md)
 - [`ti-am572x-idk` / Texas Instruments](meta-aws-demos/conf/devices/ti-am572x-idk/README.md)
@@ -42,8 +41,10 @@ alphabetical order for ease of selection, no preference should be inferred.
 Generally you can build all images for all "Devices", but some combinations do not work or do not make sense!
 
 - [aws-demo-image](meta-aws-demos/recipes-core/images/aws-demo-image/README.md)
-- [aws-greengrass-test-image](meta-aws-demos/recipes-core/images/aws-greengrass-test-image/README.md)
-- [aws-iot-device-client-test-image](meta-aws-demos/recipes-core/images/aws-iot-device-client-test-image/README.md)
+- [aws-iot-greengrass-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-demo-image/README.md)
+- [aws-iot-device-client-demo-image](meta-aws-demos/recipes-core/images/aws-iot-device-client-demo-image/README.md)
+- [aws-iot-fleetwise-test-image](meta-aws-demos/recipes-core/images/aws-iot-fleetwise-test-image/README.md)
+- [aws-iot-fleetwise-test-image-agl](meta-aws-demos/recipes-core/images/aws-iot-fleetwise-test-image-agl/README.md)
 - [aws-webrtc-demo-image](meta-aws-demos/recipes-core/images/aws-webrtc-demo-image/README.md)
 
 > [!IMPORTANT]
@@ -105,7 +106,7 @@ The `init-build-env` script adds a helper function called `get_devices` which
 will list all devices that can be configured. This can be used to build all devices with:
 
 ```bash
-for d in $(get_devices); do for i in $(get_images); do DEVICE=$d IMAGE=$i bitbake $i; done; done
+for d in $(get_devices); do for i in $(get_images); do DEVICE=$d IMAGE=$i && echo $DEVICE && echo $IMAGE && bitbake $i; done; done
 ```
 
 ## Adding new platforms

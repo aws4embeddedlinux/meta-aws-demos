@@ -22,21 +22,9 @@
 	path = layers/bsp/meta-raspberrypi
 	url = https://github.com/agherzan/meta-raspberrypi.git
 	branch = scarthgap
-[submodule "meta-java"]
-	path = layers/sw/meta-java
-	url = https://github.com/meta-java/meta-java.git
-	branch = scarthgap
-[submodule "meta-variscite-bsp-imx"]
-	path = layers/bsp/meta-variscite-bsp-imx
-	url = https://github.com/varigit/meta-variscite-bsp-imx.git
-	branch = scarthgap_6.6.23-2.0.0_var01
 [submodule "meta-freescale-distro"]
 	path = layers/bsp/meta-freescale-distro
 	url = https://github.com/Freescale/meta-freescale-distro.git
-	branch = scarthgap
-[submodule "meta-variscite-sdk"]
-	path = layers/bsp/meta-variscite-sdk
-	url = https://github.com/varigit/meta-variscite-sdk.git
 	branch = scarthgap
 [submodule "meta-qt5"]
 	path = layers/sw/meta-qt5
@@ -50,10 +38,6 @@
 	path = layers/sw/meta-selinux
 	url = https://github.com/ni/meta-selinux.git
 	branch = nilrt/master/next
-[submodule "meta-spdxscanner"]
-	path = layers/sw/meta-spdxscanner
-	url = https://git.yoctoproject.org/meta-spdxscanner/
-	branch = scarthgap
 [submodule "meta-clang"]
 	path = layers/sw/meta-clang
 	url = https://github.com/kraj/meta-clang.git
@@ -110,8 +94,7 @@
 	path = layers/sw/meta-rauc
 	url = https://github.com/rauc/meta-rauc.git
 	branch = scarthgap
-[submodule "layers/sw/meta-ros"]
-	path = layers/sw/meta-ros
-	url = https://github.com/ros/meta-ros.git
-	branch = scarthgap
-
+[submodule "layers/bsp/meta-variscite-sdk-imx"]
+	path = layers/bsp/meta-variscite-sdk-imx
+	url = https://github.com/varigit/meta-variscite-sdk-imx.git
+	branch = scarthgap_6.6.23-2.0.0_var01

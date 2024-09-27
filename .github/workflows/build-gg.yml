@@ -1,4 +1,4 @@
-name: build
+name: build-gg
 on:
   workflow_dispatch:
     inputs:
@@ -13,7 +13,7 @@ on:
       - master-next
 jobs:
   clean:
-    runs-on: codebuild-meta-aws-demos-private2-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: ${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
     - name: clean sstate-cache + downloads
       if: inputs.clean
@@ -33,11 +33,11 @@ jobs:
           - qemux86-64
           - aws-ec2-arm64
           - aws-ec2-x86-64
-          - raspberrypi-32
+          - raspberrypi2
           - raspberrypi-64
         image:
-          - aws-greengrass-demo-image
-    runs-on: codebuild-meta-aws-demos-private2-${{ github.run_id }}-${{ github.run_attempt }}
+          - aws-iot-greengrass-demo-image
+    runs-on: ${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: checkout meta-aws-demos branch to build
         uses: actions/checkout@v4
@@ -66,12 +66,18 @@ jobs:
              mkdir ${{ github.workspace }}/zipfile/
              echo "Please flash the image onto a SD card and then mount the fat boot partition and copy the CertsAndConfig zip into it." > ${{ github.workspace }}/zipfile/readme.txt
              echo "You can add the ip address to the cmdline.txt file: ip=192.168.0.69::192.168.0.1:255.255.255.0:rpi:eth0:off" >> ${{ github.workspace }}/zipfile/readme.txt
-             cat readme-license-text.txt >> ${{ github.workspace }}/zipfile/readme.txt
+             cat ${{ github.workspace }}/.github/workflows/readme-license.txt >> ${{ github.workspace }}/zipfile/readme.txt
       - name: cp image (raspberrypi) to zip dir
-        if:  startsWith(matrix.device, 'raspberrypi')
+        if:  startsWith(matrix.device, 'raspberrypi[15]')
         shell: bash
         run: |
           cp ${{ github.workspace }}/build/tmp/deploy/images/${{ matrix.device }}/${{ matrix.image }}-${{ matrix.device }}.rootfs.rpi-sdimg ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.img
+          ls -la ${{ github.workspace }}/zipfile/
+      - name: cp image (raspberrypi-) to zip dir
+        if:  startsWith(matrix.device, 'raspberrypi-64')
+        shell: bash
+        run: |
+          cp ${{ github.workspace }}/build/tmp/deploy/images/raspberrypi-armv8/${{ matrix.image }}-raspberrypi-armv8.rootfs.rpi-sdimg ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.img
           ls -la ${{ github.workspace }}/zipfile/
       - name: cp image (aws-ec2) to zip dir
         if: startsWith(matrix.device, 'aws-ec2')
