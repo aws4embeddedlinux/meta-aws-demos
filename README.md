@@ -96,7 +96,7 @@ To build for a different device, set the `DEVICE` (see [here](#Demonstration-env
 like this:
 
 ```bash
-export DEMO=ec2-arm64
+export DEVICE=ec2-arm64
 export IMAGE=aws-demo-image
 bitbake $IMAGE
 ```
