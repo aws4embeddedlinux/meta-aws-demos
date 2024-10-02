@@ -50,6 +50,7 @@ jobs:
            chown yoctouser /sstate-cache
            chown yoctouser /downloads
            chown -R yoctouser .
+           sysctl vm.mmap_min_addr=65536
            env
            sudo -u yoctouser bash -c '\
             whoami && \
