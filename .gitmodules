@@ -86,10 +86,6 @@
 	path = layers/bsp/meta-ampliphy
 	url = https://github.com/phytec/meta-ampliphy.git
 	branch = scarthgap
-[submodule "layers/bsp/meta-phytec"]
-	path = layers/bsp/meta-phytec
-	url = https://github.com/phytec/meta-phytec.git
-	branch = scarthgap
 [submodule "layers/sw/meta-rauc"]
 	path = layers/sw/meta-rauc
 	url = https://github.com/rauc/meta-rauc.git
@@ -98,3 +94,7 @@
 	path = layers/bsp/meta-variscite-sdk-imx
 	url = https://github.com/varigit/meta-variscite-sdk-imx.git
 	branch = scarthgap_6.6.23-2.0.0_var01
+[submodule "layers/bsp/meta-st-stm32mp"]
+	path = layers/bsp/meta-st-stm32mp
+	url = https://github.com/STMicroelectronics/meta-st-stm32mp.git
+	branch = scarthgap

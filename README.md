@@ -28,11 +28,12 @@ alphabetical order for ease of selection, no preference should be inferred.
 - [`aws-ec2-arm64` / AWS EC2](meta-aws-demos/conf/devices/aws-ec2-arm64/README.md)
 - [`aws-ec2-x86-64` / AWS EC2](meta-aws-demos/conf/devices/aws-ec2-x86-64/README.md)
 - [`imx8m` / NXP](meta-aws-demos/conf/devices/imx8m/README.md)
-- [`phyboard-mira-imx6-15` / phytec](meta-aws-demos/conf/devices/phyboard-mira-imx6-15/README.md)
+- [`qemuarm`](meta-aws-demos/conf/devices/qemuarm/README.md)
 - [`qemuarm64`](meta-aws-demos/conf/devices/qemuarm64/README.md)
 - [`qemux86-64`](meta-aws-demos/conf/devices/qemux86-64/README.md)
 - [`raspberrypi-64` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/raspberrypi-64/README.md)
 - [`raspberrypi2` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/raspberrypi2/README.md)
+- [`stm32mp13-disco` / STM](meta-aws-demos/conf/devices/stm32mp13-disco/README.md)
 - [`ti-am572x-idk` / Texas Instruments](meta-aws-demos/conf/devices/ti-am572x-idk/README.md)
 - [`xilinx-zcu104-zynqmp` / Xilinx](meta-aws-demos/conf/devices/xilinx-zcu104-zynqmp/README.md)
 

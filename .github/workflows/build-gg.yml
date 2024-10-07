@@ -7,6 +7,11 @@ on:
         type: boolean
         required: false
         default: false
+      upload-zip:
+        description: 'zip files should be uploaded to GH artifact store and a link will provided'
+        type: boolean
+        required: false
+        default: false
 
   push:
     branches:
@@ -89,7 +94,7 @@ jobs:
           cp -r ${{ github.workspace }}/layers/sw/meta-aws/scripts/ec2-ami/* ${{ github.workspace }}/zipfile/
           ls -la ${{ github.workspace }}/zipfile/
       - name: Create and save zipfile
-        if:  startsWith(matrix.device, 'raspberrypi') || startsWith(matrix.device, 'aws-ec2')
+        if:  (startsWith(matrix.device, 'raspberrypi') || startsWith(matrix.device, 'aws-ec2') ) && inputs.upload-zip
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.image }}_${{ matrix.device }}

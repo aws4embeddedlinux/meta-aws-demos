@@ -31,9 +31,7 @@ IMAGE_INSTALL =+ "\
     aws-iot-securetunneling-localproxy \
     aws-sdk-cpp \
     corretto-11-bin \
-    firecracker-bin \
     greengrass-bin \
-    jailer-bin \
     python3-boto3 \
     python3-botocore \
     python3-s3transfer \
