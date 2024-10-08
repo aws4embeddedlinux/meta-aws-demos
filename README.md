@@ -53,7 +53,7 @@ Generally you can build all images for all "Devices", but some combinations do n
 
 ## Quick Start
 
-To try out this project in QEMU (default device is `qemu-arm64`), run the following commands:
+To try out this project in QEMU (default device is `qemuarm64`), run the following commands:
 
 ```bash
 git submodule update --init --recursive
@@ -83,7 +83,7 @@ Next, initialize the build environment, and optionally specify the build directo
 . init-build-env [BUILDDIR]
 ```
 
-Finally, the images can be built - details in linked readme for each DEMO. Default device is `qemu-arm64`:
+Finally, the images can be built - details in linked readme for each DEMO. Default device is `qemuarm64`:
 
 ```bash
 export DEVICE=[DEVICE]
