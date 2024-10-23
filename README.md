@@ -64,6 +64,8 @@ runqemu slirp nographic
 ```
 
 Please also consider these build host [requirements](https://docs.yoctoproject.org/ref-manual/system-requirements.html#required-packages-for-the-build-host).
+> [!IMPORTANT]
+> `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0`  is needed for bitbake on Ubuntu 24.04
 
 ## Setup
 
