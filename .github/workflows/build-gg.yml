@@ -42,7 +42,7 @@ jobs:
           - raspberrypi-64
         image:
           - aws-iot-greengrass-demo-image
-    runs-on: ${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: checkout meta-aws-demos branch to build
         uses: actions/checkout@v4
