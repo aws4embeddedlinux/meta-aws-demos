@@ -98,3 +98,7 @@
 	path = layers/bsp/meta-st-stm32mp
 	url = https://github.com/STMicroelectronics/meta-st-stm32mp.git
 	branch = scarthgap
+[submodule "layers/sw/meta-rauc-community"]
+	path = layers/sw/meta-rauc-community
+	url = https://github.com/rauc/meta-rauc-community
+	branch = scarthgap
