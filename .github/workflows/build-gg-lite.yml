@@ -26,8 +26,6 @@ jobs:
       run:
         rm -rf /sstate-cache/*
         rm -rf /downloads/*
-
-
   build:
     needs: clean
     strategy:
@@ -45,6 +43,17 @@ jobs:
           - aws-iot-greengrass-lite-demo-image
           - aws-iot-greengrass-lite-demo-ab-image
           - aws-iot-greengrass-lite-tiny-demo-image
+        exclude:
+          - image: aws-iot-greengrass-lite-demo-ab-image
+            device: qemuarm
+          - image: aws-iot-greengrass-lite-demo-ab-image
+            device: qemuarm64
+          - image: aws-iot-greengrass-lite-demo-ab-image
+            device: qemux86-64
+          - image: aws-iot-greengrass-lite-demo-ab-image
+            device: aws-ec2-arm64
+          - image: aws-iot-greengrass-lite-demo-ab-image
+            device: aws-ec2-x86-64
     runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: checkout meta-aws-demos branch to build

@@ -1,6 +1,4 @@
-# aws-greengrass-demo-image
-A image to use demo greengrass-bin
+# aws-greengrass-demo-ab-image
 
-## Fleet Provisioning for Embedded Linux Devices with AWS IoT Greengrass
-this blog post:
-https://dev.to/iotbuilders/fleet-provisioning-for-embedded-linux-devices-with-aws-iot-greengrass-4h8b
+Is the default demo image for Greengrass
+Works only for raspberry-pi.
