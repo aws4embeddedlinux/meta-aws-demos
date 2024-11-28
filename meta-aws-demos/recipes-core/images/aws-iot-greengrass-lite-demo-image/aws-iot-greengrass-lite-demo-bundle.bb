@@ -6,7 +6,7 @@ inherit bundle
 # RAUC_BUNDLE_DESCRIPTION = "RAUC Demo Bundle"
 
 RAUC_BUNDLE_SLOTS = "rootfs"
-RAUC_SLOT_rootfs = "aws-iot-greengrass-lite-demo-ab-image"
+RAUC_SLOT_rootfs = "aws-iot-greengrass-lite-demo-image"
 
 RAUC_BUNDLE_COMPATIBLE   ?= "${MACHINE}"
 RAUC_BUNDLE_FORMAT ?= "verity"

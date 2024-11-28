@@ -29,13 +29,6 @@ LDFLAGS:append:libc-musl = " -largp"
 ###
 
 #THIS IS DISABLED IF exernalsrc is enabled
-# SRC_URI = "\
-#     git://github.com/rawalexe/aws-greengrass-lite_open.git;protocol=https;branch=depFixTes \
-#     file://001-disable_strip.patch \
-#     file://greengrass-lite.yaml \
-#     file://run-ptest \
-# "
-
 SRC_URI = "\
     git://github.com/aws-greengrass/aws-greengrass-lite.git;protocol=https;branch=main \
     file://001-disable_strip.patch \
@@ -93,9 +86,7 @@ SYSTEMD_SERVICE:${PN} = "\
 
 inherit systemd cmake pkgconfig useradd features_check ptest
 
-gg_rundir_relative = "greengrass"
 gg_workingdir = "${localstatedir}/lib/greengrass"
-gg_confdir = "${sysconfdir}/greengrass"
 gg_user = "ggc_user"
 gg_group = "ggc_group"
 

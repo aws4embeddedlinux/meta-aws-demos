@@ -41,25 +41,25 @@ jobs:
           - raspberrypi-64
         image:
           - aws-iot-greengrass-lite-demo-image
-          - aws-iot-greengrass-lite-demo-ab-image
-          - aws-iot-greengrass-lite-tiny-demo-image
+          - aws-iot-greengrass-lite-demo-simple-image
+          - aws-iot-greengrass-lite-demo-tiny-image
         exclude:
-          - image: aws-iot-greengrass-lite-demo-ab-image
+          - image: aws-iot-greengrass-lite-demo-image
             device: qemuarm
-          - image: aws-iot-greengrass-lite-demo-ab-image
+          - image: aws-iot-greengrass-lite-demo-image
             device: qemuarm64
-          - image: aws-iot-greengrass-lite-demo-ab-image
+          - image: aws-iot-greengrass-lite-demo-image
             device: qemux86-64
-          - image: aws-iot-greengrass-lite-demo-ab-image
+          - image: aws-iot-greengrass-lite-demo-image
             device: aws-ec2-arm64
-          - image: aws-iot-greengrass-lite-demo-ab-image
+          - image: aws-iot-greengrass-lite-demo-image
             device: aws-ec2-x86-64
     runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: checkout meta-aws-demos branch to build
         uses: actions/checkout@v4
         with:
-          submodules: recursive
+          submodules: true
           fetch-depth: 0
       - name: build
         shell: bash

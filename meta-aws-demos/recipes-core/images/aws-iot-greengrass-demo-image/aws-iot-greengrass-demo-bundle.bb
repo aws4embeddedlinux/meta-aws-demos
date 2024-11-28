@@ -1,4 +1,4 @@
-DESCRIPTION = "A update bundle for aws-iot-greengrass-demo-ab-image"
+DESCRIPTION = "A update bundle for aws-iot-greengrass-demo-image"
 
 inherit bundle
 
@@ -6,7 +6,7 @@ inherit bundle
 # RAUC_BUNDLE_DESCRIPTION = "RAUC Demo Bundle"
 
 RAUC_BUNDLE_SLOTS = "rootfs"
-RAUC_SLOT_rootfs = "aws-iot-greengrass-demo-ab-image"
+RAUC_SLOT_rootfs = "aws-iot-greengrass-demo-image"
 
 RAUC_BUNDLE_COMPATIBLE   ?= "${MACHINE}"
 RAUC_BUNDLE_FORMAT ?= "verity"

@@ -1,5 +1,5 @@
-SUMMARY = "greengrass config init"
-DESCRIPTION = "greengrass config init by zip from fat partition, e.g. for Raspberry Pi"
+SUMMARY = "AWS IoT Greengrass config init"
+DESCRIPTION = "AWS IoT Greengrass config init by zip from fat partition, e.g. for Raspberry Pi"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
@@ -15,10 +15,10 @@ FILES:${PN} += "\
 "
 
 RDEPENDS:${PN} += "\
-    sed \
-    zip \
     avahi-daemon \
     avahi-utils \
+    sed \
+    zip \
     "
 
 inherit systemd features_check
@@ -33,11 +33,7 @@ do_install() {
 
     install -d ${D}${systemd_unitdir}/system
     install -m 0644 ${WORKDIR}/greengrass-config-init.service ${D}${systemd_unitdir}/system/
-    sed -i -e 's,@SYSCONFDIR@,${sysconfdir},g' \
-            -e 's,@LOCALSTATEDIR@,${localstatedir},g' \
-            -e 's,@SBINDIR@,${sbindir},g' \
-            -e 's,@BINDIR@,${bindir},g' \
-            -e 's,@BASE_BINDIR@,${base_bindir},g' \
+    sed -i  -e 's,@BINDIR@,${bindir},g' \
             ${D}${systemd_unitdir}/system/greengrass-config-init.service
 
     install -d -m 0755 ${D}${sysconfdir}/systemd/network
