@@ -1,4 +1,4 @@
-name: build-gg
+name: build-gg-lite
 on:
   workflow_dispatch:
     inputs:
@@ -34,6 +34,7 @@ jobs:
       fail-fast: false
       matrix:
         device:
+          - qemuarm
           - qemuarm64
           - qemux86-64
           - aws-ec2-arm64
@@ -41,7 +42,9 @@ jobs:
           - raspberrypi2
           - raspberrypi-64
         image:
-          - aws-iot-greengrass-demo-image
+          - aws-iot-greengrass-lite-demo-image
+          - aws-iot-greengrass-lite-demo-ab-image
+          - aws-iot-greengrass-lite-tiny-demo-image
     runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: checkout meta-aws-demos branch to build
@@ -69,7 +72,7 @@ jobs:
       - name: Generate readme
         run: |
              mkdir ${{ github.workspace }}/zipfile/
-             cp ${{ github.workspace }}/.github/workflows/build-gg-artifacts/readme-greengrass-template.txt ${{ github.workspace }}/zipfile/readme.txt
+             cp ${{ github.workspace }}/.github/workflows/build-gg-artifacts/readme-greengrass-lite-template.txt ${{ github.workspace }}/zipfile/readme.txt
              cat ${{ github.workspace }}/.github/workflows/build-gg-artifacts/readme-license.txt >> ${{ github.workspace }}/zipfile/readme.txt
              sed -i 's|{{ VERSION_LINK }}|${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|g' ${{ github.workspace }}/zipfile/readme.txt
       - name: cp image (raspberrypi) to zip dir
@@ -88,13 +91,13 @@ jobs:
         if: startsWith(matrix.device, 'aws-ec2')
         shell: bash
         run: |
-          cp ${{ github.workspace }}/build/tmp/deploy/images/${{ matrix.device }}/${{ matrix.image }}-${{ matrix.device }}.rootfs.wic.vhd ${{ github.workspace }}/zipfile/aws-greengrass-demo-image.wic.vhd
+          cp ${{ github.workspace }}/build/tmp/deploy/images/${{ matrix.device }}/${{ matrix.image }}-${{ matrix.device }}.rootfs.wic.vhd ${{ github.workspace }}/zipfile/aws-greengrass-lite-demo-image.wic.vhd
           cp ${{ github.workspace }}/build/tmp/deploy/images/${{ matrix.device }}/${{ matrix.image }}-${{ matrix.device }}.rootfs.testdata.json ${{ github.workspace }}/zipfile/
           cp ${{ github.workspace }}/layers/sw/meta-aws/scripts/ec2-ami/README.md ${{ github.workspace }}/zipfile/
           cp ${{ github.workspace }}/layers/sw/meta-aws/scripts/ec2-ami/vmimport-cfn.yml ${{ github.workspace }}/zipfile/
           cp ${{ github.workspace }}/.github/workflows/build-gg-artifacts/ec2/create-ec2-ami.sh ${{ github.workspace }}/zipfile/
           cp -r ${{ github.workspace }}/layers/sw/meta-aws/scripts/ec2-ami/* ${{ github.workspace }}/zipfile/
-          echo "To upload the image to EC2 run: bash ./create-ec2-ami.sh amitest-bucket 16 aws-greengrass-demo-image aws-ec2-arm64" >> ${{ github.workspace }}/zipfile/readme.txt
+          echo "To upload the image to EC2 run: bash ./create-ec2-ami.sh amitest-bucket 16 aws-greengrass-lite-demo-image aws-ec2-arm64" >> ${{ github.workspace }}/zipfile/readme.txt
           ls -la ${{ github.workspace }}/zipfile/
       - name: Create and save zipfile
         if:  (startsWith(matrix.device, 'raspberrypi') || startsWith(matrix.device, 'aws-ec2') ) && inputs.upload-zip

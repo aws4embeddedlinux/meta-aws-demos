@@ -1,0 +1,12 @@
+[Unit]
+Description=greengrass config init service
+After=tmp.mount
+Before=greengrass-lite.target greengrass.service wpa_supplicant@wlan0.service avahi-daemon.service systemd-networkd.service
+
+[Service]
+Type=oneshot
+ExecStart=@BINDIR@/greengrass-config-init.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

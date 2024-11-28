@@ -98,7 +98,11 @@
 	path = layers/bsp/meta-st-stm32mp
 	url = https://github.com/STMicroelectronics/meta-st-stm32mp.git
 	branch = scarthgap
-[submodule "layers/sw/meta-rauc-community"]
-	path = layers/sw/meta-rauc-community
-	url = https://github.com/rauc/meta-rauc-community
+[submodule "layers/bsp/meta-rauc-community"]
+	path = layers/bsp/meta-rauc-community
+	url = https://github.com/rauc/meta-rauc-community.git
 	branch = scarthgap
+[submodule "layers/bsp/meta-lts-mixins"]
+	path = layers/bsp/meta-lts-mixins
+	url = https://git.yoctoproject.org/meta-lts-mixins
+	branch = scarthgap/u-boot
