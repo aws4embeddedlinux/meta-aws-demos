@@ -84,7 +84,7 @@ jobs:
              cat ${{ github.workspace }}/.github/workflows/build-gg-artifacts/readme-license.txt >> ${{ github.workspace }}/zipfile/readme.txt
              sed -i 's|{{ VERSION_LINK }}|${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|g' ${{ github.workspace }}/zipfile/readme.txt
       - name: cp image (raspberrypi) to zip dir
-        if:  startsWith(matrix.device, 'raspberrypi[15]')
+        if: startsWith(matrix.device, 'raspberrypi2')
         shell: bash
         run: |
           cp ${{ github.workspace }}/build/tmp/deploy/images/${{ matrix.device }}/${{ matrix.image }}-${{ matrix.device }}.rootfs.rpi-sdimg ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.img

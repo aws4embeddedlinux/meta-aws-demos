@@ -1,3 +1,5 @@
+SUMMARY = "AWS IoT Greengrass lite"
+DESCRIPTION = "AWS IoT Greengrass runtime for constrained devices"
 HOMEPAGE = "https://github.com/aws-greengrass/aws-greengrass-lite"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=34400b68072d710fecd0a2940a0d1658"
@@ -15,7 +17,6 @@ DEPENDS += "\
     "
 
 DEPENDS:append:libc-musl = " argp-standalone"
-
 LDFLAGS:append:libc-musl = " -largp"
 
 ### enable CLANG instead of GCC
@@ -65,22 +66,22 @@ EXTRA_OECMAKE:append = " -DGGL_LOG_LEVEL=DEBUG"
 # CFLAGS:append = " -Werror"
 
 SYSTEMD_SERVICE:${PN} = "\
-    ggl.gg-ipc.socket.socket \
-    ggl.core.ggipcd.service \
-    ggl.gg_config.socket \
-    ggl.core.ggconfigd.service \
-    ggl.gg_health.socket \
-    ggl.core.gghealthd.service \
     ggl.aws_iot_mqtt.socket \
-    ggl.core.iotcored.service \
-    ggl.gg_pubsub.socket \
-    ggl.core.ggpubsubd.service \
-    ggl.gg_deployment.socket \
-    ggl.core.ggdeploymentd.service \
-    ggl.gg_fleet_status.socket \
-    ggl.core.gg-fleet-statusd.service \
     ggl.aws_iot_tes.socket \
+    ggl.core.gg-fleet-statusd.service \
+    ggl.core.ggconfigd.service \
+    ggl.core.ggdeploymentd.service \
+    ggl.core.gghealthd.service \
+    ggl.core.ggipcd.service \
+    ggl.core.ggpubsubd.service \
+    ggl.core.iotcored.service \
     ggl.core.tesd.service \
+    ggl.gg_config.socket \
+    ggl.gg_deployment.socket \
+    ggl.gg_fleet_status.socket \
+    ggl.gg_health.socket \
+    ggl.gg_pubsub.socket \
+    ggl.gg-ipc.socket.socket \
     greengrass-lite.target \
 "
 
