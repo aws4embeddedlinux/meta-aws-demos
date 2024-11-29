@@ -89,13 +89,13 @@ jobs:
         if: startsWith(matrix.device, 'raspberrypi2')
         shell: bash
         run: |
-          cp ${{ github.workspace }}/build/tmp/deploy/images/${{ matrix.device }}/${{ matrix.image }}-${{ matrix.device }}.rootfs.rpi-sdimg ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.img
+          cp ${{ github.workspace }}/build/tmp/deploy/images/${{ matrix.device }}/${{ matrix.image }}-${{ matrix.device }}.rootfs.wic ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.img
           ls -la ${{ github.workspace }}/zipfile/
       - name: cp image (raspberrypi-) to zip dir
         if:  startsWith(matrix.device, 'raspberrypi-64')
         shell: bash
         run: |
-          cp ${{ github.workspace }}/build/tmp/deploy/images/raspberrypi-armv8/${{ matrix.image }}-raspberrypi-armv8.rootfs.rpi-sdimg ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.img
+          cp ${{ github.workspace }}/build/tmp/deploy/images/raspberrypi-armv8/${{ matrix.image }}-raspberrypi-armv8.rootfs.wic ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.img
           ls -la ${{ github.workspace }}/zipfile/
       - name: cp image (aws-ec2) to zip dir
         if: startsWith(matrix.device, 'aws-ec2')

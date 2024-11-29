@@ -64,7 +64,7 @@ RouteMetric=20
 ClientIdentifier=mac
 
 
-static example:
+static ip example:
 
 [Match]
 Name=wl*
