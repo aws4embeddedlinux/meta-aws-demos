@@ -88,10 +88,17 @@ SYSTEMD_SERVICE:${PN} = "\
 inherit systemd cmake pkgconfig useradd features_check ptest
 
 gg_workingdir = "${localstatedir}/lib/greengrass"
-gg_user = "ggc_user"
-gg_group = "ggc_group"
 
-# set user and group for greengrass-lite
+# https://github.com/aws-greengrass/aws-greengrass-lite/blob/main/docs/INSTALL.md#usergroup
+# user and group for greengrass itself
+gg_user = "ggcore"
+gg_group = "ggcore"
+
+# default user and group for greengrass components
+ggc_user = "ggc_user"
+ggc_group = "ggc_group"
+
+# set user and group for greengrass-lite itself
 EXTRA_OECMAKE:append = " -DGGL_SYSTEMD_SYSTEM_USER=${gg_user}"
 EXTRA_OECMAKE:append = " -DGGL_SYSTEMD_SYSTEM_GROUP=${gg_group}"
 EXTRA_OECMAKE:append = " -DGGL_SYSTEMD_SYSTEM_DIR=${systemd_system_unitdir}"
@@ -115,5 +122,5 @@ do_install:append() {
 }
 
 USERADD_PACKAGES = "${PN}"
-GROUPADD_PARAM:${PN} = "-r ${gg_group}"
-USERADD_PARAM:${PN} = "-r -M -N -g  ${gg_group} -s /bin/false ${gg_user}"
+GROUPADD_PARAM:${PN} = "-r ${gg_group}; -r ${ggc_group}"
+USERADD_PARAM:${PN} = "-r -M -N -g  ${gg_group} -s /bin/false ${gg_user}; -r -M -N -g  ${ggc_group} -s /bin/false ${ggc_user}"
