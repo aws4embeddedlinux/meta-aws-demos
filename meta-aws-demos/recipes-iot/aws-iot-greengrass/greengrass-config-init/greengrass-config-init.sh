@@ -9,7 +9,7 @@ if [ -e /dev/mmcblk0p1 ]; then
     if [ -n "$config_zip" ]; then
         echo "connectionKit zip found"
 
-        if [ -e /usr/bin/ggconfigd ]; then
+        if [ -d /etc/greengrass ]; then
             echo "ggconfigd found - gg-lite"
             config_file="/etc/greengrass/config.yaml"
             unzip -jo $config_zip -d /etc/greengrass/
@@ -24,23 +24,13 @@ if [ -e /dev/mmcblk0p1 ]; then
             rm -rf /greengrass/v2/config/*
             yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' /greengrass/v2/config.yaml.fragment  /greengrass/v2/greengrass-classic.yaml.fragment > $config_file            
         else
-            echo "ggconfigd and no directory /greengrass/v2/ found - doing nothing"    
+            echo "no directory /greengrass/v2/ or /etc/greengrass found - doing nothing"    
             exit -1        
         fi
         chmod 644 $config_file
         rm $config_zip
-        THING_NAME=$(grep 'thingName:' $config_file | awk '{print $2}' | tr -d '"' | sed 's/_//g')
         sync
         
-        # TODO not working on readonly
-        #if [ ! -z "$THING_NAME" ]; then
-        #    echo "setting hostname to: $THING_NAME"
-        #    sysctl kernel.hostname=$THING_NAME
-        #    echo $THING_NAME > /etc/hostname
-        #    sed -i 's/127.0.1.1.*/127.0.1.1\t'"$THING_NAME"'/g' /data/etc/hosts 
-        #    sync
-        # TODO not working            
-        #fi
     fi
     if [ -f /tmp/mmcblk0p1/wpa_supplicant.conf ]; then
         echo "wpa_supplicant.conf found"
@@ -56,4 +46,17 @@ if [ -e /dev/mmcblk0p1 ]; then
     fi
     umount /tmp/mmcblk0p1
     sync
+
+    # setting hostname to thingname
+    if [ -f /etc/greengrass/config.yaml ]; then
+        config_file="/etc/greengrass/config.yaml"
+    elif [ -f /greengrass/v2/config/config.yaml ]; then
+        config_file="/greengrass/v2/config/config.yaml"
+    else
+        echo "no config is found, doing nothing"
+        exit 0
+    fi
+    THING_NAME=$(grep 'thingName:' $config_file | awk '{print $2}' | tr -d '"' | sed 's/_//g')
+    echo "setting hostname to: $THING_NAME"        
+    hostname $THING_NAME
 fi
