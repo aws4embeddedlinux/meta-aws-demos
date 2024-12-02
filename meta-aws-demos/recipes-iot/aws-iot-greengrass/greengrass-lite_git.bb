@@ -98,10 +98,14 @@ gg_group = "ggcore"
 ggc_user = "ggc_user"
 ggc_group = "ggc_group"
 
+# ${systemd_system_unitdir} would be /lib/systemd/system
+# ggl_systemd_system_dir = "${sysconfdir}/systemd/system"
+ggl_systemd_system_dir = "${systemd_system_unitdir}"
+
 # set user and group for greengrass-lite itself
 EXTRA_OECMAKE:append = " -DGGL_SYSTEMD_SYSTEM_USER=${gg_user}"
 EXTRA_OECMAKE:append = " -DGGL_SYSTEMD_SYSTEM_GROUP=${gg_group}"
-EXTRA_OECMAKE:append = " -DGGL_SYSTEMD_SYSTEM_DIR=${systemd_system_unitdir}"
+EXTRA_OECMAKE:append = " -DGGL_SYSTEMD_SYSTEM_DIR=${ggl_systemd_system_dir}"
 
 do_install:append() {
 

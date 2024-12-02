@@ -13,11 +13,16 @@ IMAGE_INSTALL += "\
     "
 ### AWS ###
 IMAGE_INSTALL:append = " greengrass-bin udev"
+IMAGE_INSTALL:append = " aws-iot-device-sdk-python-v2"
+
+### rauc ###
+CORE_IMAGE_EXTRA_INSTALL:append = " rauc-grow-data-part"
 
 # only adding if device is rpi, as others might have a different partition layout
 IMAGE_INSTALL:append:rpi = " greengrass-config-init yq"
 # this will allow kernel updates with rauc
 IMAGE_INSTALL:append = " kernel-image kernel-modules"
+
 ### tmux ###
 IMAGE_INSTALL:append = " tmux"
 GLIBC_GENERATE_LOCALES = "en_US.UTF-8 UTF-8"
@@ -34,7 +39,7 @@ IMAGE_INSTALL:append = " ssh openssh-sshd openssh-sftp openssh-scp"
 IMAGE_INSTALL:append = " sudo"
 
 # this will disable root password - be warned!
-EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+EXTRA_IMAGE_FEATURES ?= "empty-root-password"
 
 ### license compliance ###
 COPY_LIC_MANIFEST = "1"
@@ -65,11 +70,11 @@ devpts               /dev/pts             devpts     mode=0620,ptmxmode=0666,gid
 tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,strictatime 0  0
 tmpfs                /var/volatile        tmpfs      defaults              0  0
 LABEL=boot  /boot   vfat    defaults         0       0
-LABEL=data     /data     ext4    defaults        0       0
-LABEL=home     /home     ext4    x-systemd.growfs        0       0
+LABEL=data     /data     ext4    x-systemd.growfs        0       0
 /data/etc/wpa_supplicant             /etc/wpa_supplicant             none    bind            0       0
 /data/etc/systemd/network            /etc/systemd/network            none    bind            0       0
 /data/greengrass/v2/     /greengrass/v2/      none    bind            0       0
+/data/home/     /home      none    bind            0       0
 EOF
 
 install -d -m 0755 ${IMAGE_ROOTFS}/data
@@ -97,4 +102,7 @@ ln -sf /data/etc/hostname ${IMAGE_ROOTFS}/etc/hostname
 mv -f ${IMAGE_ROOTFS}/etc/hosts ${IMAGE_ROOTFS}/data/etc/hosts
 ln -sf /data/etc/hosts ${IMAGE_ROOTFS}/etc/hosts
 
+ln -sf /${libdir}/systemd/system/systemd-time-wait-sync.service ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
+
+install -d ${IMAGE_ROOTFS}/data/home
 }
