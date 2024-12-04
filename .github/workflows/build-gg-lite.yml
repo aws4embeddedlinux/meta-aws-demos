@@ -12,7 +12,11 @@ on:
         type: boolean
         required: false
         default: false
-
+      upload-source-zip:
+        description: 'source zip files should be uploaded to GH artifact store and a link will provided, this means also building without network'
+        type: boolean
+        required: false
+        default: false
   push:
     branches:
       - master-next
@@ -61,7 +65,8 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
-      - name: build
+      - name: build fast
+        if: ${{ !inputs.upload-source-zip }}
         shell: bash
         run: |
            chown yoctouser /sstate-cache
@@ -78,6 +83,23 @@ jobs:
             export BB_ENV_PASSTHROUGH_ADDITIONS="$BB_ENV_PASSTHROUGH_ADDITIONS SSTATE_DIR DL_DIR" && \
             export DEVICE=${{ matrix.device }}  && \
             export IMAGE=${{ matrix.image }} && \
+            bitbake $IMAGE '
+      - name: fetch sources and build from pre-fetched sources without network
+        if: inputs.upload-source-zip
+        shell: bash
+        run: |
+           chown -R yoctouser .
+           sysctl vm.mmap_min_addr=65536
+           env
+           sudo -u yoctouser bash -c '\
+            whoami && \
+            id && \
+            . init-build-env &&
+            export BB_ENV_PASSTHROUGH_ADDITIONS="$BB_ENV_PASSTHROUGH_ADDITIONS" && \
+            export DEVICE=${{ matrix.device }}  && \
+            export IMAGE=${{ matrix.image }} && \
+            bitbake $IMAGE --runall=fetch && \
+            echo BB_NO_NETWORK = \"1\" > conf/site.conf && \
             bitbake $IMAGE '
       - name: Generate readme
         run: |
@@ -116,4 +138,12 @@ jobs:
           name: ${{ matrix.image }}_${{ matrix.device }}
           path: |
             ${{ github.workspace }}/zipfile/*
+          retention-days: 1
+      - name: Upload sourece zipfile
+        if:  (startsWith(matrix.device, 'raspberrypi') || startsWith(matrix.device, 'aws-ec2') ) && inputs.upload-source-zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.image }}_${{ matrix.device }}_downloads
+          path: |
+            ${{ github.workspace }}/build/downloads/*
           retention-days: 1
