@@ -18,3 +18,8 @@ IMAGE_INSTALL:append = " sudo"
 
 # this will disable root password - be warned!
 EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+
+### license compliance ###
+COPY_LIC_MANIFEST = "1"
+
+COPY_LIC_DIRS = "1"

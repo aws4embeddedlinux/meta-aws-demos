@@ -27,6 +27,8 @@ https://github.com/aws-greengrass/aws-greengrass-lite
 This image has been build from this source:
 {{ VERSION_LINK }}
 
+The Greengrass Lite package version in this image:  {{ GREENGRASS_PV }}
+Build from source code revision: {{ GREENGRASS_SRCREV }}
 
 ###############################################################################
 #

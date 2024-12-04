@@ -2,18 +2,18 @@ name: build-gg-lite
 on:
   workflow_dispatch:
     inputs:
-      clean:
-        description: 'clean sstate + downloads dir, force download + rebuild of everything'
-        type: boolean
-        required: false
-        default: false
       upload-zip:
-        description: 'zip files should be uploaded to GH artifact store and a link will provided'
+        description: 'Create image zip files, upload to GH artifact store and provide a link.'
         type: boolean
         required: false
         default: false
       upload-source-zip:
-        description: 'source zip files should be uploaded to GH artifact store and a link will provided, this means also building without network'
+        description: 'Create source zip files, upload to GH artifact store and a provide a link, this means also building images without network.'
+        type: boolean
+        required: false
+        default: false
+      clean:
+        description: 'Clean sstate + downloads dir, force download + rebuild of everything.'
         type: boolean
         required: false
         default: false
@@ -83,7 +83,9 @@ jobs:
             export BB_ENV_PASSTHROUGH_ADDITIONS="$BB_ENV_PASSTHROUGH_ADDITIONS SSTATE_DIR DL_DIR" && \
             export DEVICE=${{ matrix.device }}  && \
             export IMAGE=${{ matrix.image }} && \
-            bitbake $IMAGE '
+            bitbake $IMAGE && \
+            bitbake-getvar -q --value -r greengrass-lite SRCREV > GREENGRASS_SRCREV && \
+            bitbake-getvar -q --value -r greengrass-lite PV > GREENGRASS_PV '
       - name: fetch sources and build from pre-fetched sources without network
         if: inputs.upload-source-zip
         shell: bash
@@ -100,13 +102,24 @@ jobs:
             export IMAGE=${{ matrix.image }} && \
             bitbake $IMAGE --runall=fetch && \
             echo BB_NO_NETWORK = \"1\" > conf/site.conf && \
-            bitbake $IMAGE '
+            bitbake $IMAGE && \
+            bitbake-getvar -q --value -r greengrass-lite SRCREV > GREENGRASS_SRCREV && \
+            bitbake-getvar -q --value -r greengrass-lite PV > GREENGRASS_PV '
       - name: Generate readme
         run: |
              mkdir ${{ github.workspace }}/zipfile/
              cp ${{ github.workspace }}/.github/workflows/build-gg-artifacts/readme-greengrass-lite-template.txt ${{ github.workspace }}/zipfile/readme.txt
              cat ${{ github.workspace }}/.github/workflows/build-gg-artifacts/readme-license.txt >> ${{ github.workspace }}/zipfile/readme.txt
              sed -i 's|{{ VERSION_LINK }}|${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|g' ${{ github.workspace }}/zipfile/readme.txt
+             sed -i "s|{{ GREENGRASS_SRCREV }}|$(cat ${{ github.workspace }}/build/GREENGRASS_SRCREV)|g" ${{ github.workspace }}/zipfile/readme.txt
+             sed -i "s|{{ GREENGRASS_PV }}|$(cat ${{ github.workspace }}/build/GREENGRASS_PV)|g" ${{ github.workspace }}/zipfile/readme.txt
+      - name: Generate readme, raspberrypi-64
+        if: ${{ startsWith(matrix.device, 'raspberrypi-64') && startsWith(matrix.image, 'aws-iot-greengrass-lite-demo-image') }}
+        run: |
+             echo -e "\n###############################################################################\n#" >> ${{ github.workspace }}/zipfile/readme.txt
+             echo -e "# LIST OF PACKAGES WITH THEIR LICENSE AND VERSION\n#" >> ${{ github.workspace }}/zipfile/readme.txt
+             echo -e "###############################################################################\n" >> ${{ github.workspace }}/zipfile/readme.txt
+             cat ${{ github.workspace }}/build/tmp/deploy/licenses/raspberrypi_armv8/${{ matrix.image }}-raspberrypi-armv8.rootfs/license.manifest >> ${{ github.workspace }}/zipfile/readme.txt
       - name: cp image (raspberrypi) to zip dir
         if: startsWith(matrix.device, 'raspberrypi2')
         shell: bash

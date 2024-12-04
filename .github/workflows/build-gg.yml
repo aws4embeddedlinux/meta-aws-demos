@@ -2,13 +2,18 @@ name: build-gg
 on:
   workflow_dispatch:
     inputs:
-      clean:
-        description: 'clean sstate + downloads dir, force download + rebuild of everything'
+      upload-zip:
+        description: 'Create image zip files, upload to GH artifact store and provide a link.'
         type: boolean
         required: false
         default: false
-      upload-zip:
-        description: 'zip files should be uploaded to GH artifact store and a link will provided'
+      upload-source-zip:
+        description: 'Create source zip files, upload to GH artifact store and a provide a link, this means also building images without network.'
+        type: boolean
+        required: false
+        default: false
+      clean:
+        description: 'Clean sstate + downloads dir, force download + rebuild of everything.'
         type: boolean
         required: false
         default: false
@@ -59,7 +64,8 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
-      - name: build
+      - name: build fast
+        if: ${{ !inputs.upload-source-zip }}
         shell: bash
         run: |
            chown yoctouser /sstate-cache
@@ -76,13 +82,40 @@ jobs:
             export BB_ENV_PASSTHROUGH_ADDITIONS="$BB_ENV_PASSTHROUGH_ADDITIONS SSTATE_DIR DL_DIR" && \
             export DEVICE=${{ matrix.device }}  && \
             export IMAGE=${{ matrix.image }} && \
-            bitbake $IMAGE '
+            bitbake $IMAGE && \
+            bitbake-getvar -q --value -r greengrass-bin PV > GREENGRASS_PV '
+      - name: fetch sources and build from pre-fetched sources without network
+        if: inputs.upload-source-zip
+        shell: bash
+        run: |
+           chown -R yoctouser .
+           sysctl vm.mmap_min_addr=65536
+           env
+           sudo -u yoctouser bash -c '\
+            whoami && \
+            id && \
+            . init-build-env &&
+            export BB_ENV_PASSTHROUGH_ADDITIONS="$BB_ENV_PASSTHROUGH_ADDITIONS" && \
+            export DEVICE=${{ matrix.device }}  && \
+            export IMAGE=${{ matrix.image }} && \
+            bitbake $IMAGE --runall=fetch && \
+            echo BB_NO_NETWORK = \"1\" > conf/site.conf && \
+            bitbake $IMAGE && \
+            bitbake-getvar -q --value -r greengrass-bin PV > GREENGRASS_PV '
       - name: Generate readme
         run: |
              mkdir ${{ github.workspace }}/zipfile/
              cp ${{ github.workspace }}/.github/workflows/build-gg-artifacts/readme-greengrass-template.txt ${{ github.workspace }}/zipfile/readme.txt
              cat ${{ github.workspace }}/.github/workflows/build-gg-artifacts/readme-license.txt >> ${{ github.workspace }}/zipfile/readme.txt
              sed -i 's|{{ VERSION_LINK }}|${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|g' ${{ github.workspace }}/zipfile/readme.txt
+             sed -i "s|{{ GREENGRASS_PV }}|$(cat ${{ github.workspace }}/build/GREENGRASS_PV)|g" ${{ github.workspace }}/zipfile/readme.txt
+      - name: Generate readme, raspberrypi-64
+        if: ${{ startsWith(matrix.device, 'raspberrypi-64') && startsWith(matrix.image, 'aws-iot-greengrass-demo-image') }}
+        run: |
+             echo -e "\n###############################################################################\n#" >> ${{ github.workspace }}/zipfile/readme.txt
+             echo -e "# LIST OF PACKAGES WITH THEIR LICENSE AND VERSION\n#" >> ${{ github.workspace }}/zipfile/readme.txt
+             echo -e "###############################################################################\n" >> ${{ github.workspace }}/zipfile/readme.txt
+             cat ${{ github.workspace }}/build/tmp/deploy/licenses/raspberrypi_armv8/${{ matrix.image }}-raspberrypi-armv8.rootfs/license.manifest >> ${{ github.workspace }}/zipfile/readme.txt
       - name: cp image (raspberrypi) to zip dir
         if: startsWith(matrix.device, 'raspberrypi2')
         shell: bash
@@ -114,4 +147,12 @@ jobs:
           name: ${{ matrix.image }}_${{ matrix.device }}
           path: |
             ${{ github.workspace }}/zipfile/*
+          retention-days: 1
+      - name: Upload sourece zipfile
+        if:  (startsWith(matrix.device, 'raspberrypi') || startsWith(matrix.device, 'aws-ec2') ) && inputs.upload-source-zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.image }}_${{ matrix.device }}_downloads
+          path: |
+            ${{ github.workspace }}/build/downloads/*
           retention-days: 1
