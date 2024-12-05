@@ -1,16 +1,25 @@
-# ec2-arm64
+# aws-ec2-arm64
 
-Shows [ec2 AMI generation](https://github.com/aws4embeddedlinux/meta-aws/blob/master/scripts/ec2-ami/README.md) features.
+Shows [EC2 AMI generation](https://github.com/aws4embeddedlinux/meta-aws/blob/master/scripts/ec2-ami/README.md) feature.
 
-## build an ec2-arm64 image with greengrass-bin installed and create an EC2 AMI
+## build an aws-ec2-arm64 image and create an EC2 AMI from it
 
-* Build the image
-
+### Set the DEVICE
 ```bash
-export DEVICE=ec2-arm64
-bitbake aws-demo-image
+export DEVICE=aws-ec2-arm64
 ```
-* Upload this image to your ec2 account (follow instructions to set this up before!)
+
+### Set the IMAGE (e.g. aws-demo-image)
+```bash
+export IMAGE=aws-demo-image
+```
+
+### Build the IMAGE
+```bash
+bitbake $IMAGE
+```
+
+### Upload this image to your ec2 account (follow instructions to setup this up before!)
 ```bash
 cd ..
 meta-aws-demos$ layers/sw/meta-aws/scripts/ec2-ami/create-ec2-ami.sh amitest-bucket 16 aws-demo-image aws-ec2-arm64

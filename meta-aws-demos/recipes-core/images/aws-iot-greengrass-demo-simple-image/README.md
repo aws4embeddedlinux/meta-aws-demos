@@ -1,6 +1,5 @@
-# aws-greengrass-demo-simple-image
-A image to use demo greengrass-bin
+# aws-iot-greengrass-demo-simple-image
 
-## Fleet Provisioning for Embedded Linux Devices with AWS IoT Greengrass
-this blog post:
-https://dev.to/iotbuilders/fleet-provisioning-for-embedded-linux-devices-with-aws-iot-greengrass-4h8b
+This image is similar to [aws-iot-greengrass-demo-image](../aws-iot-greengrass-demo-image/README.md)
+
+The main difference it is just one rw rootfs partition..

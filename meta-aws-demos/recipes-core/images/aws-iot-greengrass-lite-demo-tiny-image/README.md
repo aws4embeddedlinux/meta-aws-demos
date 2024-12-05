@@ -1,6 +1,5 @@
-# aws-greengrass-test-image
-A image to use test greengrass-bin
+# aws-iot-greengrass-lite-demo-tiny-image
 
-## Fleet Provisioning for Embedded Linux Devices with AWS IoT Greengrass
-this blog post:
-https://dev.to/iotbuilders/fleet-provisioning-for-embedded-linux-devices-with-aws-iot-greengrass-4h8b
+This image is similar to [aws-iot-greengrass-lite-demo-image](../aws-iot-greengrass-lite-demo-image/README.md)
+
+The main difference it is just one rootfs partition and linked to libmusl to create a tiny image.

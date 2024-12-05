@@ -1,4 +1,4 @@
-# Build AWS IoT Greengrass v2.0 on the NXP i.MX8MQEVK and i.MX8MPEVK
+# Build for the NXP i.MX8MQEVK and i.MX8MPEVK
 
 The whole image can be build with this
 ```bash

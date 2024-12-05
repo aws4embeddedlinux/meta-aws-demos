@@ -18,6 +18,7 @@ The number of demonstrations will increase over time and your
 contributions are very welcome!
 
 ## Demonstration environments
+
 The DEMOs consist of a combination of a DEVICE, which represent a hardware and an IMAGE showcasing a use-case.
 
 ## Device
@@ -38,6 +39,7 @@ alphabetical order for ease of selection, no preference should be inferred.
 - [`xilinx-zcu104-zynqmp` / Xilinx](meta-aws-demos/conf/devices/xilinx-zcu104-zynqmp/README.md)
 
 ## Images
+
 Generally you can build all images for all "Devices", but some combinations do not work or do not make sense!
 
 - [aws-demo-image](meta-aws-demos/recipes-core/images/aws-demo-image/README.md)
@@ -45,6 +47,11 @@ Generally you can build all images for all "Devices", but some combinations do n
 - [aws-iot-fleetwise-test-image-agl](meta-aws-demos/recipes-core/images/aws-iot-fleetwise-test-image-agl/README.md)
 - [aws-iot-fleetwise-test-image](meta-aws-demos/recipes-core/images/aws-iot-fleetwise-test-image/README.md)
 - [aws-iot-greengrass-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-demo-image/README.md)
+- [aws-iot-greengrass-demo-simple-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-demo-simple-image/README.md)
+- [aws-iot-greengrass-lite-container-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-container-demo-image/README.md)
+- [aws-iot-greengrass-lite-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-image/README.md)
+- [aws-iot-greengrass-lite-demo-simple-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-simple-image/README.md)
+- [aws-iot-greengrass-lite-demo-tiny-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-tiny-image/README.md)
 - [aws-webrtc-demo-image](meta-aws-demos/recipes-core/images/aws-webrtc-demo-image/README.md)
 
 > [!IMPORTANT]
@@ -63,9 +70,14 @@ bitbake $IMAGE
 runqemu slirp nographic
 ```
 
+## Build requirements
+
 Please also consider these build host [requirements](https://docs.yoctoproject.org/ref-manual/system-requirements.html#required-packages-for-the-build-host).
-> [!IMPORTANT]
-> `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0`  is needed for bitbake on Ubuntu 24.04
+-> At least 100GB of free hard disk space is required!
+
+### Ubuntu 24.04
+
+- `sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0`  is needed for bitbake
 
 ## Setup
 
@@ -97,7 +109,7 @@ To build for a different device, set the `DEVICE` (see [here](#Demonstration-env
 like this:
 
 ```bash
-export DEVICE=ec2-arm64
+export DEVICE=aws-c2-arm64
 export IMAGE=aws-demo-image
 bitbake $IMAGE
 ```
@@ -111,31 +123,28 @@ will list all devices that can be configured. This can be used to build all devi
 for d in $(get_devices); do for i in $(get_images); do DEVICE=$d IMAGE=$i && echo $DEVICE && echo $IMAGE && bitbake $i; done; done
 ```
 
-## Adding new platforms
+## Adding new images, devices
 
 New platforms can be added by adding a new directory under
 `meta-aws-demos/conf/devices`. This directory should contain 2 files:
 
 `layers.conf`: This is the file that will be required in `bblayers.conf` when
-the product is selected
+the device is selected
 
 `config.conf`: This is the file that will be required in `local.conf` when the
-product is selected
+device is selected
 
-## Why choose build configurations this way?
+New images can be added by adding a new directory under
+`meta-aws-demos/recipes-core/images/`. This directory can contain 2 files:
 
-`TEMPLATECONF` is a great mechanism for initially populating a build
-configuration, but it has a few shortcomings that arise because it will only
-write the files if they don't already exist. Because of this, it's not suitable
-to _share_ device configuration because users won't automatically get the new
-configuration for a build when they change revisions in the repository. The
-solution to this problem is quite simple though: Instead of including the build
-configuration directly in the template files, the template files instead
-`require` a file that is checked into source control. By doing this, users will
-automatically get the correct build configuration when changing revisions, but
-can still override anything they want in their `local.conf`
+`layers.conf`: This is the file that will be optionally included in `bblayers.conf` when
+the image is selected
+
+`config.conf`: This is the file that will be optionally included in `local.conf` when the
+image is selected
 
 ## Updating submodules to latest version of specified branch is easy.
+
 The following will update upstream submodule changes recursively:
 ```bash
 git submodule update --remote --init --recursive

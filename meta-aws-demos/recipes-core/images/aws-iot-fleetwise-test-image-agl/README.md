@@ -1,4 +1,5 @@
-# AGL version of FleetWise Edge Agent
+# aws-iot-fleetwise-test-image-agl
+AGL version of FleetWise Edge Agent image.
 
 This example showcases how to run, include, configure, and use an AWS IoT Fleetwise Edge Agent.
 

@@ -10,7 +10,8 @@ for local execution.
 This zip file contains a demo image that allow you to start quick with
 AWS Greengrass. The image is build to work on Raspberry PI 3,4,5 as it is 64bit.
 
-For the latest version of this image look here:
+For the latest version of this image look here, also see options to
+build, extend it yourself:
 https://github.com/aws4embeddedlinux/meta-aws-demos/releases
 
 For other installation possibilities look here:
