@@ -159,4 +159,5 @@ jobs:
           name: ${{ matrix.image }}_${{ matrix.device }}_downloads
           path: |
             ${{ github.workspace }}/build/downloads/*
+            !${{ github.workspace }}/build/downloads/*/
           retention-days: 1
