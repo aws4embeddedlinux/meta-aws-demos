@@ -92,7 +92,7 @@ DNS=8.8.8.8 8.8.4.4
 6. Password for "root" user is empty. Please note that this can be a security risk and should be changed
 when using device in a public environment! SSH is enabled by default to connect over the network!
 You can use the thing name to connect to the device via ssh, this is set as hostname,
-and annouced by mdns. Note that underscores in a thing name will be removed!
+and announced by mdns. Note that underscores in a thing name will be removed!
 
 Login: root
 Password:
