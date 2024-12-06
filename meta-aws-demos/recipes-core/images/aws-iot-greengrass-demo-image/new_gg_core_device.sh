@@ -58,11 +58,15 @@ DEVICE_ROLE_TRUST_POLICY_DOCUMENT='{
 "Version": "2012-10-17",
   "Statement": [
     {
-"Effect": "Allow",
+      "Effect": "Allow",
       "Principal": {
-"Service": "credentials.iot.amazonaws.com"
-      },
+        "Service": [
+              "credentials.iot.amazonaws.com",
+              "iot.amazonaws.com"
+              ]
+      }              
       "Action": "sts:AssumeRole"
+
     }
   ]
 }'
@@ -79,15 +83,13 @@ else
   echo "$create_role_output"
 fi
 
-
-
 # Create a IAM policy
 DEVICE_ROLE_ACCESS_POLICY_NAME=GreengrassV2TokenExchangeRoleAccess
 DEVICE_ROLE_ACCESS_POLICY_DOCUMENT='{
 "Version": "2012-10-17",
   "Statement": [
     {
-"Effect": "Allow",
+      "Effect": "Allow",
       "Action": [
         "logs:CreateLogGroup",
         "logs:CreateLogStream",
@@ -175,9 +177,9 @@ services:
         componentType: "NUCLEUS"
         configuration:
             awsRegion: "$AWS_REGION"
-      iotCredEndpoint: "`aws --output text iot describe-endpoint --endpoint-type iot:CredentialProvider`"
-      iotDataEndpoint: "`aws --output text iot describe-endpoint --endpoint-type iot:Data-ATS`"
-      iotRoleAlias: "GreengrassV2TokenExchangeCoreDeviceRoleAlias"
+            iotCredEndpoint: "`aws --output text iot describe-endpoint --endpoint-type iot:CredentialProvider`"
+            iotDataEndpoint: "`aws --output text iot describe-endpoint --endpoint-type iot:Data-ATS`"
+            iotRoleAlias: "GreengrassV2TokenExchangeCoreDeviceRoleAlias"
 EOF
 
 # to allow user access the certs and config set to 644
