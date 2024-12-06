@@ -102,6 +102,7 @@ ln -sf /data/etc/hostname ${IMAGE_ROOTFS}/etc/hostname
 mv -f ${IMAGE_ROOTFS}/etc/hosts ${IMAGE_ROOTFS}/data/etc/hosts
 ln -sf /data/etc/hosts ${IMAGE_ROOTFS}/etc/hosts
 
+# enable systemd-time-wait-sync as this is important for greengrass to have a correct clock
 ln -sf /${libdir}/systemd/system/systemd-time-wait-sync.service ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
 
 install -d ${IMAGE_ROOTFS}/data/home

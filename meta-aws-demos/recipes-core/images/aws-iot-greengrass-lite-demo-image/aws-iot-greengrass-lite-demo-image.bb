@@ -104,6 +104,7 @@ install -d ${IMAGE_ROOTFS}/data/var/lib/greengrass
 install -d ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
 ln -sf /${libdir}/systemd/system/wpa_supplicant@.service ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/wpa_supplicant@wlan0.service
 
+# enable systemd-time-wait-sync as this is important for greengrass to have a correct clock
 ln -sf /${libdir}/systemd/system/systemd-time-wait-sync.service ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
 
 install -d ${IMAGE_ROOTFS}/data/home
