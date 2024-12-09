@@ -85,7 +85,7 @@ jobs:
             bitbake $IMAGE && \
             bitbake-getvar -q --value -r greengrass-bin PV > GREENGRASS_PV '
       - name: fetch sources and build from pre-fetched sources without network
-        if: inputs.upload-source-zip
+        if: ${{ inputs.upload-source-zip && startsWith(matrix.device, 'raspberrypi-64') && startsWith(matrix.image, 'aws-iot-greengrass-demo-image') }}
         shell: bash
         run: |
            chown -R yoctouser .
@@ -100,6 +100,9 @@ jobs:
             export IMAGE=${{ matrix.image }} && \
             bitbake $IMAGE --runall=fetch && \
             echo BB_NO_NETWORK = \"1\" > conf/site.conf && \
+            mv ${{ github.workspace }}/build/downloads/git2/github.com.mikefarah.yq  ${{ github.workspace }}/build/downloads && \
+            rm -rf {{ github.workspace }}/build/downloads/git2/* && \
+            mv ${{ github.workspace }}/build/downloads/github.com.mikefarah.yq ${{ github.workspace }}/build/downloads/git2/ && \
             bitbake $IMAGE && \
             bitbake-getvar -q --value -r greengrass-bin PV > GREENGRASS_PV '
       - name: Generate readme
@@ -156,4 +159,5 @@ jobs:
           path: |
             ${{ github.workspace }}/build/downloads/*
             !${{ github.workspace }}/build/downloads/*/
+            ${{ github.workspace }}/build/downloads/git2/github.com.mikefarah.yq
           retention-days: 1
