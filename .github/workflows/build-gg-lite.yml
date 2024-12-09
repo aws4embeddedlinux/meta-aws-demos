@@ -102,6 +102,7 @@ jobs:
             export IMAGE=${{ matrix.image }} && \
             bitbake $IMAGE --runall=fetch && \
             echo BB_NO_NETWORK = \"1\" > conf/site.conf && \
+            rm -rf downloads/git2/* && \
             bitbake $IMAGE && \
             bitbake-getvar -q --value -r greengrass-lite SRCREV > GREENGRASS_SRCREV && \
             bitbake-getvar -q --value -r greengrass-lite PV > GREENGRASS_PV '
