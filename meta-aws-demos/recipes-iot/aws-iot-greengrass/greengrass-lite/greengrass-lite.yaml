@@ -2,7 +2,7 @@
 system:
   rootPath: "@GG_WORKING_DIR@"
 services:
-  aws.greengrass.Nucleus-Lite:
+  aws.greengrass.NucleusLite:
     componentType: "NUCLEUS"
     configuration:
       runWithDefault:
