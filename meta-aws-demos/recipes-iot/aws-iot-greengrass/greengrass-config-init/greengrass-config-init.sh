@@ -13,7 +13,7 @@ if [ -e /dev/mmcblk0p1 ]; then
             echo "ggconfigd found - gg-lite"
             config_file="/etc/greengrass/config.yaml"
             unzip -jo $config_zip -d /etc/greengrass/
-            sed -i -e s:{{config_dir}}:\/etc\/greengrass:g -e s:{{nucleus_component}}:aws.greengrass.Nucleus-Lite:g $config_file
+            sed -i -e s:{{config_dir}}:\/etc\/greengrass:g -e s:{{nucleus_component}}:aws.greengrass.NucleusLite:g $config_file
         elif [ -d "/greengrass/v2/" ]; then
             echo "/greengrass/v2/ found - gg-classic"
             config_file="/greengrass/v2/config/config.yaml"
