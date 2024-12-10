@@ -1,5 +1,6 @@
-FILESEXTRAPATHS:prepend:rpi := "${THISDIR}/greengrass-bin:"
+# This are the necessary changes to make greengrass-bin using greengrass-config-init
 
+FILESEXTRAPATHS:prepend:rpi := "${THISDIR}/greengrass-bin:"
 
 SRC_URI:append:rpi = " \
     file://greengrass-classic.yaml \
