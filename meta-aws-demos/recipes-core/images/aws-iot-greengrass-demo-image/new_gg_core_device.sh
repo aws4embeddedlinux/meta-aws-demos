@@ -53,7 +53,7 @@ fi
 aws iot attach-policy --policy-name "$GREENGRASS_V2_IOT_ROLE_NAME" --target `jq -r '.certificateArn' $NEW_GG_CORE_DEVICE/create-keys-and-certificate.json`
 
 # Create a token exchange role
-GREENGRASS_V2_TOKEN_EXCHANGE_ROLE_NAME=GreengrassV2TokenExchangeRole
+GREENGRASS_V2_TOKEN_EXCHANGE_ROLE_NAME=GreengrassV2CoreDeviceRole
 DEVICE_ROLE_TRUST_POLICY_DOCUMENT='{
 "Version": "2012-10-17",
   "Statement": [
@@ -84,7 +84,7 @@ else
 fi
 
 # Create a IAM policy
-DEVICE_ROLE_ACCESS_POLICY_NAME=GreengrassV2TokenExchangeRoleAccess
+DEVICE_ROLE_ACCESS_POLICY_NAME=GreengrassV2TokenExchangeCoreDeviceRoleAlias
 DEVICE_ROLE_ACCESS_POLICY_DOCUMENT='{
 "Version": "2012-10-17",
   "Statement": [
