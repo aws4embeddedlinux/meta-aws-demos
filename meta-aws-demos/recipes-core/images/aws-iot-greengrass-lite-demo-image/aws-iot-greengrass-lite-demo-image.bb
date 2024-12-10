@@ -15,6 +15,7 @@ IMAGE_INSTALL += "\
 ### AWS ###
 IMAGE_INSTALL:append = " greengrass-lite"
 IMAGE_INSTALL:append = " aws-iot-device-sdk-python-v2"
+IMAGE_INSTALL:append = " jq"
 
 ### rauc ###
 CORE_IMAGE_EXTRA_INSTALL:append = " rauc-grow-data-part"
@@ -55,7 +56,8 @@ COPY_LIC_DIRS = "1"
 # IMAGE_INSTALL:append = " lsof"
 
 # this will install all src, dbg packages to allow proper debugging with gdb
-# EXTRA_IMAGE_FEATURES:append = " src-pkgs dbg-pkgs"
+# EXTRA_IMAGE_FEATURES:append = " src-pkgs"
+# EXTRA_IMAGE_FEATURES:append = " dbg-pkgs"
 
 IMAGE_FEATURES += "read-only-rootfs"
 
