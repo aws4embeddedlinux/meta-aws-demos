@@ -171,3 +171,40 @@ The rootfs is read only, for development purpose you can mount it read writeable
 ```
 mount -o remount,rw /
 ```
+
+
+## DEMO A/B update Greengrass component
+```
+---
+RecipeFormatVersion: '2020-01-25'
+ComponentName: 'com.example.AbUpdate'
+ComponentVersion: '1.0.41'
+ComponentDescription: 'Manages A/B system updates using RAUC'
+ComponentPublisher: 'Example Corp'
+ComponentType: 'aws.greengrass.generic'
+Manifests:
+  - Platform:
+      os: 'linux'
+    Lifecycle:
+      bootstrap:
+        Script: |
+          echo Bootstrap
+          sudo rauc install {artifacts:path}/update.raucb
+        RequiresPrivilege: true
+      startup:
+        Script: |
+          echo Startup
+          rauc status
+          current_booted_slot_bundle_hash=$(rauc status --detailed --output-format=json-pretty | jq -r '.slots[] | select(.[].state == "booted") | .[].slot_status.bundle.hash')
+          bundle_hash=$(rauc info --output-format=json-pretty {artifacts:path}/update.raucb | jq -r '.hash')
+          if [ "$current_booted_slot_bundle_hash" == "$bundle_hash" ]; then
+              echo "Bundle image hash matches the current running slot"
+              exit 0
+          else
+              echo "Bundle image hash differs from the current running slot"
+              exit 1
+          fi
+    Artifacts:
+      - URI: 's3://2024-11-27-us-east-1ab-update/update.raucb'
+        Unarchive: 'NONE'
+```
