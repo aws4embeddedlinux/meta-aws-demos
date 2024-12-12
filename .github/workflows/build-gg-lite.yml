@@ -135,7 +135,8 @@ jobs:
         shell: bash
         run: |
           cp ${{ github.workspace }}/build/tmp/deploy/images/raspberrypi-armv8/${{ matrix.image }}-raspberrypi-armv8.rootfs.wic ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.img
-          [[ "${{ matrix.image }}" == "aws-iot-greengrass-lite-demo-image" ]] && cp ${{ github.workspace }}/build/tmp/deploy/images/raspberrypi-armv8/aws-iot-greengrass-lite-demo-bundle-raspberrypi-armv8.raucb ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.raucb
+          [[ "${{ matrix.image }}" == "aws-iot-greengrass-lite-demo-image" ]] && mkdir ${{ github.workspace }}/bundle/
+          [[ "${{ matrix.image }}" == "aws-iot-greengrass-lite-demo-image" ]] && cp ${{ github.workspace }}/build/tmp/deploy/images/raspberrypi-armv8/aws-iot-greengrass-lite-demo-bundle-raspberrypi-armv8.raucb ${{ github.workspace }}/bundle/${{ matrix.image }}-${{ matrix.device }}.raucb
           ls -la ${{ github.workspace }}/zipfile/
       - name: cp image (aws-ec2) to zip dir
         if: startsWith(matrix.device, 'aws-ec2')
@@ -156,8 +157,8 @@ jobs:
           name: ${{ matrix.image }}_${{ matrix.device }}
           path: |
             ${{ github.workspace }}/zipfile/*
-          retention-days: 1
-      - name: Upload sourece zipfile
+          retention-days: 5
+      - name: Upload src zipfile
         if:  (startsWith(matrix.device, 'raspberrypi') || startsWith(matrix.device, 'aws-ec2') ) && inputs.upload-source-zip
         uses: actions/upload-artifact@v4
         with:
@@ -165,4 +166,12 @@ jobs:
           path: |
             ${{ github.workspace }}/build/downloads/*
             !${{ github.workspace }}/build/downloads/*/
-          retention-days: 1
+          retention-days: 5
+      - name: Upload bundle zipfile
+        if: ${{ startsWith(matrix.device, 'raspberrypi-64') && startsWith(matrix.image, 'aws-iot-greengrass-lite-demo-image') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.image }}_${{ matrix.device }}_raucb
+          path: |
+            ${{ github.workspace }}/bundle/*
+          retention-days: 5
