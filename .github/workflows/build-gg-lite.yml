@@ -84,6 +84,7 @@ jobs:
             export DEVICE=${{ matrix.device }}  && \
             export IMAGE=${{ matrix.image }} && \
             bitbake $IMAGE && \
+            [[ "${{ matrix.image }}" == "aws-iot-greengrass-lite-demo-image" ]] && bitbake aws-iot-greengrass-lite-demo-bundle || true && \
             bitbake-getvar -q --value -r greengrass-lite SRCREV > GREENGRASS_SRCREV && \
             bitbake-getvar -q --value -r greengrass-lite PV > GREENGRASS_PV '
       - name: fetch sources and build from pre-fetched sources without network
@@ -101,9 +102,11 @@ jobs:
             export DEVICE=${{ matrix.device }}  && \
             export IMAGE=${{ matrix.image }} && \
             bitbake $IMAGE --runall=fetch && \
+            [[ "${{ matrix.image }}" == "aws-iot-greengrass-lite-demo-image" ]] && bitbake aws-iot-greengrass-lite-demo-bundle --runall=fetch || true && \
             echo BB_NO_NETWORK = \"1\" > conf/site.conf && \
             rm -rf downloads/git2/* && \
             bitbake $IMAGE && \
+            [[ "${{ matrix.image }}" == "aws-iot-greengrass-lite-demo-image" ]] && bitbake aws-iot-greengrass-lite-demo-bundle  || true && \
             bitbake-getvar -q --value -r greengrass-lite SRCREV > GREENGRASS_SRCREV && \
             bitbake-getvar -q --value -r greengrass-lite PV > GREENGRASS_PV '
       - name: Generate readme
@@ -132,6 +135,7 @@ jobs:
         shell: bash
         run: |
           cp ${{ github.workspace }}/build/tmp/deploy/images/raspberrypi-armv8/${{ matrix.image }}-raspberrypi-armv8.rootfs.wic ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.img
+          [[ "${{ matrix.image }}" == "aws-iot-greengrass-lite-demo-image" ]] && cp ${{ github.workspace }}/build/tmp/deploy/images/raspberrypi-armv8/aws-iot-greengrass-lite-demo-bundle-raspberrypi-armv8.raucb ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.raucb
           ls -la ${{ github.workspace }}/zipfile/
       - name: cp image (aws-ec2) to zip dir
         if: startsWith(matrix.device, 'aws-ec2')
