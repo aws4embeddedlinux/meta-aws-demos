@@ -172,9 +172,35 @@ The rootfs is read only, for development purpose you can mount it read writeable
 mount -o remount,rw /
 ```
 
+# DEMO A/B update Greengrass component
 
-## DEMO A/B update Greengrass component
-```
+## Overview
+
+This Greengrass component, `com.example.AbUpdate`, is designed to manage A/B system updates using RAUC (Robust Auto-Update Controller) on Linux-based systems.
+
+## Description
+
+The component automates the process of installing system updates and verifying the installation. It uses RAUC to handle the A/B update mechanism, ensuring a reliable and fail-safe update process.
+
+## Features
+
+- Automated installation of RAUC bundle updates
+- Verification of successful update installation
+- Comparison of installed bundle hash with current running slot
+
+## Usage
+
+The component operates in two main phases:
+
+1. **Bootstrap**: Installs the RAUC bundle update.
+2. **Startup**: Verifies the installation by comparing the hash of the installed bundle with the currently running slot.
+
+## Configuration
+
+The update file (`update.raucb`) is stored in an S3 bucket. Ensure the S3 URI in the component recipe is updated to point to your specific update file location.
+Do modify the bucket name, version etc.
+
+```yaml
 ---
 RecipeFormatVersion: '2020-01-25'
 ComponentName: 'com.example.AbUpdate'
@@ -185,6 +211,7 @@ ComponentType: 'aws.greengrass.generic'
 Manifests:
   - Platform:
       os: 'linux'
+      runtime: "*"
     Lifecycle:
       bootstrap:
         Script: |
@@ -199,7 +226,6 @@ Manifests:
           bundle_hash=$(rauc info --output-format=json-pretty {artifacts:path}/update.raucb | jq -r '.hash')
           if [ "$current_booted_slot_bundle_hash" == "$bundle_hash" ]; then
               echo "Bundle image hash matches the current running slot"
-              exit 0
           else
               echo "Bundle image hash differs from the current running slot"
               exit 1
