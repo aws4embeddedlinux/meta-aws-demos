@@ -15,7 +15,7 @@ build, extend it yourself:
 https://github.com/aws4embeddedlinux/meta-aws-demos/releases
 
 For other installation possibilities look here:
-https://github.com/aws-greengrass/aws-greengrass-lite
+https://aws.amazon.com/greengrass/
 
 This image has been build from this source:
 {{ VERSION_LINK }}
