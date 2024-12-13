@@ -34,7 +34,7 @@ IMAGE_INSTALL:append = " ssh openssh-sshd openssh-sftp"
 IMAGE_INSTALL:append = " sudo"
 
 # this will disable root password - be warned!
-EXTRA_IMAGE_FEATURES ?= "debug-tweaks"
+EXTRA_IMAGE_FEATURES ?= "allow-empty-password allow-root-login empty-root-password"
 
 ### license compliance ###
 COPY_LIC_MANIFEST = "1"
