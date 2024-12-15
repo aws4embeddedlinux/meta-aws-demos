@@ -16,7 +16,7 @@ IMAGE_INSTALL += "\
 IMAGE_INSTALL:append = " greengrass-lite"
 IMAGE_INSTALL:append = " aws-iot-device-sdk-python-v2"
 IMAGE_INSTALL:append = " jq"
-IMAGE_INSTALL:append = " python3-virtualenv"
+IMAGE_INSTALL:append = " python3-virtualenv python3-pip"
 
 ### rauc ###
 CORE_IMAGE_EXTRA_INSTALL:append = " rauc-grow-data-part"
