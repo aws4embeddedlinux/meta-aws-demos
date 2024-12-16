@@ -83,8 +83,8 @@ jobs:
             export BB_ENV_PASSTHROUGH_ADDITIONS="$BB_ENV_PASSTHROUGH_ADDITIONS SSTATE_DIR DL_DIR" && \
             export DEVICE=${{ matrix.device }}  && \
             export IMAGE=${{ matrix.image }} && \
-            bitbake $IMAGE && \
-            [[ "${{ matrix.image }}" == "aws-iot-greengrass-lite-demo-image" ]] && bitbake aws-iot-greengrass-lite-demo-bundle || true && \
+            bitbake $IMAGE -f && \
+            [[ "${{ matrix.image }}" == "aws-iot-greengrass-lite-demo-image" ]] && bitbake aws-iot-greengrass-lite-demo-bundle -f || true && \
             bitbake-getvar -q --value -r greengrass-lite SRCREV > GREENGRASS_SRCREV && \
             bitbake-getvar -q --value -r greengrass-lite PV > GREENGRASS_PV '
       - name: fetch sources and build from pre-fetched sources without network

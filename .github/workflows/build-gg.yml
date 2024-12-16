@@ -82,7 +82,7 @@ jobs:
             export BB_ENV_PASSTHROUGH_ADDITIONS="$BB_ENV_PASSTHROUGH_ADDITIONS SSTATE_DIR DL_DIR" && \
             export DEVICE=${{ matrix.device }}  && \
             export IMAGE=${{ matrix.image }} && \
-            bitbake $IMAGE && \
+            bitbake $IMAGE -f && \
             bitbake-getvar -q --value -r greengrass-bin PV > GREENGRASS_PV '
       - name: fetch sources and build from pre-fetched sources without network
         if: inputs.upload-source-zip
