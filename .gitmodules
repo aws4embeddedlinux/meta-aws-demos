@@ -106,3 +106,15 @@
 	path = layers/bsp/meta-lts-mixins
 	url = https://git.yoctoproject.org/meta-lts-mixins
 	branch = scarthgap/u-boot
+[submodule "layers/bsp/meta-rockchip"]
+	path = layers/bsp/meta-rockchip
+	url = https://git.yoctoproject.org/meta-rockchip
+	branch = scarthgap
+[submodule "layers/bsp/rockchip-rv1106-dev"]
+	path = layers/bsp/rockchip-rv1106-dev
+	url = https://github.com/thomas-roos/rockchip-rv1106-dev.git
+	branch = scarthgap
+[submodule "layers/sw/meta-ptx"]
+	path = layers/sw/meta-ptx
+	url = https://git.pengutronix.de/git/meta-ptx
+	branch = scarthgap
