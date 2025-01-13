@@ -22,7 +22,7 @@ IMAGE_INSTALL:append:rpi = " greengrass-config-init yq"
 IMAGE_INSTALL:append = " tmux"
 GLIBC_GENERATE_LOCALES = "en_US.UTF-8 UTF-8"
 IMAGE_INSTALL:append = " glibc-utils localedef "
-IMAGE_INSTALL:append = " ssh openssh-sshd openssh-sftp openssh-scp"
+IMAGE_INSTALL:append = " openssh-ssh openssh-sshd openssh-sftp openssh-scp"
 
 ### aws-iot-device-client ###
 # IMAGE_INSTALL:append = " aws-iot-device-client"
