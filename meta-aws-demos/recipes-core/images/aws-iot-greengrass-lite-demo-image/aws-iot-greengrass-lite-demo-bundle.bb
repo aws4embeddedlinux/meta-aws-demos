@@ -1,4 +1,4 @@
-DESCRIPTION = "A update bundle for aws-iot-greengrass-lite-demo-ab-image"
+DESCRIPTION = "A update bundle for aws-iot-greengrass-lite-demo-image"
 
 inherit bundle
 
