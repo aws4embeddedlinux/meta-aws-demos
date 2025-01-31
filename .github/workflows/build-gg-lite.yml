@@ -126,7 +126,7 @@ jobs:
              echo -e "###############################################################################\n" >> ${{ github.workspace }}/zipfile/readme.txt
              cat ${{ github.workspace }}/build/tmp/deploy/licenses/raspberrypi_armv8/${{ matrix.image }}-raspberrypi-armv8.rootfs/license.manifest >> ${{ github.workspace }}/zipfile/readme.txt
       - name: cp image (raspberrypi) to zip dir
-        if: ( startsWith(matrix.device, 'raspberrypi2') || startsWith(matrix.device, 'raspberrypi0-wifi' ) 
+        if: ( startsWith(matrix.device, 'raspberrypi2') || startsWith(matrix.device, 'raspberrypi0-wifi') ) 
         shell: bash
         run: |
           cp ${{ github.workspace }}/build/tmp/deploy/images/${{ matrix.device }}/${{ matrix.image }}-${{ matrix.device }}.rootfs.wic ${{ github.workspace }}/zipfile/${{ matrix.image }}-${{ matrix.device }}.img
