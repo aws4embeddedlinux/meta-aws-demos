@@ -41,6 +41,7 @@ jobs:
           - qemux86-64
           - aws-ec2-arm64
           - aws-ec2-x86-64
+          - raspberrypi0-wifi
           - raspberrypi2
           - raspberrypi-64
         image:
