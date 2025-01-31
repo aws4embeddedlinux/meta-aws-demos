@@ -34,6 +34,7 @@ alphabetical order for ease of selection, no preference should be inferred.
 - [`qemux86-64`](meta-aws-demos/conf/devices/qemux86-64/README.md)
 - [`raspberrypi-64` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/raspberrypi-64/README.md)
 - [`raspberrypi2` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/raspberrypi2/README.md)
+- [`raspberrypi0-wifi` / Raspberry Pi Foundation](meta-aws-demos/conf/devices/raspberrypi0-wifi/README.md)
 - [`rockchip-rv1106`](meta-aws-demos/conf/devices/rockchip-rv1106/README.md)
 - [`stm32mp13-disco` / STM](meta-aws-demos/conf/devices/stm32mp13-disco/README.md)
 - [`ti-am572x-idk` / Texas Instruments](meta-aws-demos/conf/devices/ti-am572x-idk/README.md)
