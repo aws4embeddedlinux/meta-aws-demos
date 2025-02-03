@@ -30,7 +30,7 @@ runqemu slirp nographic
 Configure this image
 
 ```bash
-export IMAGE=aws-greengrass-lite-demo-image
+export IMAGE=aws-iot-greengrass-lite-demo-image
 ```
 
 Configure a device e.g. raspberrypi-64
