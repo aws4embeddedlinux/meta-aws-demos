@@ -1,0 +1,50 @@
+version: 2
+updates:
+  - package-ecosystem: gitsubmodule
+    directory: "/"
+    commit-message:
+      prefix: "meta-*: "
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+    groups:
+      layers:
+        patterns:
+          - "poky"
+    target-branch: "master-next"
+  - package-ecosystem: gitsubmodule
+    directory: "/layers/agl"
+    commit-message:
+      prefix: "meta-*: "
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+    groups:
+      layers:
+        patterns:
+          - "meta-*"
+    target-branch: "master-next"         
+  - package-ecosystem: gitsubmodule
+    directory: "/layers/bsp"
+    commit-message:
+      prefix: "meta-*: "
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+    groups:
+      layers:
+        patterns:
+          - "meta-*"
+    target-branch: "master-next"          
+  - package-ecosystem: gitsubmodule
+    directory: "/layers/sw"
+    commit-message:
+      prefix: "meta-*: "
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+    groups:
+      layers:
+        patterns:
+          - "meta-*"
+    target-branch: "master-next"
