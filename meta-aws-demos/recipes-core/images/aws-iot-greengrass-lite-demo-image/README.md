@@ -21,10 +21,10 @@ https://github.com/aws-greengrass/aws-greengrass-lite
 
 ## BUILDING
 
+Init build environment
+
 ```bash
 . init-build-env
-bitbake $IMAGE
-runqemu slirp nographic
 ```
 
 Configure this image
