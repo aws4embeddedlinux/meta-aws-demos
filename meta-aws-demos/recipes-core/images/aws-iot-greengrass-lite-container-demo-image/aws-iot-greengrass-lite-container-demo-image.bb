@@ -20,6 +20,8 @@ IMAGE_INSTALL = " \
        ${CONTAINER_SHELL} \
 "
 
+IMAGE_INSTALL:append = " python3-misc python3-venv python3-tomllib python3-ensurepip libcgroup python3-pip"
+
 # If the following is configured in local.conf (or the distro):
 #      PACKAGE_EXTRA_ARCHS:append = " container-dummy-provides"
 #
