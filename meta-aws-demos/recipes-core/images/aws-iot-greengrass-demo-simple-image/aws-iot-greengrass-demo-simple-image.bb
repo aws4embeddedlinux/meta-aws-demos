@@ -14,6 +14,7 @@ IMAGE_INSTALL += "\
     "
 ### AWS ###
 IMAGE_INSTALL:append = " greengrass-bin udev"
+IMAGE_INSTALL:append = " python3-misc python3-venv python3-tomllib python3-ensurepip libcgroup python3-pip"
 
 # only adding if device is rpi, as others might have a different partition layout
 IMAGE_INSTALL:append:rpi = " greengrass-config-init yq"

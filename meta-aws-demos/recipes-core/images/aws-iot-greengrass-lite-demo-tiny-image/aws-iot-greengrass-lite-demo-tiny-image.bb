@@ -9,6 +9,7 @@ inherit core-image
 ### AWS ###
 # disabled as there is a link issue
 IMAGE_INSTALL:append = " greengrass-lite"
+IMAGE_INSTALL:append = " python3-misc python3-venv python3-tomllib python3-ensurepip libcgroup python3-pip"
 
 # only adding if device is rpi
 IMAGE_INSTALL:append:rpi = " greengrass-config-init"

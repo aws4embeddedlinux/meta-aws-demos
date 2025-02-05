@@ -14,6 +14,7 @@ IMAGE_INSTALL += "\
 ### AWS ###
 IMAGE_INSTALL:append = " greengrass-bin udev"
 IMAGE_INSTALL:append = " aws-iot-device-sdk-python-v2"
+IMAGE_INSTALL:append = " python3-misc python3-venv python3-tomllib python3-ensurepip libcgroup python3-pip"
 
 ### rauc ###
 CORE_IMAGE_EXTRA_INSTALL:append = " rauc-grow-data-part"
