@@ -52,13 +52,16 @@ COPY_LIC_DIRS = "1"
 
 # this should be equal to sdimage-aws-iot-greengrass-lite-demo-ab_partition.wks.in file,
 # for rauc bundle generation wic file is not used!
-ROOTFS_POSTINSTALL_COMMAND += "extra_files"
+ROOTFS_POSTINSTALL_COMMAND += "extra_files_common"
+ROOTFS_POSTINSTALL_COMMAND:rpi += "extra_files_rpi"
 
-extra_files () {
+extra_files_common () {
+    # enable systemd-time-wait-sync as this is important for greengrass to have a correct clock
+    ln -sf /${libdir}/systemd/system/systemd-time-wait-sync.service ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
+}
+
+extra_files_rpi () {
     # decided to do here instead of a bbappend of wpa:supplicant
     install -d ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
     ln -sf /${libdir}/systemd/system/wpa_supplicant@.service ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/wpa_supplicant@wlan0.service
-
-    # enable systemd-time-wait-sync as this is important for greengrass to have a correct clock
-    ln -sf /${libdir}/systemd/system/systemd-time-wait-sync.service ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
 }
