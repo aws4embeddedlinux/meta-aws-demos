@@ -5,8 +5,7 @@ updates:
     commit-message:
       prefix: "meta-*: "
     schedule:
-      interval: "weekly"
-      day: "tuesday"
+      interval: "daily"
     groups:
       layers:
         patterns:
@@ -17,8 +16,7 @@ updates:
     commit-message:
       prefix: "meta-*: "
     schedule:
-      interval: "weekly"
-      day: "tuesday"
+      interval: "daily"
     groups:
       layers:
         patterns:
@@ -29,8 +27,7 @@ updates:
     commit-message:
       prefix: "meta-*: "
     schedule:
-      interval: "weekly"
-      day: "tuesday"
+      interval: "daily"
     groups:
       layers:
         patterns:
@@ -41,8 +38,7 @@ updates:
     commit-message:
       prefix: "meta-*: "
     schedule:
-      interval: "weekly"
-      day: "tuesday"
+      interval: "daily"
     groups:
       layers:
         patterns:
