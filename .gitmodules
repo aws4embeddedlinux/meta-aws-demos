@@ -30,14 +30,6 @@
 	path = layers/sw/meta-qt5
 	url = https://github.com/meta-qt5/meta-qt5.git
 	branch = scarthgap
-[submodule "meta-security"]
-	path = layers/sw/meta-security
-	url = https://github.com/ni/meta-security.git
-	branch = nilrt/master/next
-[submodule "meta-selinux"]
-	path = layers/sw/meta-selinux
-	url = https://github.com/ni/meta-selinux.git
-	branch = nilrt/master/next
 [submodule "meta-clang"]
 	path = layers/sw/meta-clang
 	url = https://github.com/kraj/meta-clang.git
