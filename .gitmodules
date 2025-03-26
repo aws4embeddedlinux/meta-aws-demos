@@ -66,10 +66,6 @@
 	path = layers/bsp/meta-arm
 	url = https://git.yoctoproject.org/meta-arm
 	branch = scarthgap
-[submodule "meta-renesas"]
-	path = layers/bsp/meta-renesas
-	url = https://github.com/renesas-rcar/meta-renesas.git
-	branch = scarthgap-dev
 [submodule "meta-agl-refhw"]
 	path = layers/agl/meta-agl-refhw
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-refhw
