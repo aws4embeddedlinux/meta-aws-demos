@@ -119,9 +119,9 @@ systemctl status --with-dependencies greengrass-lite.target
 
 ## A/B update example made with [meta-rauc](https://github.com/rauc/meta-rauc-community)
 
-Set IMAGE to aws-iot-greengrass-lite-demo-ab-image.
+Set IMAGE to aws-iot-greengrass-lite-demo-image.
 ```
-export IMAGE=aws-iot-greengrass-lite-demo-ab-image
+export IMAGE=aws-iot-greengrass-lite-demo-image
 ```
 
 This image works only with raspberry pi. cause of bootloader settings.
@@ -142,14 +142,14 @@ bitbake $IMAGE
 
 Build the update bundle - the update that can be applied to the image.
 ```
-bitbake aws-iot-greengrass-lite-demo-ab-bundle
+bitbake aws-iot-greengrass-lite-demo-bundle
 ```
 
 Flash the image onto your device e.g.
 Be careful device depends on your setup - may sda is your harddisk and not a sd card!!!
 You can also extract this and write it with rpi-imager!
 ```
-bzcat aws-iot-greengrass-lite-demo-ab-image-raspberrypi-armv8.rootfs.wic.bz2 | sudo dcfldd of=/dev/sda
+bzcat aws-iot-greengrass-lite-demo-image-raspberrypi-armv8.rootfs.wic.bz2 | sudo dcfldd of=/dev/sda
 ```
 
 Then power-on the board and log in. To see that RAUC is configured correctly and can interact with the bootloader, run:
