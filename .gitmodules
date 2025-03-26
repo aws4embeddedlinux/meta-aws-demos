@@ -78,10 +78,6 @@
 	path = layers/sw/meta-rauc
 	url = https://github.com/rauc/meta-rauc.git
 	branch = scarthgap
-[submodule "layers/bsp/meta-variscite-sdk-imx"]
-	path = layers/bsp/meta-variscite-sdk-imx
-	url = https://github.com/varigit/meta-variscite-sdk-imx.git
-	branch = scarthgap_6.6.23-2.0.0_var01
 [submodule "layers/bsp/meta-st-stm32mp"]
 	path = layers/bsp/meta-st-stm32mp
 	url = https://github.com/STMicroelectronics/meta-st-stm32mp.git
