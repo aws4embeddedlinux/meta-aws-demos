@@ -1,5 +1,6 @@
 name: build-gg-lite
 on:
+  pull_request:
   workflow_dispatch:
     inputs:
       upload-zip:
