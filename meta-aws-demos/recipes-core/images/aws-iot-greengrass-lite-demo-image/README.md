@@ -51,9 +51,9 @@ bitbake $IMAGE
 1. Download rpi imager for your OS (mac, win, linux)
 https://www.raspberrypi.com/documentation/computers/getting-started.html#raspberry-pi-imager
 
-2. Select “use custom img” and flash demo image contained in this zip file
+2. Select "use custom img" and flash demo image contained in this zip file
 on your SD-Card. The RPI imager auto rejects the SD card after it completes flashing the image,
-you need to uncheck this option or need to plug in again to transfer the unzipped connection kit.
+you need to uncheck this option or need to plug in again to transfer the connection kit zip file.
 
 3. Mount the boot fat partition and copy Connection Kit Zip onto it.
 
