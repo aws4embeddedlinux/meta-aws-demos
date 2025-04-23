@@ -1,52 +1,35 @@
 SUMMARY = "A demo image for gg-lite as a container"
+DESCRIPTION = "A small systemd system container which will run greengrass-lite."
 
 IMAGE_INSTALL += "packagegroup-core-boot ${CORE_IMAGE_EXTRA_INSTALL}"
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/COPYING.MIT;md5=3da9cfbcb788c80a0384361b4de20420"
 
-IMAGE_FSTYPES = "container oci"
-inherit image
-inherit image-oci
-
-IMAGE_FEATURES = ""
-IMAGE_LINGUAS = ""
-NO_RECOMMENDATIONS = "1"
-
-IMAGE_INSTALL = " \
-       base-files \
-       base-passwd \
-       netbase \
-       ${CONTAINER_SHELL} \
-"
+IMAGE_FEATURES += "empty-root-password allow-empty-password allow-root-login serial-autologin-root"
 
 IMAGE_INSTALL:append = " python3-misc python3-venv python3-tomllib python3-ensurepip libcgroup python3-pip"
+# Use local.conf to specify additional systemd services to disable. To overwrite
+# the default list use SERVICES_TO_DISABLE:pn-systemd-container in local.conf
+SERVICES_TO_DISABLE = "systemd-userdbd.service"
+SERVICES_TO_DISABLE:append = " ${SYSTEMD_CONTAINER_DISABLE_SERVICES}"
 
-# If the following is configured in local.conf (or the distro):
-#      PACKAGE_EXTRA_ARCHS:append = " container-dummy-provides"
-#
-# it has been explicitly # indicated that we don't want or need a shell, so we'll
-# add the dummy provides.
-#
-# This is required, since there are postinstall scripts in base-files and base-passwd
-# that reference /bin/sh and we'll get a rootfs error if there's no shell or no dummy
-# provider.
-CONTAINER_SHELL ?= "${@bb.utils.contains('PACKAGE_EXTRA_ARCHS', 'container-dummy-provides', 'container-dummy-provides', 'busybox', d)}"
+# Use local.conf to enable systemd services
+SERVICES_TO_ENABLE += "${SYSTEMD_CONTAINER_ENABLE_SERVICES}"
 
-# Allow build with or without a specific kernel
-IMAGE_CONTAINER_NO_DUMMY = "1"
+require container-systemd-base.inc
 
-# Workaround /var/volatile for now
-ROOTFS_POSTPROCESS_COMMAND += "rootfs_fixup_var_volatile ; "
-rootfs_fixup_var_volatile () {
-    install -m 1777 -d ${IMAGE_ROOTFS}/${localstatedir}/volatile/tmp
-    install -m 755 -d ${IMAGE_ROOTFS}/${localstatedir}/volatile/log
-}
+SYSTEMD_CONTAINER_DISABLE_SERVICES += " \
+    systemd-resolved.service \
+    var-volatile.mount \
+"
 
-OCI_IMAGE_ENTRYPOINT = "curl"
-OCI_IMAGE_TAG = "easy"
-OCI_IMAGE_ENTRYPOINT_ARGS = "http://localhost:80"
-CONTAINER_SHELL = "busybox"
+IMAGE_INSTALL:append = " systemd-serialgetty systemd-extra-utils systemd-conf"
+# resolvconf
+
+OCI_IMAGE_ENTRYPOINT = "/sbin/init systemd.unified_cgroup_hierarchy=1"
+
+DISTRO_FEATURES:remove = "sysvinit"
 
 ### AWS ###
 IMAGE_INSTALL:append = " greengrass-lite"
