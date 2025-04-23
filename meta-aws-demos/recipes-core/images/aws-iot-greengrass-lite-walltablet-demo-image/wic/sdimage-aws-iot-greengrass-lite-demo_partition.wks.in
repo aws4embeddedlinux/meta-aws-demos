@@ -1,0 +1,4 @@
+part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --fixed-size 500M --active --align 4096
+part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --fixed-size 2000M --label rootfs_A --align 4096
+part / --ondisk mmcblk0 --fstype=ext4 --fixed-size 2000M --label rootfs_B --align 4096
+part /data --source rootfs --rootfs-dir=${IMAGE_ROOTFS}/data --size 500M --ondisk mmcblk0 --fstype=ext4 --label data --align 4096 --fsoptions "x-systemd.growfs"
