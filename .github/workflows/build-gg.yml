@@ -44,20 +44,13 @@ jobs:
           - aws-ec2-x86-64
           - raspberrypi2
           - raspberrypi-64
+          - stm32mp13-disco
         image:
           - aws-iot-greengrass-demo-image
           - aws-iot-greengrass-demo-simple-image
         exclude:
           - image: aws-iot-greengrass-demo-image
-            device: qemuarm
-          - image: aws-iot-greengrass-demo-image
-            device: qemuarm64
-          - image: aws-iot-greengrass-demo-image
-            device: qemux86-64
-          - image: aws-iot-greengrass-demo-image
-            device: aws-ec2-arm64
-          - image: aws-iot-greengrass-demo-image
-            device: aws-ec2-x86-64
+            device: qemuarm, qemuarm64, qemux86-64, aws-ec2-arm64, aws-ec2-x86-64
     runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: checkout meta-aws-demos branch to build
