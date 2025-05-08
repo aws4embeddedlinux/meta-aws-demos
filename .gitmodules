@@ -102,10 +102,6 @@
 	path = layers/sw/meta-ptx
 	url = https://git.pengutronix.de/git/meta-ptx
 	branch = scarthgap
-[submodule "layers/sw/meta-browser"]
-	path = layers/sw/meta-browser
-	url = https://github.com/OSSystems/meta-browser.git
-	branch = scarthgap
 [submodule "layers/sw/meta-clang"]
 	path = layers/sw/meta-clang
 	url = https://github.com/kraj/meta-clang.git
@@ -114,3 +110,7 @@
 	path = layers/sw/meta-lts-mixins
 	url = https://git.yoctoproject.org/meta-lts-mixins
 	branch = scarthgap/rust
+[submodule "layers/sw/meta-browser"]
+	path = layers/sw/meta-browser
+	url = https://github.com/OSSystems/meta-browser.git
+	branch = scarthgap
