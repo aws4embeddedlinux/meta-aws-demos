@@ -59,7 +59,7 @@ IMAGE_FEATURES += "read-only-rootfs"
 
 # this should be equal to sdimage-aws-iot-greengrass-lite-demo-ab_partition.wks.in file,
 # for rauc bundle generation wic file is not used!
-ROOTFS_POSTINSTALL_COMMAND += "rootfs_user_fstab"
+IMAGE_PREPROCESS_COMMAND:append = " rootfs_user_fstab"
 
 rootfs_user_fstab () {
 
@@ -107,4 +107,5 @@ ln -sf /data/etc/hosts ${IMAGE_ROOTFS}/etc/hosts
 ln -sf /${libdir}/systemd/system/systemd-time-wait-sync.service ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
 
 install -d ${IMAGE_ROOTFS}/data/home
+mv -f ${IMAGE_ROOTFS}/home/* ${IMAGE_ROOTFS}/data/home/
 }
