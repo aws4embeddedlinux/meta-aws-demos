@@ -1,0 +1,13 @@
+[Unit]
+Description=Grow data partition to max size and expand filesystem
+DefaultDependencies=no
+Before=data.mount
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c '/usr/bin/growpart /dev/nvme0n1 5 && /usr/sbin/shutdown -r now'
+RemainAfterExit=yes
+SuccessExitStatus=1 0
+
+[Install]
+WantedBy=data.mount
