@@ -11,4 +11,4 @@ part / --source rootfs  --fstype=ext4  --label root_a  --fixed-size 600M  --alig
 part / --source rootfs  --fstype=ext4  --label root_b --fixed-size 600M  --align 4096
 part /data --source rootfs --rootfs-dir=${IMAGE_ROOTFS}/data --size 500M --fstype=ext4 --label data --align 4096 --fsoptions "x-systemd.growfs"
 
-bootloader --ptable gpt  --configfile="${THISDIR}/sdimage-aws-iot-greengrass-lite-demo-ec2_grub.cfg"
+bootloader --ptable gpt  --configfile="${WORKDIR}/grub.cfg"

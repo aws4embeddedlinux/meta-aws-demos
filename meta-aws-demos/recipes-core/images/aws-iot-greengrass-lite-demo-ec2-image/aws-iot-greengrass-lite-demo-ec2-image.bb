@@ -35,7 +35,6 @@ IMAGE_INSTALL:append = " sudo"
 # only for debugging - with this enabled you can login as root without password with the "EC2 serial console"
 # Be aware that this is a security risk and cause a security warning mail!
 # EXTRA_IMAGE_FEATURES += "serial-autologin-root empty-root-password allow-empty-password"
-EXTRA_IMAGE_FEATURES += "serial-autologin-root empty-root-password allow-empty-password"
 
 ### license compliance ###
 COPY_LIC_MANIFEST = "1"
@@ -172,3 +171,13 @@ IMAGE_INSTALL:append = " systemd-extra-utils"
 
 # this will install the rauc configuration file
 IMAGE_INSTALL:append = " virtual-rauc-conf"
+
+addtask configure_grub after do_install before do_build
+
+GRUB_CFG_SRC = "${THISDIR}/sdimage-aws-iot-greengrass-lite-demo-ec2_grub.cfg.in"
+GRUB_CFG_DEST = "${WORKDIR}/grub.cfg"
+
+do_configure_grub() {
+    sed -e "s|@@KERNEL_IMAGE@@|${KERNEL_IMAGETYPE}|g" \
+        ${GRUB_CFG_SRC} > ${GRUB_CFG_DEST}
+}
