@@ -57,9 +57,59 @@ IMAGE_FEATURES += "read-only-rootfs"
 # for rauc bundle generation wic file is not used!
 IMAGE_PREPROCESS_COMMAND:append = " rootfs_user_fstab"
 
+####
 rootfs_user_fstab () {
 
-install -d ${IMAGE_ROOTFS}/grubenv
+# Allow user to use sudo
+echo "user ALL=(ALL) NOPASSWD: ALL" >> ${IMAGE_ROOTFS}/etc/sudoers
+
+
+# enable serial console auto login for root
+sed -i '/^\s*ExecStart\b/ s/getty /&--autologin root /' \
+    "${IMAGE_ROOTFS}${systemd_system_unitdir}/serial-getty@.service"
+
+# reload services after data partition is mounted
+cat > ${IMAGE_ROOTFS}/lib/systemd/system/reload-systemd-data.service << 'EOF'
+[Unit]
+Description=Reload systemd services from data partition
+After=data.mount
+
+[Service]
+Type=oneshot
+ExecStart=/bin/systemctl daemon-reload
+ExecStart=/bin/systemctl start --all
+RemainAfterExit=yes
+EOF
+
+ln -sf /lib/systemd/system/reload-systemd-data.service ${IMAGE_ROOTFS}/lib/systemd/system/reload-systemd-data.service
+
+# not necessary for this image
+rm ${IMAGE_ROOTFS}//usr/lib/systemd/system/systemd-vconsole-setup.service
+
+# move all exising systemd services to the lib system directory and the remaining dir will be the bind mount point
+cp -a ${IMAGE_ROOTFS}/etc/systemd/system/* ${IMAGE_ROOTFS}/lib/systemd/system/
+rm -rf ${IMAGE_ROOTFS}/etc/systemd/system/*
+
+# cloud-intit service needs to be started after data partition is mounted
+mkdir -p ${IMAGE_ROOTFS}/lib/systemd/system/cloud-init.service.d/
+cat << EOF > ${IMAGE_ROOTFS}/lib/systemd/system/cloud-init.service.d/overrides.conf
+[Unit]
+After=local-fs.target
+After=rauc-grow-data-partition.service
+RequiresMountsFor=/home
+RequiresMountsFor=/root
+RequiresMountsFor=/etc/ssh/
+
+[Service]
+Restart=on-failure
+RestartSec=30
+StartLimitInterval=90
+StartLimitBurst=3
+ExecStopPost=/usr/bin/cloud-init clean
+
+[Install]
+WantedBy=multi-user.target
+EOF
 
 
 # overwrite the default fstab, adding customization for this image
@@ -81,15 +131,18 @@ LABEL=grubenv            /grubenv             auto       defaults,sync  0  0
 /data/root      /root      none    bind            0       0
 EOF
 
-install -d -m 0755 ${IMAGE_ROOTFS}/data
 
 # copy those directories that should be present at the data partition to /data and just
 # leave them empty as a mount point for the bind mount
+
+install -d ${IMAGE_ROOTFS}/grubenv
+
+install -d -m 0755 ${IMAGE_ROOTFS}/data
+
 install -d ${IMAGE_ROOTFS}/data/etc/greengrass
 mv -f ${IMAGE_ROOTFS}/etc/greengrass/* ${IMAGE_ROOTFS}/data/etc/greengrass/
 
-
-install -d -m 0755 ${IMAGE_ROOTFS}/data/root
+install -d -m 0700 ${IMAGE_ROOTFS}/data/root
 
 install -d ${IMAGE_ROOTFS}/data/etc/systemd/system
 
@@ -103,44 +156,6 @@ install -d ${IMAGE_ROOTFS}/data/etc/systemd/network/
 install -d ${IMAGE_ROOTFS}/data/etc/ssh/
 mv -f ${IMAGE_ROOTFS}/etc/ssh/* ${IMAGE_ROOTFS}/data/etc/ssh/
 
-# reload services after data partition is mounted
-cat > ${IMAGE_ROOTFS}/lib/systemd/system/reload-systemd-data.service << 'EOF'
-[Unit]
-Description=Reload systemd services from data partition
-After=data.mount
-
-[Service]
-Type=oneshot
-ExecStart=/bin/systemctl daemon-reload
-ExecStart=/bin/systemctl start --all
-RemainAfterExit=yes
-EOF
-
-ln -sf /lib/systemd/system/reload-systemd-data.service ${IMAGE_ROOTFS}/lib/systemd/system/reload-systemd-data.service
-
-
-# move all exising systemd services to the lib system directory and the remaining dir will be the bind mount point
-cp -a ${IMAGE_ROOTFS}/etc/systemd/system/* ${IMAGE_ROOTFS}/lib/systemd/system/
-rm -rf ${IMAGE_ROOTFS}/etc/systemd/system/*
-
-# cloud-intit service needs to be started after data partition is mounted
-mkdir -p ${IMAGE_ROOTFS}/lib/systemd/system/cloud-init.service.d/
-cat << EOF > ${IMAGE_ROOTFS}/lib/systemd/system/cloud-init.service.d/overrides.conf
-[Unit]
-After=local-fs.target
-
-[Service]
-Restart=on-failure
-RestartSec=30
-StartLimitInterval=300
-StartLimitBurst=3
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-# Allow user to use sudo
-echo "user ALL=(ALL) NOPASSWD: ALL" >> ${IMAGE_ROOTFS}/etc/sudoers
 
 }
 
