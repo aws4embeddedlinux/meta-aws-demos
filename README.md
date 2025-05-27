@@ -52,6 +52,7 @@ Generally you can build all images for all "Devices", but some combinations do n
 - [aws-iot-greengrass-demo-simple-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-demo-simple-image/README.md)
 - [aws-iot-greengrass-lite-container-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-container-demo-image/README.md)
 - [aws-iot-greengrass-lite-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-image/README.md)
+- [aws-iot-greengrass-lite-demo-ec2-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-ec2-image/README.md)
 - [aws-iot-greengrass-lite-demo-simple-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-simple-image/README.md)
 - [aws-iot-greengrass-lite-demo-tiny-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-tiny-image/README.md)
 - [aws-iot-greengrass-lite-webrtc-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-webrtc-demo-image/README.md)

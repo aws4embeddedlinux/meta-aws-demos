@@ -44,9 +44,9 @@ save_env --file=(hd0,2)/grubenv A_TRY A_OK B_TRY B_OK ORDER
 CMDLINE="rootwait rootfstype=ext4"
 
 menuentry "Slot A (OK=$A_OK TRY=$A_TRY)" {
-    linux (hd0,3)/boot/bzImage root=/dev/nvme0n1p3 $CMDLINE rauc.slot=A
+    linux (hd0,3)/boot/@@KERNEL_IMAGE@@ root=/dev/nvme0n1p3 $CMDLINE rauc.slot=A
 }
 
 menuentry "Slot B (OK=$B_OK TRY=$B_TRY)" {
-    linux (hd0,4)/boot/bzImage root=/dev/nvme0n1p4 $CMDLINE rauc.slot=B
+    linux (hd0,4)/boot/@@KERNEL_IMAGE@@ root=/dev/nvme0n1p4 $CMDLINE rauc.slot=B
 }
