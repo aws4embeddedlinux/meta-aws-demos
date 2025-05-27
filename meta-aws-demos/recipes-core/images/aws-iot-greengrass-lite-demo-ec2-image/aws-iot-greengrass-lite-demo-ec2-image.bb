@@ -51,7 +51,7 @@ COPY_LIC_DIRS = "1"
 # EXTRA_IMAGE_FEATURES:append = " src-pkgs"
 # EXTRA_IMAGE_FEATURES:append = " dbg-pkgs"
 
-IMAGE_FEATURES += "read-only-rootfs"
+# TODO: this is causeing cloud-init to fail - disabling: IMAGE_FEATURES += "read-only-rootfs"
 
 # this should be equal to sdimage-aws-iot-greengrass-lite-demo-ab_partition.wks.in file,
 # for rauc bundle generation wic file is not used!
@@ -114,7 +114,7 @@ EOF
 
 # overwrite the default fstab, adding customization for this image
 cat << EOF > ${IMAGE_ROOTFS}/${sysconfdir}/fstab
-/dev/root            /                    auto       ro              1  1
+/dev/root            /                    auto       rw              1  1
 proc                 /proc                proc       defaults              0  0
 devpts               /dev/pts             devpts     mode=0620,ptmxmode=0666,gid=5      0  0
 tmpfs                /run                 tmpfs      mode=0755,nodev,nosuid,strictatime 0  0
@@ -173,7 +173,7 @@ IMAGE_ROOTFS_ALIGNMENT = "4"
 EXTRA_IMAGECMD:ext4 = "-i 4096 -b 4096 -E hash_seed=86ca73ff-7379-40bd-a098-fcb03a6e719d"
 
 # for correct PVRE reporting
-IMAGE_INSTALL:append = " curl amazon-ssm-agent util-linux"
+IMAGE_INSTALL:append = " curl amazon-ssm-agent util-linux ca-certificates"
 IMAGE_FEATURES:append = " package-management"
 
 # resize data partition to 100% of underlying device
