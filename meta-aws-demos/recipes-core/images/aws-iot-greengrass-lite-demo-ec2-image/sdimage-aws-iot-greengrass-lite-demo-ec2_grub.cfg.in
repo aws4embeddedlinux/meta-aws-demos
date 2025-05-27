@@ -12,13 +12,13 @@ load_env --file=(hd0,2)/grubenv
 # select bootable slot
 for SLOT in $ORDER; do
     if [ "$SLOT" == "A" ]; then
-        INDEX=1
+        INDEX=0
         OK=$A_OK
         TRY=$A_TRY
         A_TRY=1
     fi
     if [ "$SLOT" == "B" ]; then
-        INDEX=2
+        INDEX=1
         OK=$B_OK
         TRY=$B_TRY
         B_TRY=1
