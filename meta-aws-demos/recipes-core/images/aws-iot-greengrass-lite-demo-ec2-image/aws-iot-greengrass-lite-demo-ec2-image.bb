@@ -178,6 +178,7 @@ IMAGE_FEATURES:append = " package-management"
 
 # resize data partition to 100% of underlying device
 IMAGE_INSTALL:append = " rauc-grow-data-part"
+IMAGE_INSTALL:append = " rauc-mark-good"
 
 # size optimization
 NO_RECOMMENDATIONS = "1"
