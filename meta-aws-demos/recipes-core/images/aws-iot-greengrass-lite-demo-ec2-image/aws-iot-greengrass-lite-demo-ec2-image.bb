@@ -187,13 +187,3 @@ IMAGE_INSTALL:append = " systemd-extra-utils"
 
 # this will install the rauc configuration file
 IMAGE_INSTALL:append = " virtual-rauc-conf"
-
-addtask configure_grub after do_install before do_build
-
-GRUB_CFG_SRC = "${THISDIR}/sdimage-aws-iot-greengrass-lite-demo-ec2_grub.cfg.in"
-GRUB_CFG_DEST = "${WORKDIR}/grub.cfg"
-
-do_configure_grub() {
-    sed -e "s|@@KERNEL_IMAGE@@|${KERNEL_IMAGETYPE}|g" \
-        ${GRUB_CFG_SRC} > ${GRUB_CFG_DEST}
-}
