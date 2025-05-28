@@ -11,6 +11,7 @@ IMAGE_INSTALL += "\
     packagegroup-base \
     packagegroup-core-boot \
     "
+
 ### AWS ###
 IMAGE_INSTALL:append = " greengrass-bin udev"
 IMAGE_INSTALL:append = " aws-iot-device-sdk-python-v2"
@@ -107,5 +108,5 @@ ln -sf /data/etc/hosts ${IMAGE_ROOTFS}/etc/hosts
 ln -sf /${libdir}/systemd/system/systemd-time-wait-sync.service ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
 
 install -d ${IMAGE_ROOTFS}/data/home
-mv -f ${IMAGE_ROOTFS}/home/* ${IMAGE_ROOTFS}/data/home/
+# mv -f ${IMAGE_ROOTFS}/home/* ${IMAGE_ROOTFS}/data/home/
 }
