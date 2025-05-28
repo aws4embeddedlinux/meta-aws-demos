@@ -5,10 +5,10 @@
 # data partition is p5
 
 
-part /boot --source bootimg-efi --sourceparams="loader=${EFI_PROVIDER}" --label boot --active --align 4096
+part --fixed-size 50M --source rawcopy --sourceparams="file=efi-boot.vfat" --fstype=vfat --label boot --active --align 4096
 part --fixed-size 10M --source rawcopy --sourceparams="file=grubenv.vfat" --fstype=vfat --label grubenv --align 1024
 part / --source rootfs  --exclude-path=data/ --fstype=ext4  --label root_a  --fixed-size 1000M  --align 4096
 part / --source rootfs  --exclude-path=data/ --fstype=ext4  --label root_b --fixed-size 1000M  --align 4096
 part /data --source rootfs --rootfs-dir=${IMAGE_ROOTFS}/data --size 500M --fstype=ext4 --label data --align 4096 --fsoptions "x-systemd.growfs"
 
-bootloader --ptable gpt  --configfile="${WORKDIR}/grub.cfg"
+bootloader --ptable gpt

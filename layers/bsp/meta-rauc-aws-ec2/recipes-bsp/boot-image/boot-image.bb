@@ -19,6 +19,36 @@ do_deploy[depends] += "\
     rauc-qemu-grubconf:do_deploy"
 
 do_deploy () {
+    FATSOURCEDIR="${WORKDIR}/efi-boot/"
+    mkdir -p ${FATSOURCEDIR}
+
+    mkdir -p ${FATSOURCEDIR}/EFI/BOOT
+    cp ${DEPLOY_DIR_IMAGE}/grub.cfg ${FATSOURCEDIR}/EFI/BOOT/
+
+    if [ "${TARGET_ARCH}" = "x86_64" ]; then
+        kernel_efi_image="bootx64.efi"
+    elif [ "${TARGET_ARCH}" = "i686" ]; then
+        kernel_efi_image="bootia32.efi"
+    elif [ "${TARGET_ARCH}" = "aarch64" ]; then
+        kernel_efi_image="bootaa64.efi"
+    fi
+
+    cp ${DEPLOY_DIR_IMAGE}/grub-efi-$kernel_efi_image ${FATSOURCEDIR}/EFI/BOOT/$kernel_efi_image
+
+    MKDOSFS_EXTRAOPTS="-S 512"
+    FATIMG="${WORKDIR}/efi-boot.vfat"
+    BLOCKS=32786
+
+    rm -f ${FATIMG}
+
+    mkdosfs -n "BOOT" ${MKDOSFS_EXTRAOPTS} -C ${FATIMG} \
+                    ${BLOCKS}
+    # Copy FATSOURCEDIR recursively into the image file directly
+    mcopy -i ${FATIMG} -s ${FATSOURCEDIR}/* ::/
+    chmod 644 ${FATIMG}
+
+    mv ${FATIMG} ${DEPLOYDIR}/
+
     GRUBENV_IMG="${WORKDIR}/grubenv.vfat"
 
     rm -f ${GRUBENV_IMG}
