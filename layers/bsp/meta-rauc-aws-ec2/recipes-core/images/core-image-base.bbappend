@@ -11,9 +11,9 @@ IMAGE_ROOTFS_ALIGNMENT = "4"
 # reduce the image delta size (keep oe-core's 4K bytes-per-inode)
 EXTRA_IMAGECMD:ext4 = "-i 4096 -b 4096 -E hash_seed=86ca73ff-7379-40bd-a098-fcb03a6e719d"
 
-IMAGE_PREPROCESS_COMMAND:append = " rootfs_user_fstab"
+IMAGE_PREPROCESS_COMMAND:append = " rootfs_user"
 
 ####
-rootfs_user_fstab () {
+rootfs_user () {
     install -d -m 0755 ${IMAGE_ROOTFS}/data
 }

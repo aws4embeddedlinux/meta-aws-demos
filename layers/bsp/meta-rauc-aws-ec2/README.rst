@@ -58,7 +58,7 @@ Add this to your local.conf
 
 Build the image::
 
-   $ bitbake core-image-minimal
+   $ bitbake core-image-base
 
 III. Flash & Run The Demo System
 ================================

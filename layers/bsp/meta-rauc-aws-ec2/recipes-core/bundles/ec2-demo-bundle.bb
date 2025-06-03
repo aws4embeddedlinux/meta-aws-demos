@@ -11,7 +11,7 @@ RAUC_BUNDLE_SLOTS = "rootfs"
 
 RAUC_IMAGE_FSTYPE = "tar.bz2"
 
-RAUC_SLOT_rootfs = "core-image-minimal"
+RAUC_SLOT_rootfs = "core-image-base"
 # uncomment for enabling adaptive update method 'block-hash-index'
 #RAUC_SLOT_rootfs[fstype] = "ext4"
 #RAUC_SLOT_rootfs[adaptive] = "block-hash-index"
