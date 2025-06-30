@@ -3,7 +3,11 @@
 This image contain [amazon-kvs-webrtc-sdk](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-c) and when started it automatically connect to Amazon Kinesis Video Streams WebRTC using the [kvsWebrtcClientMasterGstSample](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-c?tab=readme-ov-file#sample-kvswebrtcclientmastergstsample) that use the default camera and microphone to init a WebRTC connection as a Master.
 It is based on [aws-iot-greengrass-lite-demo-image](../aws-iot-greengrass-lite-demo-image/README.md) and does have the same features, such as A/B update, read only partition etc.
 
-The channel name is the same as the thing name. It will use AWS IoT certs to connect to your account. [For this permissions need to be added to your account.](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-c?tab=readme-ov-file#setup-iot) E.g. Attach this policy to your: GreengrassV2CoreDeviceRole (when using the connection kit)
+## Permissions
+
+The channel name is the same as the thing name. It will use AWS IoT certs to connect to your account. [For this permissions need to be added to your account.](https://github.com/awslabs/amazon-kinesis-video-streams-webrtc-sdk-c?tab=readme-ov-file#setup-iot)
+
+E.g. Attach this policy to your: GreengrassV2CoreDeviceRole (when using the connection kit)
 
 ```json
 {
@@ -23,9 +27,10 @@ The channel name is the same as the thing name. It will use AWS IoT certs to con
    ]
 }
 ```
+
 Note: if you want to use keys on your device you need to edit [here](aws-iot-greengrass-lite-webrtc-demo-image.bb#L123) and [here](config.conf#L66).
 
-### Create a signalling channel in web console or cli (can also done on testpage)
+## Create a signalling channel in web console or cli (can also done on testpage)
 
 ```bash
 aws kinesisvideo create-signaling-channel \
@@ -49,6 +54,7 @@ sudo bzcat build/tmp/deploy/images/raspberrypi-armv8/aws-iot-greengrass-lite-web
 ```
 
 ## Debugging
+
 Once booted you can connect to your device via ssh. Be careful default password is empty for root user!
 Wifi can be configured as described [here](../aws-iot-greengrass-lite-demo-image/README.md#installation). That zip file can be downloaded from web console (AWS IoT -> AWS IoT Greengrass) when following the "Set up one Greengrass core device" wizard.
 
@@ -58,4 +64,17 @@ cat /etc/systemd/system/webrtc.service
 ```
 
 ## Testing
+
 Use the official [Testpage](https://awslabs.github.io/amazon-kinesis-video-streams-webrtc-sdk-js/examples/index.html) and enter your keys and start as viewer. This should start a WebRTC connection with your device.
+
+## (beta) For linux-webrtc-reference-for-amazon-kinesis-video-streams implementation
+
+this needs to be done before creating the image.
+Adding keys to build/config/local.conf:
+
+```bash
+AWS_REGION:pn-linux-webrtc-reference-for-amazon-kinesis-video-streams = "xxx"
+AWS_KVS_CHANNEL_NAME:pn-linux-webrtc-reference-for-amazon-kinesis-video-streams = "xxx"
+AWS_ACCESS_KEY_ID:pn-linux-webrtc-reference-for-amazon-kinesis-video-streams = "xxx"
+AWS_SECRET_ACCESS_KEY:pn-linux-webrtc-reference-for-amazon-kinesis-video-streams = "xxx"
+```
