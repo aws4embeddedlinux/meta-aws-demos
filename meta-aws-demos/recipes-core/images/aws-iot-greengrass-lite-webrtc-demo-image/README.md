@@ -78,3 +78,9 @@ AWS_KVS_CHANNEL_NAME:pn-linux-webrtc-reference-for-amazon-kinesis-video-streams 
 AWS_ACCESS_KEY_ID:pn-linux-webrtc-reference-for-amazon-kinesis-video-streams = "xxx"
 AWS_SECRET_ACCESS_KEY:pn-linux-webrtc-reference-for-amazon-kinesis-video-streams = "xxx"
 ```
+
+You should disable the webrtc service to use the beta to not have both running at a time.
+
+```bash
+systemctl disable webrtc
+```
