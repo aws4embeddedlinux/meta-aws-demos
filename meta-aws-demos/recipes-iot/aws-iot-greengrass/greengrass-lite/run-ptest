@@ -1,0 +1,18 @@
+#!/bin/sh
+set -euxo pipefail
+
+# this has been disabled cause this has issues with greengrass-bin
+systemctl enable ggl.gg-ipc.socket.socket
+systemctl start greengrass-lite.target
+
+# settle time
+sleep 10
+
+systemctl is-active greengrass-lite.target
+
+RETVAL=$?
+if [ $RETVAL -eq 0 ] ; then
+    echo "PASS: greengrass lite active test"
+else
+    echo "FAIL: greengrass lite active test"
+fi
