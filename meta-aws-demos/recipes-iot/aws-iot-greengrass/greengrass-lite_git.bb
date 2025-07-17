@@ -39,9 +39,10 @@ SRC_URI = "\
     file://001-disable_strip.patch \
     file://greengrass-lite.yaml \
     file://run-ptest \
+    file://ggl.gg_fleetprovisioning.service \
 "
 
-SRCREV_ggl = "649d4d4946b5c0f558470117ff542c86f0b53d7b"
+SRCREV_ggl = "f1b4b3e241e4f8305adc9216e89212a6ec7e3ef2"
 
 # must match fc_deps.json
 SRCREV_mqtt = "f1827d8b46703f1c5ff05d21b34692d3122c9a04"
@@ -54,6 +55,7 @@ IOT_DATA_ENDPOINT ?= ""
 IOT_CRED_ENDPOINT ?= ""
 FLEET_PROVISIONING_TEMPLATE ?= ""
 FLEET_CLAIM_CERTS_PATH ?= ""
+IOT_ROLE_ALIAS ?= ""
 
 EXTRA_OECMAKE:append = " \
     -DFETCHCONTENT_SOURCE_DIR_CORE_MQTT=${S}/thirdparty/core_mqtt \
@@ -76,12 +78,12 @@ S = "${WORKDIR}/git"
 
 FILES:${PN}:append = " \
     ${systemd_unitdir}/system/greengrass-lite.service \
+        ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','${systemd_unitdir}/system/ggl.gg_fleetprovisioning.service','',d)} \
     /usr/components/* \
     ${sysconfdir}/sudoers.d/${BPN} \
     /usr/lib/* \
     ${gg_workingdir} \
     ${sysconfdir}/greengrass/certs/* \
-    /ggcredentials \
     "
 
 REQUIRED_DISTRO_FEATURES = "systemd"
@@ -127,6 +129,7 @@ SYSTEMD_SERVICE:${PN} = "\
     ggl.gg_pubsub.socket \
     ggl.gg-ipc.socket.socket \
     ggl.ipc_component.socket \
+    ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','ggl.gg_fleetprovisioning.service ','',d)} \
     greengrass-lite.target \
 "
 
@@ -162,16 +165,24 @@ do_install:append() {
     install -d ${D}/${gg_workingdir}
     chown ${gg_user}:${gg_group} ${D}/${gg_workingdir}
 
-    # Create ggcredentials directory for fleet provisioning
-    install -d ${D}/ggcredentials
-    chown ${gg_user}:${gg_group} ${D}/ggcredentials
-    chmod 700 ${D}/ggcredentials
-
     if ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','true','false',d)}; then
+        # Create ggcredentials directory for fleet provisioning
+        install ${WORKDIR}/ggl.gg_fleetprovisioning.service ${D}${systemd_unitdir}/system/
+
         # Replace variables in the config file using a temporary file to ensure proper expansion
         cat > ${D}/${sysconfdir}/greengrass/config.d/fleetprovisioning-config.yaml << EOF
 ---
 services:
+  aws.greengrass.NucleusLite:
+    componentType: "NUCLEUS"
+    configuration:
+      awsRegion: "eu-central-1"
+      iotCredEndpoint: ""
+      iotDataEndpoint: ""
+      iotRoleAlias: "${IOT_ROLE_ALIAS}"
+      runWithDefault:
+        posixUser: "${gg_user}:${gg_group}"
+      greengrassDataPlanePort: "8443"
   aws.greengrass.fleet_provisioning:
     configuration:
       iotDataEndpoint: "${IOT_DATA_ENDPOINT}"
@@ -179,7 +190,7 @@ services:
       claimCertPath: "/etc/greengrass/certs/claim.cert.pem"
       claimKeyPath: "/etc/greengrass/certs/claim.key.pem"
       templateName: "${FLEET_PROVISIONING_TEMPLATE}"
-      templateParams: '{"SerialNumber": "AAA55555TT"}'
+      templateParams: '{"SerialNumber": "0123456789"}'
 EOF
     # For fleetprovisioning we also need a /etc/greengrass/config.yaml
 

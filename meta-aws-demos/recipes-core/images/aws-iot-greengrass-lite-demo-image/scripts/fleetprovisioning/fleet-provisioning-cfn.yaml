@@ -1,0 +1,211 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Parameters:
+  ProvisioningTemplateName:
+    Type: String
+    Default: 'GreengrassFleetProvisioningTemplate' 
+  GGTokenExchangeRoleName:
+    Type: String
+    Default: 'GGTokenExchangeRole'
+  GGFleetProvisioningRoleName:
+    Type: String
+    Default: 'GGFleetProvisioningRole'
+  GGTokenExchangeRoleAliasName:
+    Type: String
+    Default: 'GreengrassV2TokenExchangeRoleAlias'
+  GGThingGroupName:
+    Type: String
+    Default: 'GreengrassDevices'
+  GGThingNamePrefix:
+    Type: String
+    Default: 'gg_'
+
+Resources:
+  # IAM Role for Greengrass Token Exchange
+  GGTokenExchangeRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref GGTokenExchangeRoleName
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: credentials.iot.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+      Policies:
+        - PolicyName: GreengrassTokenExchangeAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "iot:DescribeCertificate"
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                  - "logs:DescribeLogStreams"
+                  - "iot:Connect"
+                  - "iot:Publish"
+                  - "iot:Subscribe"
+                  - "iot:Receive"
+                  - "s3:GetBucketLocation"
+                Resource: "*"
+
+  # IAM Role for Fleet Provisioning
+  GGFleetProvisioningRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref GGFleetProvisioningRoleName
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: iot.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSIoTThingsRegistration
+
+  # IoT Role Alias for Greengrass Token Exchange
+  GGTokenExchangeRoleAlias:
+    Type: AWS::IoT::RoleAlias
+    Properties:
+      RoleAlias: !Sub "${GGTokenExchangeRoleAliasName}-${AWS::StackName}"
+      RoleArn: !GetAtt GGTokenExchangeRole.Arn
+      CredentialDurationSeconds: 3600
+
+  # IoT Thing Group for Greengrass Devices
+  GGThingGroup:
+    Type: AWS::IoT::ThingGroup
+    Properties:
+      ThingGroupName: !Ref GGThingGroupName
+
+  # IoT Policy for Fleet Provisioning Claim Certificates
+  FleetProvisioningPolicy:
+    Type: AWS::IoT::Policy
+    Properties:
+      PolicyName: !Sub "FleetProvisioningPolicy-${AWS::StackName}"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: 
+              - "iot:Connect"
+            Resource: "*"
+          - Effect: Allow
+            Action:
+              - "iot:Publish"
+              - "iot:Receive"
+            Resource:
+              - !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topic/$aws/certificates/create/*"
+              - !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topic/$aws/provisioning-templates/${ProvisioningTemplateName}/provision/*"
+          - Effect: Allow
+            Action: "iot:Subscribe"
+            Resource:
+              - !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topicfilter/$aws/certificates/create/*"
+              - !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topicfilter/$aws/provisioning-templates/${ProvisioningTemplateName}/provision/*"
+
+  # IoT Policy for Greengrass Core Devices
+  GreengrassV2IoTThingPolicy:
+    Type: AWS::IoT::Policy
+    Properties:
+      PolicyName: !Sub "GreengrassV2IoTThingPolicy-${AWS::StackName}"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - "iot:Connect"
+              - "iot:Publish"
+              - "iot:Subscribe"
+              - "iot:Receive"
+              - "greengrass:*"
+            Resource: "*"
+
+  # IoT Policy for Token Exchange Role Alias
+  GreengrassV2TokenExchangeRoleAliasPolicy:
+    Type: AWS::IoT::Policy
+    Properties:
+      PolicyName: !Sub "GreengrassV2TokenExchangeRoleAliasPolicy-${AWS::StackName}"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action: "iot:AssumeRoleWithCertificate"
+            Resource: !GetAtt GGTokenExchangeRoleAlias.RoleAliasArn
+
+  # Fleet Provisioning Template
+  FleetProvisioningTemplate:
+    Type: AWS::IoT::ProvisioningTemplate
+    Properties:
+      TemplateName: !Ref ProvisioningTemplateName
+      Description: "Fleet provisioning template for Greengrass devices"
+      Enabled: true
+      ProvisioningRoleArn: !GetAtt GGFleetProvisioningRole.Arn
+      TemplateBody: !Sub |
+        {
+          "Parameters": {
+            "SerialNumber": {
+              "Type": "String"
+            },
+            "AWS::IoT::Certificate::Id": {
+              "Type": "String"
+            }
+          },
+          "Resources": {
+            "certificate": {
+              "Type": "AWS::IoT::Certificate",
+              "Properties": {
+                "CertificateId": {
+                  "Ref": "AWS::IoT::Certificate::Id"
+                },
+                "Status": "ACTIVE"
+              }
+            },
+            "thing": {
+              "Type": "AWS::IoT::Thing",
+              "Properties": {
+                "ThingName": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "${GGThingNamePrefix}",
+                      {
+                        "Ref": "SerialNumber"
+                      }
+                    ]
+                  ]
+                },
+                "ThingGroups": [
+                  "${GGThingGroupName}"
+                ]
+              }
+            },
+            "policy": {
+              "Type": "AWS::IoT::Policy",
+              "Properties": {
+                "PolicyName": "GreengrassV2IoTThingPolicy-${AWS::StackName}"
+              }
+            },
+            "policy_tokenexchange": {
+              "Type": "AWS::IoT::Policy",
+              "Properties": {
+                "PolicyName": "GreengrassV2TokenExchangeRoleAliasPolicy-${AWS::StackName}"
+              }
+            }
+          }
+        }
+
+Outputs:
+  ProvisioningTemplateName:
+    Description: "Name of the provisioning template"
+    Value: !Ref ProvisioningTemplateName
+  TokenExchangeRoleAlias:
+    Description: "Role alias for token exchange"
+    Value: !Sub "${GGTokenExchangeRoleAliasName}-${AWS::StackName}"
+  ThingGroupName:
+    Description: "Thing group for Greengrass devices"
+    Value: !Ref GGThingGroupName
