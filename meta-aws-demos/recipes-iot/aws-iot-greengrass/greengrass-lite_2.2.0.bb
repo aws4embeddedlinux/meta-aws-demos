@@ -49,6 +49,12 @@ SRCREV_backoff = "f2f3bb2d8310f7cb48baa3ee64b635a5d66f838b"
 SRCREV_sigv4 = "f0409ced6c2c9430f0e972019b7e8f20bbf58f4e"
 SRCREV_sdk = "0d239f96101608441dd6434f98a9e7f6623556c7"
 
+# Fleet provisioning configuration
+IOT_DATA_ENDPOINT ?= ""
+IOT_CRED_ENDPOINT ?= ""
+FLEET_PROVISIONING_TEMPLATE ?= ""
+FLEET_CLAIM_CERTS_PATH ?= ""
+
 EXTRA_OECMAKE:append = " \
     -DFETCHCONTENT_SOURCE_DIR_CORE_MQTT=${S}/thirdparty/core_mqtt \
     -DFETCHCONTENT_SOURCE_DIR_BACKOFF_ALGORITHM=${S}/thirdparty/backoff_algorithm \
@@ -74,6 +80,8 @@ FILES:${PN}:append = " \
     ${sysconfdir}/sudoers.d/${BPN} \
     /usr/lib/* \
     ${gg_workingdir} \
+    ${sysconfdir}/greengrass/certs/* \
+    /ggcredentials \
     "
 
 REQUIRED_DISTRO_FEATURES = "systemd"
@@ -154,35 +162,48 @@ do_install:append() {
     install -d ${D}/${gg_workingdir}
     chown ${gg_user}:${gg_group} ${D}/${gg_workingdir}
 
+    # Create ggcredentials directory for fleet provisioning
+    install -d ${D}/ggcredentials
+    chown ${gg_user}:${gg_group} ${D}/ggcredentials
+    chmod 700 ${D}/ggcredentials
+
     if ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','true','false',d)}; then
-    echo TODO
+        # Replace variables in the config file using a temporary file to ensure proper expansion
+        cat > ${D}/${sysconfdir}/greengrass/config.d/fleetprovisioning-config.yaml << EOF
+---
+services:
+  aws.greengrass.fleet_provisioning:
+    configuration:
+      iotDataEndpoint: "${IOT_DATA_ENDPOINT}"
+      iotCredEndpoint: "${IOT_CRED_ENDPOINT}"
+      claimCertPath: "/etc/greengrass/certs/claim.cert.pem"
+      claimKeyPath: "/etc/greengrass/certs/claim.key.pem"
+      templateName: "${FLEET_PROVISIONING_TEMPLATE}"
+      templateParams: '{"SerialNumber": "AAA55555TT"}'
+EOF
+    # For fleetprovisioning we also need a /etc/greengrass/config.yaml
 
-#        install -d ${GG_ROOT}/claim-certs
-#        install -d ${GG_ROOT}/plugins
-#        install -d ${GG_ROOT}/plugins/trusted
-#        install -m 0440 ${WORKDIR}/claim.pkey.pem ${GG_ROOT}/claim-certs
-#        install -m 0440 ${WORKDIR}/claim.cert.pem ${GG_ROOT}/claim-certs
-#        install -m 0440 ${WORKDIR}/claim.root.pem ${GG_ROOT}/claim-certs
-#
-#        install -m 0740 ${WORKDIR}/fleetprovisioningbyclaim-${GGV2_FLEETPROVISIONING_VERSION}.jar ${GG_ROOT}/plugins/trusted/aws.greengrass.FleetProvisioningByClaim.jar
-#
-#        install -m 0755 ${WORKDIR}/replace_board_id.sh ${GG_ROOT}/config/
-#
-#        install -m 0640 ${WORKDIR}/config.yaml.template ${GG_ROOT}/config/config.yaml
-#
-#        AWS_DEFAULT_REGION=${GGV2_REGION} \
-#        PROXY_USER=ggc_user:ggc_group \
-#        IOT_DATA_ENDPOINT=${GGV2_DATA_EP} \
-#        IOT_CRED_ENDPOINT=${GGV2_CRED_EP} \
-#        TE_ROLE_ALIAS=${GGV2_TES_RALIAS} \
-#        FLEET_PROVISIONING_TEMPLATE_NAME=${GGV2_FLEET_PROVISIONING_TEMPLATE_NAME} \
-#        CLAIM_CERT_PATH=/${GG_BASENAME}/claim-certs/claim.cert.pem \
-#        CLAIM_KEY_PATH=/${GG_BASENAME}/claim-certs/claim.pkey.pem \
-#        ROOT_CA_PATH=/${GG_BASENAME}/claim-certs/claim.root.pem \
-#        THING_NAME=${GGV2_THING_NAME} \
-#        THING_GROUP_NAME=${GGV2_THING_GROUP} \
-#        envsubst < ${WORKDIR}/config.yaml.template > ${GG_ROOT}/config/config.yaml
 
+        # Create certificates directory
+        install -d ${D}/${sysconfdir}/greengrass/certs
+
+        # Install certificates only if FLEET_CLAIM_CERTS_PATH is set
+        if [ -n "${FLEET_CLAIM_CERTS_PATH}" ]; then
+            if [ -d "${FLEET_CLAIM_CERTS_PATH}" ]; then
+                # Install claim certificates from specified path
+                install -m 0644 ${FLEET_CLAIM_CERTS_PATH}/certificate.pem.crt ${D}/${sysconfdir}/greengrass/certs/claim.cert.pem
+                install -m 0600 ${FLEET_CLAIM_CERTS_PATH}/private.pem.key ${D}/${sysconfdir}/greengrass/certs/claim.key.pem
+                install -m 0644 ${FLEET_CLAIM_CERTS_PATH}/AmazonRootCA1.pem ${D}/${sysconfdir}/greengrass/certs/AmazonRootCA1.pem
+
+                # Ensure correct ownership
+                chown -R ${gg_user}:${gg_group} ${D}/${sysconfdir}/greengrass/certs
+            else
+                bbwarn "FLEET_CLAIM_CERTS_PATH is set but directory '${FLEET_CLAIM_CERTS_PATH}' does not exist"
+            fi
+        else
+            bbwarn "FLEET_CLAIM_CERTS_PATH is not set. Fleet provisioning certificates will not be installed."
+            bbwarn "You will need to provide the certificates manually at /etc/greengrass/certs/"
+        fi
     fi
 
 }

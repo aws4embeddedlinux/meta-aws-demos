@@ -1,0 +1,80 @@
+{
+  "Parameters": {
+    "SerialNumber": {
+      "Type": "String"
+    },
+    "AWS::IoT::Certificate::Id": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "policy_GreengrassV2TokenExchangeCoreDeviceRoleAliasPolicy": {
+      "Type": "AWS::IoT::Policy",
+      "Properties": {
+        "PolicyName": "GreengrassV2TokenExchangeCoreDeviceRoleAliasPolicy"
+      }
+    },
+    "policy_GreengrassV2IoTThingPolicy": {
+      "Type": "AWS::IoT::Policy",
+      "Properties": {
+        "PolicyName": "GreengrassV2IoTThingPolicy"
+      }
+    },
+    "certificate": {
+      "Type": "AWS::IoT::Certificate",
+      "Properties": {
+        "CertificateId": {
+          "Ref": "AWS::IoT::Certificate::Id"
+        },
+        "Status": "Active"
+      }
+    },
+    "thing": {
+      "Type": "AWS::IoT::Thing",
+      "OverrideSettings": {
+        "AttributePayload": "MERGE",
+        "ThingGroups": "DO_NOTHING",
+        "ThingTypeName": "REPLACE"
+      },
+      "Properties": {
+        "AttributePayload": {},
+        "ThingGroups": [
+          "NewGreengrassDevices"
+        ],
+        "ThingName": {
+          "Fn::Join": [
+            "",
+            [
+              "greengrass",
+              {
+                "Ref": "SerialNumber"
+              }
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "Conditions": {
+    "ValidSerialNumber": {
+      "Fn::StartsWith": [
+        {
+          "Ref": "SerialNumber"
+        },
+        "AAA"
+      ]
+    }
+  },
+  "AllowProvisioning": {
+    "Fn::Equals": [
+      {
+        "Fn::If": [
+          "ValidSerialNumber",
+          true,
+          false
+        ]
+      },
+      true
+    ]
+  }
+}
