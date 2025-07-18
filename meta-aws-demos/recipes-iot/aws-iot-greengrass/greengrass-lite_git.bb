@@ -104,8 +104,8 @@ EXTRA_OECMAKE:append = " -DCMAKE_BUILD_TYPE=RelWithDebInfo"
 # EXTRA_OECMAKE:append = " -DCMAKE_BUILD_TYPE=MinSizeRel"
 
 # add DEBUG logs
-# EXTRA_OECMAKE:append = " -DGGL_LOG_LEVEL=DEBUG"
-EXTRA_OECMAKE:append = " -DGGL_LOG_LEVEL=TRACE"
+EXTRA_OECMAKE:append = " -DGGL_LOG_LEVEL=DEBUG"
+# EXTRA_OECMAKE:append = " -DGGL_LOG_LEVEL=TRACE"
 
 # No warnings should be in commited code, not enabled yet
 # CFLAGS:append = " -Werror"
@@ -170,8 +170,10 @@ do_install:append() {
         install ${WORKDIR}/ggl.gg_fleetprovisioning.service ${D}${systemd_unitdir}/system/
 
         # Replace variables in the config file using a temporary file to ensure proper expansion
-        cat > ${D}/${sysconfdir}/greengrass/config.d/fleetprovisioning-config.yaml << EOF
+        cat > ${D}/${sysconfdir}/greengrass/config.d/fleetprovisioning.yaml << EOF
 ---
+system:
+  rootCaPath: "/etc/greengrass/certs/AmazonRootCA1.pem"
 services:
   aws.greengrass.NucleusLite:
     componentType: "NUCLEUS"
@@ -190,7 +192,7 @@ services:
       claimCertPath: "/etc/greengrass/certs/claim.cert.pem"
       claimKeyPath: "/etc/greengrass/certs/claim.key.pem"
       templateName: "${FLEET_PROVISIONING_TEMPLATE}"
-      templateParams: '{"SerialNumber": "0123456789"}'
+      templateParams: '{"SerialNumber": "<unique>"}'
 EOF
     # For fleetprovisioning we also need a /etc/greengrass/config.yaml
 
