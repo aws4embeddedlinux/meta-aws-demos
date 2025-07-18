@@ -140,7 +140,7 @@ Resources:
           - Effect: Allow
             Action: "iot:AssumeRoleWithCertificate"
             Resource: !GetAtt GGTokenExchangeRoleAlias.RoleAliasArn
-            
+
   # Lambda Role for MAC Address Validation
   MacValidationLambdaRole:
     Type: AWS::IAM::Role
@@ -169,7 +169,7 @@ Resources:
                 Action:
                   - "iot:*"
                 Resource: "*"
-              
+
   # Lambda Function for MAC Address Validation
   MacValidationLambda:
     Type: AWS::Lambda::Function
@@ -183,29 +183,29 @@ Resources:
         ZipFile: |
           exports.handler = async (event) => {
             console.log('Received event:', JSON.stringify(event, null, 2));
-            
+
             // Extract the serial number from the event (which should be a MAC address)
             const serialNumber = event.parameters.SerialNumber;
             console.log(`Validating MAC address: ${serialNumber}`);
-            
+
             // Regular expression for validating MAC address format
             // Accepts formats: XX:XX:XX:XX:XX:XX, XX-XX-XX-XX-XX-XX, XXXXXXXXXXXX
-            const macRegex = /^([0-9A-Fa-f]{2}[:-]?){5}([0-9A-Fa-f]{2})$/;
-            
+            const macRegex = /^([0-9A-Fa-f]{2}[:-_]?){5}([0-9A-Fa-f]{2})$/;
+
             if (!serialNumber || !macRegex.test(serialNumber)) {
               console.log(`Invalid MAC address format: ${serialNumber}`);
-              throw new Error('Invalid MAC address format. Expected format: XX:XX:XX:XX:XX:XX, XX-XX-XX-XX-XX-XX, or XXXXXXXXXXXX');
+              throw new Error('Invalid MAC address format. Expected format: XX:XX:XX:XX:XX:XX, XX-XX-XX-XX-XX-XX, XX_XX_XX_XX_XX_XX or XXXXXXXXXXXX');
             }
-            
+
             // Optional: Add additional validation logic here
             // For example, check against a database of allowed MAC addresses
-            
+
             console.log(`MAC address validation successful: ${serialNumber}`);
             return {
               allowProvisioning: true
             };
           };
-          
+
   # Permission for AWS IoT to invoke the Lambda function
   MacValidationLambdaPermission:
     Type: AWS::Lambda::Permission
