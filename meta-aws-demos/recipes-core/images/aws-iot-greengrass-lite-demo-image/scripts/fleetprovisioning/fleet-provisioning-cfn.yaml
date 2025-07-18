@@ -19,6 +19,9 @@ Parameters:
   GGThingNamePrefix:
     Type: String
     Default: 'gg_'
+  MacValidationLambdaName:
+    Type: String
+    Default: 'MacAddressValidator'
 
 Resources:
   # IAM Role for Greengrass Token Exchange
@@ -64,6 +67,15 @@ Resources:
             Action: sts:AssumeRole
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSIoTThingsRegistration
+      Policies:
+        - PolicyName: FleetProvisioningLambdaAccess
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "lambda:InvokeFunction"
+                Resource: !GetAtt MacValidationLambda.Arn
 
   # IoT Role Alias for Greengrass Token Exchange
   GGTokenExchangeRoleAlias:
@@ -128,6 +140,80 @@ Resources:
           - Effect: Allow
             Action: "iot:AssumeRoleWithCertificate"
             Resource: !GetAtt GGTokenExchangeRoleAlias.RoleAliasArn
+            
+  # Lambda Role for MAC Address Validation
+  MacValidationLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: MacValidationPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "logs:CreateLogGroup"
+                  - "logs:CreateLogStream"
+                  - "logs:PutLogEvents"
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - "iot:*"
+                Resource: "*"
+              
+  # Lambda Function for MAC Address Validation
+  MacValidationLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Ref MacValidationLambdaName
+      Handler: index.handler
+      Role: !GetAtt MacValidationLambdaRole.Arn
+      Runtime: nodejs18.x
+      Timeout: 30
+      Code:
+        ZipFile: |
+          exports.handler = async (event) => {
+            console.log('Received event:', JSON.stringify(event, null, 2));
+            
+            // Extract the serial number from the event (which should be a MAC address)
+            const serialNumber = event.parameters.SerialNumber;
+            console.log(`Validating MAC address: ${serialNumber}`);
+            
+            // Regular expression for validating MAC address format
+            // Accepts formats: XX:XX:XX:XX:XX:XX, XX-XX-XX-XX-XX-XX, XXXXXXXXXXXX
+            const macRegex = /^([0-9A-Fa-f]{2}[:-]?){5}([0-9A-Fa-f]{2})$/;
+            
+            if (!serialNumber || !macRegex.test(serialNumber)) {
+              console.log(`Invalid MAC address format: ${serialNumber}`);
+              throw new Error('Invalid MAC address format. Expected format: XX:XX:XX:XX:XX:XX, XX-XX-XX-XX-XX-XX, or XXXXXXXXXXXX');
+            }
+            
+            // Optional: Add additional validation logic here
+            // For example, check against a database of allowed MAC addresses
+            
+            console.log(`MAC address validation successful: ${serialNumber}`);
+            return {
+              allowProvisioning: true
+            };
+          };
+          
+  # Permission for AWS IoT to invoke the Lambda function
+  MacValidationLambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref MacValidationLambda
+      Principal: iot.amazonaws.com
+      SourceAccount: !Ref AWS::AccountId
 
   # Fleet Provisioning Template
   FleetProvisioningTemplate:
@@ -137,6 +223,8 @@ Resources:
       Description: "Fleet provisioning template for Greengrass devices"
       Enabled: true
       ProvisioningRoleArn: !GetAtt GGFleetProvisioningRole.Arn
+      PreProvisioningHook:
+        TargetArn: !GetAtt MacValidationLambda.Arn
       TemplateBody: !Sub |
         {
           "Parameters": {
@@ -207,3 +295,6 @@ Outputs:
   ThingGroupName:
     Description: "Thing group for Greengrass devices"
     Value: !Ref GGThingGroupName
+  MacValidationLambdaArn:
+    Description: "ARN of the MAC address validation Lambda function"
+    Value: !GetAtt MacValidationLambda.Arn

@@ -56,6 +56,7 @@ IOT_CRED_ENDPOINT ?= ""
 FLEET_PROVISIONING_TEMPLATE ?= ""
 FLEET_CLAIM_CERTS_PATH ?= ""
 IOT_ROLE_ALIAS ?= ""
+AWS_REGION ?= ""
 
 EXTRA_OECMAKE:append = " \
     -DFETCHCONTENT_SOURCE_DIR_CORE_MQTT=${S}/thirdparty/core_mqtt \
@@ -178,7 +179,7 @@ services:
   aws.greengrass.NucleusLite:
     componentType: "NUCLEUS"
     configuration:
-      awsRegion: "eu-central-1"
+      awsRegion: "${AWS_REGION}"
       iotCredEndpoint: ""
       iotDataEndpoint: ""
       iotRoleAlias: "${IOT_ROLE_ALIAS}"
