@@ -42,7 +42,7 @@ SRC_URI = "\
     file://ggl.gg_fleetprovisioning.service \
 "
 
-SRCREV_ggl = "13183ef2d7080829df88d8c79634f8fee4eebacf"
+SRCREV_ggl = "4e7501f743db6cbb8e85d4c7bdaebfdd9ec1e468"
 
 # must match fc_deps.json
 SRCREV_mqtt = "f1827d8b46703f1c5ff05d21b34692d3122c9a04"
@@ -196,7 +196,7 @@ services:
       claimCertPath: "/etc/greengrass/certs/claim.cert.pem"
       claimKeyPath: "/etc/greengrass/certs/claim.key.pem"
       templateName: "${FLEET_PROVISIONING_TEMPLATE}"
-      templateParams: '{"SerialNumber": "<unique>"}'
+      templateParams: '{"SerialNumber": "00_00_00_00_00_00"}'
 EOF
     # For fleetprovisioning we also need a /etc/greengrass/config.yaml
 
