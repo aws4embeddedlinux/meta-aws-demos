@@ -74,6 +74,8 @@ if [ ! -f "${TEMP_DIR}/certificate.pem.crt" ] || [ ! -f "${TEMP_DIR}/private.pem
   # Attach the fleet provisioning policy to the claim certificate
   echo "Attaching FleetProvisioningPolicy to certificate..."
   CERT_ARN=$(jq -r '.certificateArn' ${TEMP_DIR}/cert-details.json)
+  CERT_ID=$(jq -r '.certificateId' ${TEMP_DIR}/cert-details.json)
+  echo "Certificate ID: ${CERT_ID}"
   aws iot attach-policy \
     --policy-name "FleetProvisioningPolicy-${STACK_NAME}" \
     --target "${CERT_ARN}" \
@@ -112,6 +114,12 @@ echo "  - local.conf.sample"
 echo "  - certificate.pem.crt"
 echo "  - private.pem.key"
 echo "  - AmazonRootCA1.pem"
+echo ""
+# Display certificate ID if available
+if [ -f "${TEMP_DIR}/cert-details.json" ]; then
+  CERT_ID=$(jq -r '.certificateId' ${TEMP_DIR}/cert-details.json)
+  echo "Claim Certificate ID: ${CERT_ID}"
+fi
 echo ""
 echo "To use fleet provisioning in your build:"
 echo "1. Copy the contents of ${TEMP_DIR}/local.conf.sample to your local.conf"

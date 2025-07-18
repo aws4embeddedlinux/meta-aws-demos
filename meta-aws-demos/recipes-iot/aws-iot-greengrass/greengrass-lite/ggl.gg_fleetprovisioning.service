@@ -1,67 +1,6 @@
 [Unit]
-Description=Greengrass Lite Fleet Provisioning Service
 After=ggl.core.ggconfigd.service
 Requires=ggl.core.ggconfigd.service
-PartOf=greengrass-lite.target
 
 [Service]
-Type=oneshot
-ExecStartPre=/bin/bash -c 'CONFIG_FILE="/etc/greengrass/config.d/fleetprovisioning-config.yaml"; \
-    LOG_FILE="/var/log/fleetprovisioning.log"; \
-    PROVISIONED_CERT_DIR="/var/lib/greengrass/provisioned-cert"; \
-    echo "$(date "+%Y-%m-%d %H:%M:%S") - Starting fleet provisioning preparation" >> $LOG_FILE; \
-    if [ ! -d "$PROVISIONED_CERT_DIR" ]; then \
-        mkdir -p "$PROVISIONED_CERT_DIR"; \
-        chmod 700 "$PROVISIONED_CERT_DIR"; \
-        echo "$(date "+%Y-%m-%d %H:%M:%S") - Created directory: $PROVISIONED_CERT_DIR" >> $LOG_FILE; \
-    fi; \
-    generate_unique_id() { \
-        if [ -d "/sys/class/net" ]; then \
-            for interface in $(ls /sys/class/net/ | grep -v lo); do \
-                if [ -f "/sys/class/net/$interface/address" ]; then \
-                    MAC=$(cat "/sys/class/net/$interface/address" | sed "s/://g"); \
-                    if [ ! -z "$MAC" ]; then \
-                        echo "mac-${MAC}"; \
-                        return; \
-                    fi; \
-                fi; \
-            done; \
-        fi; \
-        if [ -f "/proc/cpuinfo" ]; then \
-            CPU_SERIAL=$(grep -i "Serial" /proc/cpuinfo | awk "{print \$3}"); \
-            if [ ! -z "$CPU_SERIAL" ]; then \
-                echo "cpu-${CPU_SERIAL}"; \
-                return; \
-            fi; \
-        fi; \
-        if [ -f "/proc/device-tree/serial-number" ]; then \
-            DT_SERIAL=$(cat /proc/device-tree/serial-number | tr -d "\0"); \
-            if [ ! -z "$DT_SERIAL" ]; then \
-                echo "dt-${DT_SERIAL}"; \
-                return; \
-            fi; \
-        fi; \
-        if command -v dmidecode &> /dev/null; then \
-            DMI_SERIAL=$(dmidecode -s baseboard-serial-number 2>/dev/null); \
-            if [ ! -z "$DMI_SERIAL" ] && [ "$DMI_SERIAL" != "Unknown" ]; then \
-                echo "dmi-${DMI_SERIAL}"; \
-                return; \
-            fi; \
-        fi; \
-        echo "dev-$(date +%s)-$(shuf -i 1000-9999 -n 1)"; \
-    }; \
-    UNIQUE_ID=$(generate_unique_id); \
-    echo "$(date "+%Y-%m-%d %H:%M:%S") - Generated unique ID: $UNIQUE_ID" >> $LOG_FILE; \
-    if grep -q "SerialNumber" "$CONFIG_FILE"; then \
-        sed -i "s/\"SerialNumber\": \"[^\"]*\"/\"SerialNumber\": \"$UNIQUE_ID\"/" "$CONFIG_FILE"; \
-        echo "$(date "+%Y-%m-%d %H:%M:%S") - Updated SerialNumber in $CONFIG_FILE to $UNIQUE_ID" >> $LOG_FILE; \
-    else \
-        echo "$(date "+%Y-%m-%d %H:%M:%S") - Error: SerialNumber field not found in $CONFIG_FILE" >> $LOG_FILE; \
-    fi'
 ExecStart=/usr/bin/fleetprovisioning
-User=root
-Group=root
-RemainAfterExit=true
-
-[Install]
-WantedBy=greengrass-lite.target

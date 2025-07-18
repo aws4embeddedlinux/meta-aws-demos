@@ -42,7 +42,7 @@ SRC_URI = "\
     file://ggl.gg_fleetprovisioning.service \
 "
 
-SRCREV_ggl = "f1b4b3e241e4f8305adc9216e89212a6ec7e3ef2"
+SRCREV_ggl = "2d7dc584d7e05bd710c041c777ebbe6336a12c8e"
 
 # must match fc_deps.json
 SRCREV_mqtt = "f1827d8b46703f1c5ff05d21b34692d3122c9a04"
@@ -104,8 +104,8 @@ EXTRA_OECMAKE:append = " -DCMAKE_BUILD_TYPE=RelWithDebInfo"
 # EXTRA_OECMAKE:append = " -DCMAKE_BUILD_TYPE=MinSizeRel"
 
 # add DEBUG logs
-EXTRA_OECMAKE:append = " -DGGL_LOG_LEVEL=DEBUG"
-# EXTRA_OECMAKE:append = " -DGGL_LOG_LEVEL=TRACE"
+# EXTRA_OECMAKE:append = " -DGGL_LOG_LEVEL=DEBUG"
+EXTRA_OECMAKE:append = " -DGGL_LOG_LEVEL=TRACE"
 
 # No warnings should be in commited code, not enabled yet
 # CFLAGS:append = " -Werror"

@@ -3,7 +3,7 @@ AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
   ProvisioningTemplateName:
     Type: String
-    Default: 'GreengrassFleetProvisioningTemplate' 
+    Default: 'GreengrassFleetProvisioningTemplate'
   GGTokenExchangeRoleName:
     Type: String
     Default: 'GGTokenExchangeRole'
@@ -42,16 +42,12 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  - "iot:DescribeCertificate"
-                  - "logs:CreateLogGroup"
+                  - "s3:*"
+                  - "s3-object-lambda:*"
                   - "logs:CreateLogStream"
                   - "logs:PutLogEvents"
+                  - "logs:CreateLogGroup"
                   - "logs:DescribeLogStreams"
-                  - "iot:Connect"
-                  - "iot:Publish"
-                  - "iot:Subscribe"
-                  - "iot:Receive"
-                  - "s3:GetBucketLocation"
                 Resource: "*"
 
   # IAM Role for Fleet Provisioning
@@ -92,21 +88,17 @@ Resources:
         Version: "2012-10-17"
         Statement:
           - Effect: Allow
-            Action: 
+            Action:
               - "iot:Connect"
             Resource: "*"
           - Effect: Allow
             Action:
               - "iot:Publish"
               - "iot:Receive"
-            Resource:
-              - !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topic/$aws/certificates/create/*"
-              - !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topic/$aws/provisioning-templates/${ProvisioningTemplateName}/provision/*"
+            Resource: "*"
           - Effect: Allow
             Action: "iot:Subscribe"
-            Resource:
-              - !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topicfilter/$aws/certificates/create/*"
-              - !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:topicfilter/$aws/provisioning-templates/${ProvisioningTemplateName}/provision/*"
+            Resource: "*"
 
   # IoT Policy for Greengrass Core Devices
   GreengrassV2IoTThingPolicy:
@@ -167,7 +159,13 @@ Resources:
             },
             "thing": {
               "Type": "AWS::IoT::Thing",
+              "OverrideSettings": {
+                "AttributePayload": "MERGE",
+                "ThingGroups": "DO_NOTHING",
+                "ThingTypeName": "REPLACE"
+              },
               "Properties": {
+                "AttributePayload": {},
                 "ThingName": {
                   "Fn::Join": [
                     "",
