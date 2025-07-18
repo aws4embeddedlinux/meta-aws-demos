@@ -42,7 +42,7 @@ SRC_URI = "\
     file://ggl.gg_fleetprovisioning.service \
 "
 
-SRCREV_ggl = "2d7dc584d7e05bd710c041c777ebbe6336a12c8e"
+SRCREV_ggl = "13183ef2d7080829df88d8c79634f8fee4eebacf"
 
 # must match fc_deps.json
 SRCREV_mqtt = "f1827d8b46703f1c5ff05d21b34692d3122c9a04"
@@ -175,6 +175,9 @@ do_install:append() {
 ---
 system:
   rootCaPath: "/etc/greengrass/certs/AmazonRootCA1.pem"
+  thingName: ""
+  privateKeyPath: ""
+  certificateFilePath: ""
 services:
   aws.greengrass.NucleusLite:
     componentType: "NUCLEUS"
