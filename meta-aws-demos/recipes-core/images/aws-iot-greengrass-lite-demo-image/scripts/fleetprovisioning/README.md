@@ -47,15 +47,7 @@ Fleet provisioning allows you to securely provision IoT devices at scale without
 
 ## Unique Device ID Generation
 
-The fleet provisioning service automatically generates a unique device ID using the following methods (in order of preference):
-
-1. MAC address of the first network interface
-2. CPU serial number
-3. Device tree serial number
-4. DMI board serial number
-5. Fallback to timestamp + random number
-
-This ensures that each device gets a unique identity during the provisioning process.
+The fleet provisioning service automatically generates a unique device ID using the MAC address of the first network interface
 
 ## Resources Created
 
