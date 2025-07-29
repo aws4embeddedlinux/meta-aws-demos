@@ -16,15 +16,14 @@ Fleet provisioning allows you to securely provision IoT devices at scale without
 
 ## Files
 
-- `fleet.sh`: Main script to set up fleet provisioning infrastructure
-- `fleet-provisioning-cfn.yaml`: CloudFormation template that creates all required AWS resources
-- `ggl.gg_fleetprovisioning.service`: Systemd service that runs the fleet provisioning process on the device
+- `create-fleet-provisioning-stack-and-certs.sh`: Main script to set up fleet provisioning infrastructure
+- `fleet-provisioning-cfn.yaml`: CloudFormation template that creates all required AWS resources (used by the script above)
 
 ## Usage
 
-1. Run the fleet.sh script to set up the AWS infrastructure:
+1. Run the create-fleet-provisioning-stack-and-certs.sh script to set up the AWS infrastructure:
    ```
-   ./fleet.sh
+   ./create-fleet-provisioning-stack-and-certs.sh
    ```
 
 2. Copy the generated local.conf snippet to your Yocto build's local.conf:
@@ -36,10 +35,13 @@ Fleet provisioning allows you to securely provision IoT devices at scale without
    ```
    bitbake aws-iot-greengrass-lite-demo-image
    ```
+(This also works with every other demo image where greengrass lite is installed)
 
-4. When the device boots for the first time, the `ggl.gg_fleetprovisioning.service` will:
-   - Generate a unique device ID based on hardware identifiers (MAC address, CPU serial, etc.)
+4. When the device boots for the first time, the `ggl.gg_pre-fleetprovisioning.service` will:
+   - Generate a unique device ID based on MAC address
    - Update the fleet provisioning configuration with this unique ID
+
+5. When the device boots for the first time, the `ggl.gg_fleetprovisioning.service` will:
    - Use the claim certificates to authenticate with AWS IoT
    - Register the device using the fleet provisioning template
    - Store the new device certificates
@@ -58,8 +60,11 @@ The CloudFormation stack creates the following resources:
 - IoT role alias for token exchange
 - IoT thing group for Greengrass devices
 - Fleet provisioning template
+- Lambda Function for MAC Address Validation
 
 ## Reference
 
-This implementation is based on the approach described in the article:
+This implementation is based on the approach described in the article, adapted to Greengrass lite:
 [Fleet Provisioning for Embedded Linux Devices with AWS IoT Greengrass](https://dev.to/iotbuilders/fleet-provisioning-for-embedded-linux-devices-with-aws-iot-greengrass-4h8b)
+
+More information [here](https://github.com/aws-greengrass/aws-greengrass-lite/blob/main/docs/fleet_provisioning/fleet_provisioning.md)

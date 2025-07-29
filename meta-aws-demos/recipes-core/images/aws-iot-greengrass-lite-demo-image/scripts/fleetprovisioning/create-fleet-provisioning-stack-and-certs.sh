@@ -104,7 +104,9 @@ IOT_DATA_ENDPOINT:pn-greengrass-lite = "${IOT_DATA_ENDPOINT}"
 IOT_CRED_ENDPOINT:pn-greengrass-lite = "${IOT_CRED_ENDPOINT}"
 IOT_ROLE_ALIAS:pn-greengrass-lite = "${TOKEN_EXCHANGE_ROLE_ALIAS}"
 FLEET_PROVISIONING_TEMPLATE:pn-greengrass-lite = "${PROVISIONING_TEMPLATE_NAME}"
-FLEET_CLAIM_CERTS_PATH:pn-greengrass-lite = "\${TOPDIR}/../build/fleetprovisioning"
+CLAIM_CERT_PATH:pn-greengrass-lite = "\${TOPDIR}/../build/fleetprovisioning/certificate.pem.crt"
+CLAIM_KEY_PATH:pn-greengrass-lite = "\${TOPDIR}/../build/fleetprovisioning/private.pem.key"
+ROOT_CA_PATH:pn-greengrass-lite = "\${TOPDIR}/../build/fleetprovisioning/AmazonRootCA1.pem"
 EOF
 
 echo -e "\n=== Fleet provisioning setup complete ==="

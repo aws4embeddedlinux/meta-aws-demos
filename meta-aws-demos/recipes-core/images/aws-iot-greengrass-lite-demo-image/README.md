@@ -117,6 +117,11 @@ Password:
 7. When logged in you can check the status of the installation by running
 systemctl status --with-dependencies greengrass-lite.target
 
+
+## Fleetprovisioning example
+
+Follow instructiongs [here](scripts/fleetprovisioning/README.md)
+
 ## A/B update example made with [meta-rauc](https://github.com/rauc/meta-rauc-community)
 
 Set IMAGE to aws-iot-greengrass-lite-demo-image.

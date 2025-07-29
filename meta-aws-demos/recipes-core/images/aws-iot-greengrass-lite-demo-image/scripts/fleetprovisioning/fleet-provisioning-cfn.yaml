@@ -3,25 +3,25 @@ AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
   ProvisioningTemplateName:
     Type: String
-    Default: 'GreengrassFleetProvisioningTemplate'
+    Default: "GreengrassFleetProvisioningTemplate"
   GGTokenExchangeRoleName:
     Type: String
-    Default: 'GGTokenExchangeRole'
+    Default: "GGTokenExchangeRole"
   GGFleetProvisioningRoleName:
     Type: String
-    Default: 'GGFleetProvisioningRole'
+    Default: "GGFleetProvisioningRole"
   GGTokenExchangeRoleAliasName:
     Type: String
-    Default: 'GreengrassV2TokenExchangeRoleAlias'
+    Default: "GreengrassV2TokenExchangeRoleAlias"
   GGThingGroupName:
     Type: String
-    Default: 'GreengrassDevices'
+    Default: "GreengrassDevices"
   GGThingNamePrefix:
     Type: String
-    Default: 'gg_'
+    Default: "gg_"
   MacValidationLambdaName:
     Type: String
-    Default: 'MacAddressValidator'
+    Default: "MacAddressValidator"
 
 Resources:
   # IAM Role for Greengrass Token Exchange
