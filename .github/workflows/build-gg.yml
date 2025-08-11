@@ -117,7 +117,7 @@ jobs:
             export DEVICE=${{ matrix.device }} && \
             export IMAGE=${{ matrix.image }} && \
             bitbake $IMAGE -c create_spdx'
-          cp ${{ github.workspace }}/build/tmp/deploy/spdx/${{ matrix.image }}/raspberrypi-armv8/${{ matrix.image }}-raspberrypi-armv8.spdx.json ${{ github.workspace }}/zipfile/
+          cp ${{ github.workspace }}/build/tmp/deploy/spdx/raspberrypi_armv8/recipes/recipe-aws-iot-greengrass-demo-image.spdx.json ${{ github.workspace }}/zipfile/
       - name: cp image (raspberrypi) to zip dir
         if: startsWith(matrix.device, 'raspberrypi2')
         shell: bash
