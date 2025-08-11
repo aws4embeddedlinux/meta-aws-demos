@@ -135,7 +135,7 @@ jobs:
             export DEVICE=${{ matrix.device }} && \
             export IMAGE=${{ matrix.image }} && \
             bitbake $IMAGE -c create_spdx'
-          find ${{ github.workspace }}/build/tmp/deploy/spdx -name "*${{ matrix.image }}*.spdx.json" -exec cp {} ${{ github.workspace }}/zipfile/ \;
+          cp ${{ github.workspace }}/build/tmp/deploy/spdx/${{ matrix.image }}/raspberrypi-armv8/${{ matrix.image }}-raspberrypi-armv8.spdx.json ${{ github.workspace }}/zipfile/
       - name: cp image (raspberrypi) to zip dir
         if: startsWith(matrix.device, 'raspberrypi2')
         shell: bash
