@@ -91,17 +91,26 @@ install -d -m 0755 ${IMAGE_ROOTFS}/data
 # leave them empty as a mount point for the bind mount
 
 install -d ${IMAGE_ROOTFS}/data/etc/greengrass
-mv -f ${IMAGE_ROOTFS}/etc/greengrass/* ${IMAGE_ROOTFS}/data/etc/greengrass/
+if [ -n "$(ls -A ${IMAGE_ROOTFS}/etc/greengrass 2>/dev/null)" ]; then
+    mv -f ${IMAGE_ROOTFS}/etc/greengrass/* ${IMAGE_ROOTFS}/data/etc/greengrass/
+fi
 
 install -d ${IMAGE_ROOTFS}/data/etc/wpa_supplicant
 
 install -d ${IMAGE_ROOTFS}/data/etc/systemd/network
-mv -f ${IMAGE_ROOTFS}/etc/systemd/network/* ${IMAGE_ROOTFS}/data/etc/systemd/network
+if [ -n "$(ls -A ${IMAGE_ROOTFS}/etc/systemd/network 2>/dev/null)" ]; then
+    mv -f ${IMAGE_ROOTFS}/etc/systemd/network/* ${IMAGE_ROOTFS}/data/etc/systemd/network
+fi
 
 install -d ${IMAGE_ROOTFS}/data/etc/systemd/system
-mv -f ${IMAGE_ROOTFS}/etc/systemd/system/* ${IMAGE_ROOTFS}/data/etc/systemd/system
+if [ -n "$(ls -A ${IMAGE_ROOTFS}/etc/systemd/system 2>/dev/null)" ]; then
+    mv -f ${IMAGE_ROOTFS}/etc/systemd/system/* ${IMAGE_ROOTFS}/data/etc/systemd/system
+fi
 
 install -d ${IMAGE_ROOTFS}/data/var/lib/greengrass
+if [ -n "$(ls -A ${IMAGE_ROOTFS}/var/lib/greengrass 2>/dev/null)" ]; then
+    mv -f ${IMAGE_ROOTFS}/var/lib/greengrass/* ${IMAGE_ROOTFS}/data/var/lib/greengrass
+fi
 
 # decided to do here instead of a bbappend of wpa:supplicant
 install -d ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
