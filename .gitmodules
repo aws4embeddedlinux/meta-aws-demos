@@ -110,3 +110,7 @@
 	path = layers/sw/meta-browser
 	url = https://github.com/OSSystems/meta-browser.git
 	branch = scarthgap
+[submodule "layers/bsp/meta-phytec"]
+	path = layers/bsp/meta-phytec
+	url = https://github.com/thomas-roos/meta-phytec.git
+	branch = fix-optee-file-paths

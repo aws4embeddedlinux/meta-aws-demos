@@ -29,6 +29,7 @@ alphabetical order for ease of selection, no preference should be inferred.
 - [`aws-ec2-arm64` / AWS EC2](meta-aws-demos/conf/devices/aws-ec2-arm64/README.md)
 - [`aws-ec2-x86-64` / AWS EC2](meta-aws-demos/conf/devices/aws-ec2-x86-64/README.md)
 - [`imx8m` / NXP](meta-aws-demos/conf/devices/imx8m/README.md)
+- [`phyboard-electra-am64xx-2` / PHYTEC](meta-aws-demos/conf/devices/phyboard-electra-am64xx-2/README.md)
 - [`qemuarm`](meta-aws-demos/conf/devices/qemuarm/README.md)
 - [`qemuarm64`](meta-aws-demos/conf/devices/qemuarm64/README.md)
 - [`qemux86-64`](meta-aws-demos/conf/devices/qemux86-64/README.md)
