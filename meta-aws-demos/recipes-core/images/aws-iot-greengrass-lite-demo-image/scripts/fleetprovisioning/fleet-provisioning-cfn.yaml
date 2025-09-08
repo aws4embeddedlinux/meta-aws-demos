@@ -3,7 +3,7 @@ AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
   ProvisioningTemplateName:
     Type: String
-    Default: "GreengrassFleetProvisioningTemplate"
+    Default: "GGFleetTemplate"
   GGTokenExchangeRoleName:
     Type: String
     Default: "GGTokenExchangeRole"
@@ -28,7 +28,7 @@ Resources:
   GGTokenExchangeRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Ref GGTokenExchangeRoleName
+      RoleName: !Sub "${GGTokenExchangeRoleName}-${AWS::Region}"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -57,7 +57,7 @@ Resources:
   GGFleetProvisioningRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Ref GGFleetProvisioningRoleName
+      RoleName: !Sub "${GGFleetProvisioningRoleName}-${AWS::Region}"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -81,7 +81,7 @@ Resources:
   GGTokenExchangeRoleAlias:
     Type: AWS::IoT::RoleAlias
     Properties:
-      RoleAlias: !Sub "${GGTokenExchangeRoleAliasName}-${AWS::StackName}"
+      RoleAlias: !Sub "${GGTokenExchangeRoleAliasName}-${AWS::StackName}-${AWS::Region}"
       RoleArn: !GetAtt GGTokenExchangeRole.Arn
       CredentialDurationSeconds: 3600
 
@@ -219,7 +219,7 @@ Resources:
   FleetProvisioningTemplate:
     Type: AWS::IoT::ProvisioningTemplate
     Properties:
-      TemplateName: !Ref ProvisioningTemplateName
+      TemplateName: !Sub "${ProvisioningTemplateName}-${AWS::Region}"
       Description: "Fleet provisioning template for Greengrass devices"
       Enabled: true
       ProvisioningRoleArn: !GetAtt GGFleetProvisioningRole.Arn
@@ -288,10 +288,10 @@ Resources:
 Outputs:
   ProvisioningTemplateName:
     Description: "Name of the provisioning template"
-    Value: !Ref ProvisioningTemplateName
+    Value: !Sub "${ProvisioningTemplateName}-${AWS::Region}"
   TokenExchangeRoleAlias:
     Description: "Role alias for token exchange"
-    Value: !Sub "${GGTokenExchangeRoleAliasName}-${AWS::StackName}"
+    Value: !Sub "${GGTokenExchangeRoleAliasName}-${AWS::StackName}-${AWS::Region}"
   ThingGroupName:
     Description: "Thing group for Greengrass devices"
     Value: !Ref GGThingGroupName
