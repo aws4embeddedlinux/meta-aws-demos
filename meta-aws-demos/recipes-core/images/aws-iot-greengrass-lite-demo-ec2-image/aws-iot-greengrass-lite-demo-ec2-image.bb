@@ -140,18 +140,29 @@ install -d ${IMAGE_ROOTFS}/grubenv
 install -d -m 0755 ${IMAGE_ROOTFS}/data
 
 install -d ${IMAGE_ROOTFS}/data/etc/greengrass
-mv -f ${IMAGE_ROOTFS}/etc/greengrass/* ${IMAGE_ROOTFS}/data/etc/greengrass/
+if [ -n "$(ls -A ${IMAGE_ROOTFS}/etc/greengrass 2>/dev/null)" ]; then
+    mv -f ${IMAGE_ROOTFS}/etc/greengrass/* ${IMAGE_ROOTFS}/data/etc/greengrass/
+fi
 
 install -d -m 0700 ${IMAGE_ROOTFS}/data/root
 
 install -d ${IMAGE_ROOTFS}/data/etc/systemd/system
+if [ -n "$(ls -A ${IMAGE_ROOTFS}/etc/systemd/system 2>/dev/null)" ]; then
+    mv -f ${IMAGE_ROOTFS}/etc/systemd/system/* ${IMAGE_ROOTFS}/data/etc/systemd/system
+fi
 
 install -d ${IMAGE_ROOTFS}/data/var/lib/greengrass
+if [ -n "$(ls -A ${IMAGE_ROOTFS}/var/lib/greengrass 2>/dev/null)" ]; then
+    mv -f ${IMAGE_ROOTFS}/var/lib/greengrass/* ${IMAGE_ROOTFS}/data/var/lib/greengrass
+fi
 
 install -d ${IMAGE_ROOTFS}/data/home
 mv -f ${IMAGE_ROOTFS}/home/* ${IMAGE_ROOTFS}/data/home/
 
-install -d ${IMAGE_ROOTFS}/data/etc/systemd/network/
+install -d ${IMAGE_ROOTFS}/data/etc/systemd/network
+if [ -n "$(ls -A ${IMAGE_ROOTFS}/etc/systemd/network 2>/dev/null)" ]; then
+    mv -f ${IMAGE_ROOTFS}/etc/systemd/network/* ${IMAGE_ROOTFS}/data/etc/systemd/network
+fi
 
 install -d ${IMAGE_ROOTFS}/data/etc/ssh/
 mv -f ${IMAGE_ROOTFS}/etc/ssh/* ${IMAGE_ROOTFS}/data/etc/ssh/
