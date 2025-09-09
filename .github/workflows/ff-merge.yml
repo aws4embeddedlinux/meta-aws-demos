@@ -22,13 +22,17 @@ jobs:
 
     - name: merge ${{ github.event.inputs.branch }}-next into ${{ github.event.inputs.branch }}
       working-directory: meta-aws-demos
+      env:
+        BRANCH_NAME: ${{ github.event.inputs.branch }}
       run: |
         git config --global user.name aws-iot-embedded-linux-ci
         git config --global user.email aws-iot-embedded-linux-ci@users.noreply.github.com
-        git merge --ff-only origin/${{ github.event.inputs.branch }}-next
+        git merge --ff-only origin/${BRANCH_NAME}-next
 
     - name: push ${{ github.event.inputs.branch }}
       working-directory: meta-aws-demos
+      env:
+        BRANCH_NAME: ${{ github.event.inputs.branch }}
       run: |
-        git push -u origin ${{ github.event.inputs.branch }}
+        git push -u origin ${BRANCH_NAME}
 
