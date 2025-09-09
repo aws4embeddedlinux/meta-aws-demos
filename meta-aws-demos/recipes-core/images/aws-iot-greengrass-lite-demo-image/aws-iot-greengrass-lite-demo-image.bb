@@ -56,6 +56,9 @@ COPY_LIC_DIRS = "1"
 # IMAGE_INSTALL:append = " strace"
 # IMAGE_INSTALL:append = " lsof"
 
+# IMAGE_INSTALL:append = " sqlite3"
+# can be used to debug config db: /var/lib/greengrass# sqlite3 config.db
+
 # this will install all src, dbg packages to allow proper debugging with gdb
 # EXTRA_IMAGE_FEATURES:append = " src-pkgs"
 # EXTRA_IMAGE_FEATURES:append = " dbg-pkgs"
