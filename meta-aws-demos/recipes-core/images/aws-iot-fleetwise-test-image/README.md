@@ -32,3 +32,27 @@ More information about AWS IoT FleetWise Edge Agent can be found [here](https://
 ```bash
 runqemu slirp nographic
 ```
+
+### perf testing
+
+Collecting data on the running target:
+```bash
+cd /usr/lib/aws-iot-fleetwise-edge/ptest
+perf record -g -- tests/fwe-gtest --gtest_filter="*RisingEdgeTrigger*" --gtest_fail_fast
+perf script > perf.out
+```
+
+Then copy local:
+```bash
+scp -O root@192.168.7.2:/usr/lib/aws-iot-fleetwise-edge/ptest/perf.out  .
+```
+
+Then run Flamegraph commands on dev machine:
+
+```bash
+cat perf.out | ~/git/FlameGraph/stackcollapse-perf.pl > perf.out.folded
+~/git/FlameGraph/flamegraph.pl perf.out.folded > out.svg
+```
+(download from here: `git clone https://github.com/brendangregg/FlameGraph`)
+
+View with e.g. firefox
