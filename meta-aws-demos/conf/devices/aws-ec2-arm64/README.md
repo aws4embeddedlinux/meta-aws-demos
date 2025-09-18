@@ -21,6 +21,5 @@ bitbake $IMAGE
 
 ### Upload this image to your ec2 account (follow instructions to setup this up before!)
 ```bash
-cd ..
-meta-aws-demos$ layers/sw/meta-aws/scripts/ec2-ami/create-ec2-ami.sh amitest-bucket 16 aws-demo-image aws-ec2-arm64
+../layers/sw/meta-aws/scripts/ec2-ami/create-ec2-ami.sh amitest-bucket 16 $IAMGE aws-ec2-arm64
 ```
