@@ -2,31 +2,14 @@
 
 This image is similar to [aws-iot-greengrass-lite-demo-simple-image](../aws-iot-greengrass-lite-demo-simple-image/README.md)
 
-The main difference it is supporting a TPM module.
+The main difference it is supporting a TPM module to test [Greengrass Lite TPM support](https://github.com/aws-greengrass/aws-greengrass-lite/blob/main/docs/TPM_SUPPORT.md)
 
 Tested with `aws-ec2-x86-64` and `raspberrypi4-tpm`
 
+Using LetsTrust-TPM (RaspberryPi 4) and LetsTrust-TPM2Go (any device)
 
 
-Note: for aws-ec2-x86-64 you need to upload the snapshot with tpm support and start with a nitro instance that suppors tpm (e.g. m5n.large).
-
-
-Modify / Create a new ami after upload
-```
-aws ec2 register-image \
-    --name my-tpm-image \
-    --boot-mode uefi \
-    --architecture x86_64 \
-    --root-device-name /dev/sda1 \
-    --block-device-mappings DeviceName=/dev/sda1,Ebs={SnapshotId=snap-xxxxxxxxxxxxxx} \
-    --tpm-support v2.0
-```
-
-
-More information here: https://github.com/aws-greengrass/aws-greengrass-lite/blob/main/docs/TPM_SUPPORT.md
-
-
-Add the following configuration here: /etc/ssl/openssl.cnf
+Add the following configuration here: `/etc/ssl/openssl.cnf`
 
 ```bash
 [openssl_init]
@@ -46,7 +29,8 @@ activate = 1
 ```
 
 
-example config.yaml
+example Greengrass lite `config.yaml`
+
 ```
 ---
 system:
@@ -72,12 +56,21 @@ services:
 
 
 
+## aws-ec2-x86-64
 
+Note: for aws-ec2-x86-64 you need to upload the snapshot with tpm support and start with a nitro instance that suppors tpm (e.g. m5n.large).
 
+Modify / Create a new ami after upload
+```
+aws ec2 register-image \
+    --name my-tpm-image \
+    --boot-mode uefi \
+    --architecture x86_64 \
+    --root-device-name /dev/sda1 \
+    --block-device-mappings DeviceName=/dev/sda1,Ebs={SnapshotId=snap-xxxxxxxxxxxxxx} \
+    --tpm-support v2.0
+```
 
-
-
-Sep 18 14:40:21 raspberrypi4-64 iotcored[667]: E[iotcored] tls.c:255: Failed TLS handshake.
-Sep 18 14:40:21 raspberrypi4-64 iotcored[667]: E[iotcored] tls.c:50: [openssl]: A0F15DB47F000000:error:0800007D:elliptic curve routines:ossl_ecdsa_simple_sign_sig:missing private key:/usr/src/debug/openssl/3.2.4/crypto/ec/ecdsa_ossl.c:291:
-Sep 18 14:40:21 raspberrypi4-64 iotcored[667]: E[iotcored] tls.c:50: [openssl]: A0F15DB47F000000:error:0A080006:SSL routines:tls_construct_cert_verify:EVP lib:/usr/src/debug/openssl/3.2.4/ssl/statem/statem_lib.c:406:
-Sep 18 14:40:21 raspberrypi4-64 iotcored[667]: E[iotcored] mqtt.c:284: Failed to create TLS connection.
+## LetsTrust-TPM2Go
+https://github.com/tpm2-software/tpm2-tss/blob/master/doc/tcti-spi-ltt2go.md
+additional steps required: https://github.com/tpm2-software/tpm2-tss/blob/master/doc/tcti-spi-ltt2go.md#abrmd-udev--systemd-service
