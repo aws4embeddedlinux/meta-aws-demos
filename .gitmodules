@@ -126,3 +126,11 @@
 	path = layers/bsp/meta-slb9670-rpi
 	url = https://github.com/ejaaskel/meta-slb9670-rpi.git
 	branch = scarthgap
+[submodule "layers/sw/meta-swupdate"]
+	path = layers/sw/meta-swupdate
+	url = https://github.com/sbabic/meta-swupdate.git
+	branch = scarthgap
+[submodule "layers/bsp/meta-swupdate-boards"]
+	path = layers/bsp/meta-swupdate-boards
+	url = https://github.com/sbabic/meta-swupdate-boards.git
+	branch = scarthgap
