@@ -265,8 +265,6 @@ Manifests:
       bootstrap:
         Script: |
           echo Bootstrap
-          echo AWS_CONTAINER_AUTHORIZATION_TOKEN: $AWS_CONTAINER_AUTHORIZATION_TOKEN
-          echo AWS_CONTAINER_CREDENTIALS_FULL_URI: $AWS_CONTAINER_CREDENTIALS_FULL_URI
           BUCKET=rauc-yocto-test-bucket
           UPDATEFILE=aws-iot-greengrass-lite-demo-swupdate-file-raspberrypi-armv8.rootfs.swu
           REGION=$(aws s3api get-bucket-location --bucket "$BUCKET" --query LocationConstraint --output text)
