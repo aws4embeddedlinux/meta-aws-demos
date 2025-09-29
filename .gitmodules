@@ -112,5 +112,25 @@
 	branch = scarthgap
 [submodule "layers/bsp/meta-phytec"]
 	path = layers/bsp/meta-phytec
-	url = https://github.com/thomas-roos/meta-phytec.git
-	branch = fix-optee-file-paths
+	url = https://github.com/phytec/meta-phytec.git
+	branch = scarthgap
+[submodule "layers/sw/scarthgap-rust-mixin"]
+	path = layers/sw/scarthgap-rust-mixin
+	url = https://git.yoctoproject.org/meta-lts-mixins
+	branch = scarthgap/rust
+[submodule "layers/sw/meta-security"]
+	path = layers/sw/meta-security
+	url = https://github.com/thomas-roos/meta-security
+	branch = scarthgap
+[submodule "layers/bsp/meta-slb9670-rpi"]
+	path = layers/bsp/meta-slb9670-rpi
+	url = https://github.com/ejaaskel/meta-slb9670-rpi.git
+	branch = scarthgap
+[submodule "layers/sw/meta-swupdate"]
+	path = layers/sw/meta-swupdate
+	url = https://github.com/sbabic/meta-swupdate.git
+	branch = scarthgap
+[submodule "layers/bsp/meta-swupdate-boards"]
+	path = layers/bsp/meta-swupdate-boards
+	url = https://github.com/sbabic/meta-swupdate-boards.git
+	branch = scarthgap

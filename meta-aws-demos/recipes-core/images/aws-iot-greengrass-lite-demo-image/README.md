@@ -239,3 +239,44 @@ Manifests:
       - URI: 's3://2024-11-27-us-east-1ab-update/update.raucb'
         Unarchive: 'NONE'
 ```
+
+## Configuration for streaming updates
+
+The update file (`update.raucb`) is stored in an S3 bucket. But not downloaded as before from the Greengrass component, instead a signed url is generated and passed into rauc.
+This allows (streaming)[https://rauc.readthedocs.io/en/latest/advanced.html#http-streaming] and (adaptive)[https://rauc.readthedocs.io/en/latest/advanced.html#adaptive-updates] updates.
+
+```yaml
+---
+RecipeFormatVersion: '2020-01-25'
+ComponentName: 'com.example.AbUpdateRaucStreaming'
+ComponentVersion: '1.0.1'
+ComponentDescription: 'Manages A/B system updates using RAUC streaming'
+ComponentPublisher: 'Example Corp'
+ComponentType: 'aws.greengrass.generic'
+ComponentDependencies:
+  aws.greengrass.TokenExchangeService:
+    VersionRequirement: ">=2.0.0"
+    DependencyType: HARD
+Manifests:
+  - Platform:
+      os: 'linux'
+      runtime: "*"
+    Lifecycle:
+      bootstrap:
+        Script: |
+          echo Bootstrap
+          echo AWS_CONTAINER_AUTHORIZATION_TOKEN: $AWS_CONTAINER_AUTHORIZATION_TOKEN
+          echo AWS_CONTAINER_CREDENTIALS_FULL_URI: $AWS_CONTAINER_CREDENTIALS_FULL_URI
+          BUCKET=rauc-yocto-test-bucket
+          UPDATEFILE=aws-iot-greengrass-lite-demo-swupdate-file-raspberrypi-armv8.rootfs.swu
+          REGION=$(aws s3api get-bucket-location --bucket "$BUCKET" --query LocationConstraint --output text)
+          echo $REGION
+          BUNDLE_URL=$(aws s3 presign "s3://$BUCKET/$UPDATEFILE" --expires-in 3600 --endpoint-url "https://s3.$REGION.amazonaws.com")
+          echo $BUNDLE_URL
+          sudo rauc install $BUNDLE_URL
+        RequiresPrivilege: true
+      startup:
+        Script: |
+          echo Startup
+          rauc status
+```
