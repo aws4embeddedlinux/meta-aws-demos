@@ -1,0 +1,53 @@
+name: nightly-autorev
+on:
+  schedule:
+    - cron: '0 2 * * *'  # Run at 2 AM UTC daily
+  workflow_dispatch:
+    inputs:
+      clean:
+        description: 'Clean sstate + downloads dir, force download + rebuild of everything.'
+        type: boolean
+        required: false
+        default: false
+jobs:
+  clean:
+    runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+    - name: clean sstate-cache + downloads
+      if: inputs.clean
+      shell: bash
+      run:
+        rm -rf /sstate-cache/*
+        rm -rf /downloads/*
+  build:
+    needs: clean
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { device: qemuarm64, image: aws-iot-greengrass-lite-demo-simple-image }
+          - { device: raspberrypi-64, image: aws-iot-greengrass-lite-demo-image }
+    runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: checkout master branch
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          submodules: true
+          fetch-depth: 0
+      - name: build with AUTOREV
+        shell: bash
+        run: |
+           chown yoctouser /sstate-cache
+           chown yoctouser /downloads
+           chown -R yoctouser .
+           sysctl vm.mmap_min_addr=65536
+           sudo -u yoctouser bash -c '\
+            . init-build-env &&
+            export SSTATE_DIR=/sstate-cache && \
+            export DL_DIR=/downloads && \
+            export BB_ENV_PASSTHROUGH_ADDITIONS="$BB_ENV_PASSTHROUGH_ADDITIONS SSTATE_DIR DL_DIR" && \
+            export DEVICE=${{ matrix.device }} && \
+            export IMAGE=${{ matrix.image }} && \
+            echo "SRCREV:pn-greengrass-lite = \"${AUTOREV}\"" >> conf/local.conf && \
+            bitbake $IMAGE'

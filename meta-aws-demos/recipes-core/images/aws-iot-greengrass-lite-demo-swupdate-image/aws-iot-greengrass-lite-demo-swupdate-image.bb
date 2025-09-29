@@ -19,7 +19,7 @@ IMAGE_INSTALL:append = " jq"
 IMAGE_INSTALL:append = " python3-misc python3-venv python3-tomllib python3-ensurepip libcgroup python3-pip"
 
 ### rauc ###
-CORE_IMAGE_EXTRA_INSTALL:append = " rauc-grow-data-part"
+# CORE_IMAGE_EXTRA_INSTALL:append = " rauc-grow-data-part"
 
 # only adding if device is rpi, as others might have a different partition layout
 IMAGE_INSTALL:append:rpi = " greengrass-config-init"
@@ -123,15 +123,18 @@ ln -sf /${libdir}/systemd/system/wpa_supplicant@.service ${IMAGE_ROOTFS}/${sysco
 ln -sf /${libdir}/systemd/system/systemd-time-wait-sync.service ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
 
 install -d ${IMAGE_ROOTFS}/data/home
+
+#### swupdate
+echo ${MACHINE}:1.0 > ${IMAGE_ROOTFS}/etc/hwrevision
+
 }
 
+
+#### swupdate
+
+IMAGE_INSTALL += "\
+		swupdate \
+		util-linux-sfdisk \
+		 "
+
 IMAGE_INSTALL:append = " aws-cli"
-
-# Optimizations for RAUC adaptive method 'block-hash-index'
-# rootfs image size must to be 4K-aligned
-IMAGE_ROOTFS_ALIGNMENT = "4"
-
-# TODO
-# ext4 block size should be set to 4K and use a fixed directory hash seed to
-# reduce the image delta size (keep oe-core's 4K bytes-per-inode)
-# EXTRA_IMAGECMD:ext4 = "-i 4096 -b 4096 -E hash_seed=86ca73ff-7379-40bd-a098-fcb03a6e719d"

@@ -15,3 +15,7 @@ RAUC_BUNDLE_FORMAT ?= "verity"
 # they are intended for demo purpose only
 RAUC_KEY_FILE ?= "${THISDIR}/files/development-1.key.pem"
 RAUC_CERT_FILE ?= "${THISDIR}/files/development-1.cert.pem"
+
+# uncomment for enabling adaptive update method 'block-hash-index'
+RAUC_SLOT_rootfs[fstype] = "ext4"
+RAUC_SLOT_rootfs[adaptive] = "block-hash-index"
