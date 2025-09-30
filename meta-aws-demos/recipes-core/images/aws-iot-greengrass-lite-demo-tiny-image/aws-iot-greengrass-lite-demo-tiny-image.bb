@@ -33,3 +33,9 @@ extra_files () {
     # enable systemd-time-wait-sync as this is important for greengrass to have a correct clock
     ln -sf /${libdir}/systemd/system/systemd-time-wait-sync.service ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
 }
+
+# we do not want to have ptests in demo images enabled
+DISTRO_FEATURES:remove = " ptest"
+
+# disable fleetprovisioning
+PACKAGECONFIG:pn-greengrass-lite = ""

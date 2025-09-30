@@ -65,3 +65,6 @@ extra_files_rpi () {
     install -d ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/
     ln -sf /${libdir}/systemd/system/wpa_supplicant@.service ${IMAGE_ROOTFS}/${sysconfdir}/systemd/system/multi-user.target.wants/wpa_supplicant@wlan0.service
 }
+
+# disable fleetprovisioning
+PACKAGECONFIG:pn-greengrass-lite = ""

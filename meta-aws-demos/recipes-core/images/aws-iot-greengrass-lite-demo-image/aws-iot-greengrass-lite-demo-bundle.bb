@@ -2,8 +2,7 @@ DESCRIPTION = "A update bundle for aws-iot-greengrass-lite-demo-image"
 
 inherit bundle
 
-# RAUC_BUNDLE_VERSION = "v20200703"
-# RAUC_BUNDLE_DESCRIPTION = "RAUC Demo Bundle"
+RAUC_BUNDLE_DESCRIPTION = "aws-iot-greengrass-lite-demo-bundle"
 
 RAUC_BUNDLE_SLOTS = "rootfs"
 RAUC_SLOT_rootfs = "aws-iot-greengrass-lite-demo-image"

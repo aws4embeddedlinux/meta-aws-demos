@@ -1,6 +1,6 @@
 # aws-iot-greengrass-lite-demo-swupdate-image
-Similar to
-But demo for (swupdate[])https://sbabic.github.io/swupdate/index.html]
+Similar to [aws-iot-greengrass-lite-demo-image](../aws-iot-greengrass-lite-demo-image/README.md)
+But demo for (swupdate[https://sbabic.github.io/swupdate/index.html]
 
 Tested with: `raspberrypi-64`
 
@@ -29,8 +29,7 @@ swupdate  -i /tmp/aws-iot-greengrass-lite-demo-swupdate-file-raspberrypi-armv8.r
 
 ```
 
-
-## How to use in a gg component
+## How to use this in a gg component
 
 The component operates in two main phases:
 
@@ -73,15 +72,6 @@ Manifests:
       startup:
         Script: |
           echo Startup
-          rauc status
-          current_booted_slot_bundle_hash=$(rauc status --detailed --output-format=json-pretty | jq -r '.slots[] | select(.[].state == "booted") | .[].slot_status.bundle.hash')
-          bundle_hash=$(rauc info --output-format=json-pretty {artifacts:path}/aws-iot-greengrass-lite-demo-swupdate-file-raspberrypi-armv8.rootfs.swu | jq -r '.hash')
-          if [ "$current_booted_slot_bundle_hash" == "$bundle_hash" ]; then
-              echo "Bundle image hash matches the current running slot"
-          else
-              echo "Bundle image hash differs from the current running slot"
-              exit 1
-          fi
     Artifacts:
       - URI: 's3://2024-11-27-us-east-1ab-update/aws-iot-greengrass-lite-demo-swupdate-file-raspberrypi-armv8.rootfs.swu'
         Unarchive: 'NONE'
