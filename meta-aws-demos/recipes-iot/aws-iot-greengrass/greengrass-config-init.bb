@@ -7,11 +7,13 @@ SRC_URI = "\
     file://greengrass-config-init.service \
     file://greengrass-config-init.sh \
     file://wlan.network \
+    file://systemd-networkd-wait-online.service.d-override.conf \
 "
 
 FILES:${PN} += "\
     ${systemd_unitdir}/system/greengrass-config-init.service \
     ${sysconfdir}/systemd/network/wlan.network \
+    ${systemd_unitdir}/system/systemd-networkd-wait-online.service.d/override.conf \
 "
 
 RDEPENDS:${PN} += "\
@@ -38,6 +40,10 @@ do_install() {
 
     install -d -m 0755 ${D}${sysconfdir}/systemd/network
     install -m 0644 ${WORKDIR}/wlan.network ${D}${sysconfdir}/systemd/network/
+
+    # Install systemd override for networkd-wait-online
+    install -d ${D}${systemd_unitdir}/system/systemd-networkd-wait-online.service.d/
+    install -m 0644 ${WORKDIR}/systemd-networkd-wait-online.service.d-override.conf ${D}${systemd_unitdir}/system/systemd-networkd-wait-online.service.d/override.conf
 
     install -d ${D}${sysconfdir}/wpa_supplicant
 }

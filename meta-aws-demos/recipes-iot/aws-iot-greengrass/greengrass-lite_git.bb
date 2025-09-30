@@ -44,6 +44,8 @@ SRC_URI = "\
     ${@bb.utils.contains('PACKAGECONFIG','localdeployment','file://ggl-deploy-image-components','',d)} \
     ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','file://ggl.gg_pre-fleetprovisioning.service','',d)} \
     ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','file://ggl.gg_fleetprovisioning.service','',d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','file://ggl.core.tesd.service.d-fleet-provisioning.conf','',d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','file://ggl.aws.greengrass.TokenExchangeService.service.d-fleet-provisioning.conf','',d)} \
 "
 
 SRCREV_ggl = "c116286afaee26736dbcf3ed0a7a897c3bb2f921"
@@ -89,6 +91,8 @@ FILES:${PN}:append = " \
     ${@bb.utils.contains('PACKAGECONFIG','localdeployment','${bindir}/ggl-deploy-image-components','',d)} \
     ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','${systemd_unitdir}/system/ggl.gg_fleetprovisioning.service','',d)} \
     ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','${systemd_unitdir}/system/ggl.gg_pre-fleetprovisioning.service','',d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','${systemd_unitdir}/system/ggl.core.tesd.service.d/fleet-provisioning.conf','',d)} \
+    ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','${systemd_unitdir}/system/ggl.aws.greengrass.TokenExchangeService.service.d/fleet-provisioning.conf','',d)} \
     /usr/components/* \
     /usr/share/greengrass-image-components/* \
     ${sysconfdir}/sudoers.d/${BPN} \
@@ -122,6 +126,10 @@ EXTRA_OECMAKE:append = " -DGGL_LOG_LEVEL=INFO"
 
 # No warnings should be in commited code, not enabled yet
 # CFLAGS:append = " -Werror"
+
+# Disable -D_FORTIFY_SOURCE=2 as we set it to -D_FORTIFY_SOURCE=3
+TARGET_CFLAGS:remove = "-D_FORTIFY_SOURCE=2"
+OECMAKE_C_FLAGS:remove = "-D_FORTIFY_SOURCE=2"
 
 SYSTEMD_SERVICE:${PN} = "\
     ggl.aws_iot_mqtt.socket \
@@ -190,6 +198,14 @@ do_install:append() {
         # Create ggcredentials directory for fleet provisioning
         install -m 0644 ${WORKDIR}/ggl.gg_pre-fleetprovisioning.service ${D}${systemd_unitdir}/system/
         install -m 0644 ${WORKDIR}/ggl.gg_fleetprovisioning.service ${D}${systemd_unitdir}/system/
+
+        # Install systemd override for tesd service
+        install -d ${D}${systemd_unitdir}/system/ggl.core.tesd.service.d/
+        install -m 0644 ${WORKDIR}/ggl.core.tesd.service.d-fleet-provisioning.conf ${D}${systemd_unitdir}/system/ggl.core.tesd.service.d/fleet-provisioning.conf
+
+        # Install systemd override for TokenExchangeService
+        install -d ${D}${systemd_unitdir}/system/ggl.aws.greengrass.TokenExchangeService.service.d/
+        install -m 0644 ${WORKDIR}/ggl.aws.greengrass.TokenExchangeService.service.d-fleet-provisioning.conf ${D}${systemd_unitdir}/system/ggl.aws.greengrass.TokenExchangeService.service.d/fleet-provisioning.conf
 
         # Replace variables in the config file using a temporary file to ensure proper expansion
         cat > ${D}/${sysconfdir}/greengrass/config.d/fleetprovisioning.yaml << EOF
