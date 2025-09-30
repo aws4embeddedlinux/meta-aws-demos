@@ -198,3 +198,6 @@ IMAGE_INSTALL:append = " systemd-extra-utils"
 
 # this will install the rauc configuration file
 IMAGE_INSTALL:append = " virtual-rauc-conf"
+
+# disable fleetprovisioning
+PACKAGECONFIG:pn-greengrass-lite = ""

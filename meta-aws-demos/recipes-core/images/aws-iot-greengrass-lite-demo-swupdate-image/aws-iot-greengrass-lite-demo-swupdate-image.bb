@@ -138,3 +138,6 @@ IMAGE_INSTALL += "\
 		 "
 
 IMAGE_INSTALL:append = " aws-cli"
+
+# disable fleetprovisioning
+PACKAGECONFIG:pn-greengrass-lite = ""
