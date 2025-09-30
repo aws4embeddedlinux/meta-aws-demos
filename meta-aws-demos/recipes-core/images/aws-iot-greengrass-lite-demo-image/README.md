@@ -267,7 +267,6 @@ Manifests:
           echo Bootstrap
           BUCKET=rauc-adaptive-test
           UPDATEFILE=aws-iot-greengrass-lite-demo-bundle-raspberrypi-armv8.raucb
-
           REGION=$(aws s3api get-bucket-location --bucket "$BUCKET" --query LocationConstraint --output text)
           echo $REGION
           BUNDLE_URL=$(aws s3 presign "s3://$BUCKET/$UPDATEFILE" --expires-in 3600 --endpoint-url "https://s3.$REGION.amazonaws.com")
