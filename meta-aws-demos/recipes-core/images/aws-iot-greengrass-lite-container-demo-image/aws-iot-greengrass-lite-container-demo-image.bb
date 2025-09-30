@@ -33,3 +33,6 @@ DISTRO_FEATURES:remove = "sysvinit"
 
 ### AWS ###
 IMAGE_INSTALL:append = " greengrass-lite"
+
+# disable fleetprovisioning
+PACKAGECONFIG:pn-greengrass-lite = ""

@@ -147,3 +147,6 @@ ln -sf /${libdir}/systemd/system/webrtc.service ${IMAGE_ROOTFS}/${sysconfdir}/sy
 # webrtc
 IMAGE_INSTALL:append = " amazon-kvs-webrtc-sdk"
 IMAGE_INSTALL:append = " gstreamer1.0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-base-apps gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly v4l-utils libcamera libcamera-apps libcamera-gst"
+
+# disable fleetprovisioning
+PACKAGECONFIG:pn-greengrass-lite = ""
