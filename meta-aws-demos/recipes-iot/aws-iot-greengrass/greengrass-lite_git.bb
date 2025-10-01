@@ -48,13 +48,13 @@ SRC_URI = "\
     ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','file://ggl.aws.greengrass.TokenExchangeService.service.d-fleet-provisioning.conf','',d)} \
 "
 
-SRCREV_ggl = "c116286afaee26736dbcf3ed0a7a897c3bb2f921"
+SRCREV_ggl = "f545ea2aa11168528565c01dda1f50d8774829d5"
 
 # must match fc_deps.json
 SRCREV_mqtt = "f1827d8b46703f1c5ff05d21b34692d3122c9a04"
 SRCREV_backoff = "f2f3bb2d8310f7cb48baa3ee64b635a5d66f838b"
 SRCREV_sigv4 = "f0409ced6c2c9430f0e972019b7e8f20bbf58f4e"
-SRCREV_sdk = "dbef3a9cefe34469a213a7d0614d2716d5b10d75"
+SRCREV_sdk = "9f9b95363d6de4c68ee5d34ba5c6065b4c1b31fb"
 
 EXTRA_OECMAKE:append = " \
     -DFETCHCONTENT_SOURCE_DIR_CORE_MQTT=${S}/thirdparty/core_mqtt \
@@ -125,7 +125,7 @@ EXTRA_OECMAKE:append = " -DCMAKE_BUILD_TYPE=RelWithDebInfo"
 EXTRA_OECMAKE:append = " -DGGL_LOG_LEVEL=INFO"
 
 # No warnings should be in commited code, not enabled yet
-# CFLAGS:append = " -Werror"
+CFLAGS:append = " -Werror -Wno-stringop-overflow -Wno-unused-variable"
 
 # Disable -D_FORTIFY_SOURCE=2 as we set it to -D_FORTIFY_SOURCE=3
 TARGET_CFLAGS:remove = "-D_FORTIFY_SOURCE=2"

@@ -243,7 +243,7 @@ Manifests:
 ## Configuration for streaming / adaptive updates
 
 The update file (`update.raucb`) is stored in an S3 bucket. But not downloaded as before from the Greengrass component, instead a signed url is generated and passed into rauc.
-This allows (streaming)[https://rauc.readthedocs.io/en/latest/advanced.html#http-streaming] and (adaptive)[https://rauc.readthedocs.io/en/latest/advanced.html#adaptive-updates] updates.
+This allows [streaming](https://rauc.readthedocs.io/en/latest/advanced.html#http-streaming) and [adaptive](https://rauc.readthedocs.io/en/latest/advanced.html#adaptive-updates) updates.
 
 ```yaml
 ---
