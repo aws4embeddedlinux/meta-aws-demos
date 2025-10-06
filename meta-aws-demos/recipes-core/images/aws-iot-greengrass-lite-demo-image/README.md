@@ -120,7 +120,7 @@ systemctl status --with-dependencies greengrass-lite.target
 
 ## Fleetprovisioning example
 
-Follow instructiongs [here](scripts/fleetprovisioning/README.md)
+Follow instructions [here](scripts/fleetprovisioning/README.md)
 
 ## A/B update example made with [meta-rauc](https://github.com/rauc/meta-rauc-community)
 
@@ -238,4 +238,45 @@ Manifests:
     Artifacts:
       - URI: 's3://2024-11-27-us-east-1ab-update/update.raucb'
         Unarchive: 'NONE'
+```
+
+## Configuration for streaming / adaptive updates
+
+The update file (`update.raucb`) is stored in an S3 bucket. But not downloaded as before from the Greengrass component, instead a signed url is generated and passed into rauc.
+This allows [streaming](https://rauc.readthedocs.io/en/latest/advanced.html#http-streaming) and [adaptive](https://rauc.readthedocs.io/en/latest/advanced.html#adaptive-updates) updates.
+
+```yaml
+---
+RecipeFormatVersion: '2020-01-25'
+ComponentName: 'com.example.AbUpdateRaucStreaming'
+ComponentVersion: '1.0.1'
+ComponentDescription: 'Manages A/B system updates using RAUC streaming'
+ComponentPublisher: 'Example Corp'
+ComponentType: 'aws.greengrass.generic'
+ComponentDependencies:
+  aws.greengrass.TokenExchangeService:
+    VersionRequirement: ">=2.0.0"
+    DependencyType: HARD
+Manifests:
+  - Platform:
+      os: 'linux'
+      runtime: "*"
+    Lifecycle:
+      bootstrap:
+        Script: |
+          echo Bootstrap
+          BUCKET=rauc-adaptive-test
+          UPDATEFILE=aws-iot-greengrass-lite-demo-bundle-raspberrypi-armv8.raucb
+          REGION=$(aws s3api get-bucket-location --bucket "$BUCKET" --query LocationConstraint --output text)
+          echo $REGION
+          BUNDLE_URL=$(aws s3 presign "s3://$BUCKET/$UPDATEFILE" --expires-in 3600 --endpoint-url "https://s3.$REGION.amazonaws.com")
+          echo $BUNDLE_URL
+          sudo rauc install $BUNDLE_URL
+          sleep  5
+        RequiresPrivilege: true
+        Timeout: '600'
+      startup:
+        Script: |
+          echo Startup
+          rauc status
 ```

@@ -23,7 +23,7 @@ on:
       - master-next
 jobs:
   clean:
-    runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME || 'meta-aws-demos' }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
     - name: clean sstate-cache + downloads
       if: inputs.clean
@@ -49,7 +49,7 @@ jobs:
           - { device: raspberrypi2, image: aws-iot-greengrass-demo-simple-image }
           - { device: raspberrypi-64, image: aws-iot-greengrass-demo-simple-image }
           - { device: stm32mp13-disco, image: aws-iot-greengrass-demo-simple-image }
-    runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME || 'meta-aws-demos' }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: checkout meta-aws-demos branch to build
         uses: actions/checkout@v4
