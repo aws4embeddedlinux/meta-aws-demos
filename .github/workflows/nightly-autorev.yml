@@ -50,4 +50,5 @@ jobs:
             export DEVICE=${{ matrix.device }} && \
             export IMAGE=${{ matrix.image }} && \
             echo "SRCREV:pn-greengrass-lite = \"${AUTOREV}\"" >> conf/local.conf && \
+            echo "DISABLE_FETCHCONTENT:pn-greengrass-lite = \"1\"" >> conf/local.conf && \
             bitbake $IMAGE'
