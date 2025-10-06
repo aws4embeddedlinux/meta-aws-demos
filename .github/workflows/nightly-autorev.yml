@@ -11,7 +11,7 @@ on:
         default: false
 jobs:
   clean:
-    runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME || 'meta-aws-demos' }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
     - name: clean sstate-cache + downloads
       if: inputs.clean
@@ -27,7 +27,7 @@ jobs:
         include:
           - { device: qemuarm64, image: aws-iot-greengrass-lite-demo-simple-image }
           - { device: raspberrypi-64, image: aws-iot-greengrass-lite-demo-image }
-    runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME }}-${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME || 'meta-aws-demos' }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: checkout master branch
         uses: actions/checkout@v4
