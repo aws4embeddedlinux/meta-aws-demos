@@ -32,10 +32,10 @@ LDFLAGS:append:libc-musl = " -largp"
 # THIS IS DISABLED IF exernalsrc is enabled
 SRC_URI = "\
     git://github.com/aws-greengrass/aws-greengrass-lite.git;protocol=https;branch=main;name=ggl \
-    git://github.com/FreeRTOS/coreMQTT.git;protocol=https;branch=main;name=mqtt;destsuffix=${S}/thirdparty/core_mqtt \
-    git://github.com/FreeRTOS/backoffAlgorithm.git;protocol=https;branch=main;name=backoff;destsuffix=${S}/thirdparty/backoff_algorithm \
-    git://github.com/aws/SigV4-for-AWS-IoT-embedded-sdk.git;protocol=https;branch=main;name=sigv4;destsuffix=${S}/thirdparty/aws_sigv4 \
-    git://github.com/aws-greengrass/aws-greengrass-sdk-lite.git;protocol=https;branch=main;name=sdk;destsuffix=${S}/thirdparty/ggl_sdk \
+    ${@'' if d.getVar('DISABLE_FETCHCONTENT') else 'git://github.com/FreeRTOS/coreMQTT.git;protocol=https;branch=main;name=mqtt;destsuffix=${S}/thirdparty/core_mqtt'} \
+    ${@'' if d.getVar('DISABLE_FETCHCONTENT') else 'git://github.com/FreeRTOS/backoffAlgorithm.git;protocol=https;branch=main;name=backoff;destsuffix=${S}/thirdparty/backoff_algorithm'} \
+    ${@'' if d.getVar('DISABLE_FETCHCONTENT') else 'git://github.com/aws/SigV4-for-AWS-IoT-embedded-sdk.git;protocol=https;branch=main;name=sigv4;destsuffix=${S}/thirdparty/aws_sigv4'} \
+    ${@'' if d.getVar('DISABLE_FETCHCONTENT') else 'git://github.com/aws-greengrass/aws-greengrass-sdk-lite.git;protocol=https;branch=main;name=sdk;destsuffix=${S}/thirdparty/ggl_sdk'} \
     file://001-disable_strip.patch \
     ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','file://004-fix-fleet-provisioning-circular-dependency.patch','',d)} \
     file://greengrass-lite.yaml \
@@ -57,10 +57,11 @@ SRCREV_sigv4 = "f0409ced6c2c9430f0e972019b7e8f20bbf58f4e"
 SRCREV_sdk = "9f9b95363d6de4c68ee5d34ba5c6065b4c1b31fb"
 
 EXTRA_OECMAKE:append = " \
-    -DFETCHCONTENT_SOURCE_DIR_CORE_MQTT=${S}/thirdparty/core_mqtt \
-    -DFETCHCONTENT_SOURCE_DIR_BACKOFF_ALGORITHM=${S}/thirdparty/backoff_algorithm \
-    -DFETCHCONTENT_SOURCE_DIR_AWS_SIGV4=${S}/thirdparty/aws_sigv4 \
-    -DFETCHCONTENT_SOURCE_DIR_GGL_SDK=${S}/thirdparty/ggl_sdk \
+    ${@'' if d.getVar('DISABLE_FETCHCONTENT') else '-DFETCHCONTENT_SOURCE_DIR_CORE_MQTT=${S}/thirdparty/core_mqtt'} \
+    ${@'' if d.getVar('DISABLE_FETCHCONTENT') else '-DFETCHCONTENT_SOURCE_DIR_BACKOFF_ALGORITHM=${S}/thirdparty/backoff_algorithm'} \
+    ${@'' if d.getVar('DISABLE_FETCHCONTENT') else '-DFETCHCONTENT_SOURCE_DIR_AWS_SIGV4=${S}/thirdparty/aws_sigv4'} \
+    ${@'' if d.getVar('DISABLE_FETCHCONTENT') else '-DFETCHCONTENT_SOURCE_DIR_GGL_SDK=${S}/thirdparty/ggl_sdk'} \
+    ${@'-DFETCHCONTENT_FULLY_DISCONNECTED=OFF' if d.getVar('DISABLE_FETCHCONTENT') else ''} \
     "
 
 SRCREV_FORMAT .= "_ggl_core_mqtt_backoff_aws_sigv4_ggl_sdk"
@@ -72,6 +73,8 @@ do_configure:prepend() {
     grep -q ${SRCREV_sigv4} ${S}/fc_deps.json || bbfatal "ERROR: dependency version mismatch, please update 'SRCREV_sigv4'!"
     grep -q ${SRCREV_sdk} ${S}/fc_deps.json || bbfatal "ERROR: dependency version mismatch, please update 'SRCREV_sdk'!"
 }
+
+do_configure[network] = "${@'1' if d.getVar('DISABLE_FETCHCONTENT') else '0'}"
 
 S = "${WORKDIR}/git"
 
@@ -261,3 +264,7 @@ SSTATE_SCAN_FILES:append = " ${@' ${CLAIM_CERT_PATH} ${CLAIM_KEY_PATH} ${ROOT_CA
 USERADD_PACKAGES = "${PN}"
 GROUPADD_PARAM:${PN} = "-r ${gg_group}; -r ${ggc_group}"
 USERADD_PARAM:${PN} = "-r -M -N -g  ${gg_group} -s /bin/false ${gg_user}; -r -M -N -g  ${ggc_group} -s /bin/false ${ggc_user}"
+
+# for testing you can add this to your local.conf to test the latest version from upstream git main branch
+# SRCREV_ggl:pn-greengrass-lite = "${AUTOREV}"
+# DISABLE_FETCHCONTENT:pn-greengrass-lite = "1"
