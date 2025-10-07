@@ -48,7 +48,7 @@ SRC_URI = "\
     ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','file://ggl.aws.greengrass.TokenExchangeService.service.d-fleet-provisioning.conf','',d)} \
 "
 
-SRCREV_ggl = "f545ea2aa11168528565c01dda1f50d8774829d5"
+SRCREV_ggl = "c3ff272bc408833467cb4a50202ab09ad1b54d8b"
 
 # must match fc_deps.json
 SRCREV_mqtt = "f1827d8b46703f1c5ff05d21b34692d3122c9a04"
@@ -127,8 +127,8 @@ EXTRA_OECMAKE:append = " -DCMAKE_BUILD_TYPE=RelWithDebInfo"
 
 EXTRA_OECMAKE:append = " -DGGL_LOG_LEVEL=INFO"
 
-# No warnings should be in commited code, not enabled yet
-CFLAGS:append = " -Werror -Wno-stringop-overflow -Wno-unused-variable"
+# No warnings should be in the code
+CFLAGS:append = " -Werror"
 
 # Disable -D_FORTIFY_SOURCE=2 as we set it to -D_FORTIFY_SOURCE=3
 TARGET_CFLAGS:remove = "-D_FORTIFY_SOURCE=2"
