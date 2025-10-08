@@ -12,3 +12,6 @@ updates:
           - "poky"
           - "meta-*"
     target-branch: "master-next"
+    labels:
+      - "dependencies"
+      - "automerge"
