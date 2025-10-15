@@ -201,3 +201,5 @@ IMAGE_INSTALL:append = " virtual-rauc-conf"
 
 # disable fleetprovisioning
 PACKAGECONFIG:pn-greengrass-lite = ""
+
+IMAGE_INSTALL:append = " podman"
