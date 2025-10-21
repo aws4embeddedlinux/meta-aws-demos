@@ -9,6 +9,9 @@ on:
         type: boolean
         required: false
         default: false
+permissions:
+  contents: read
+
 jobs:
   clean:
     runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME || 'meta-aws-demos' }}-${{ github.run_id }}-${{ github.run_attempt }}
