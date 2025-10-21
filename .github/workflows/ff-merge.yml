@@ -8,6 +8,9 @@ on:
           default: 'master'
           required: true
 
+permissions:
+  contents: write
+
 jobs:
   ff-merge:
     runs-on: ubuntu-latest
