@@ -5,7 +5,7 @@ After=network-online.target
 Wants=network-online.target
 Before=ggl.core.ggconfigd.service
 Before=ggl.gg_fleetprovisioning.service
-ConditionPathExists=!/var/lib/greengrass/provisioned-cert
+ConditionPathExists=!/var/lib/greengrass/credentials
 
 [Service]
 Type=oneshot
