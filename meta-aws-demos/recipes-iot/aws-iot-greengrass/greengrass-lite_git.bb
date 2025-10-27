@@ -37,7 +37,6 @@ SRC_URI = "\
     ${@'' if d.getVar('DISABLE_FETCHCONTENT') else 'git://github.com/aws/SigV4-for-AWS-IoT-embedded-sdk.git;protocol=https;branch=main;name=sigv4;destsuffix=${S}/thirdparty/aws_sigv4'} \
     ${@'' if d.getVar('DISABLE_FETCHCONTENT') else 'git://github.com/aws-greengrass/aws-greengrass-sdk-lite.git;protocol=https;branch=main;name=sdk;destsuffix=${S}/thirdparty/ggl_sdk'} \
     file://001-disable_strip.patch \
-    ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','file://004-fix-fleet-provisioning-circular-dependency.patch','',d)} \
     file://greengrass-lite.yaml \
     file://run-ptest \
     ${@bb.utils.contains('PACKAGECONFIG','localdeployment','file://ggl.local-deployment.service','',d)} \
@@ -48,13 +47,13 @@ SRC_URI = "\
     ${@bb.utils.contains('PACKAGECONFIG','fleetprovisioning','file://ggl.aws.greengrass.TokenExchangeService.service.d-fleet-provisioning.conf','',d)} \
 "
 
-SRCREV_ggl = "c3ff272bc408833467cb4a50202ab09ad1b54d8b"
+SRCREV_ggl = "b78f51f3359c43849a241418da08dfcfe52d917d"
 
 # must match fc_deps.json
 SRCREV_mqtt = "f1827d8b46703f1c5ff05d21b34692d3122c9a04"
 SRCREV_backoff = "f2f3bb2d8310f7cb48baa3ee64b635a5d66f838b"
 SRCREV_sigv4 = "f0409ced6c2c9430f0e972019b7e8f20bbf58f4e"
-SRCREV_sdk = "9f9b95363d6de4c68ee5d34ba5c6065b4c1b31fb"
+SRCREV_sdk = "1ee3a5ad3de59f141973839412b5025e67ea533d"
 
 EXTRA_OECMAKE:append = " \
     ${@'' if d.getVar('DISABLE_FETCHCONTENT') else '-DFETCHCONTENT_SOURCE_DIR_CORE_MQTT=${S}/thirdparty/core_mqtt'} \
@@ -236,7 +235,8 @@ services:
       claimKeyPath: "/etc/greengrass/certs/claim.key.pem"
       rootCaPath: "/etc/greengrass/certs/AmazonRootCA1.pem"
       templateName: "${FLEET_PROVISIONING_TEMPLATE}"
-      templateParams: '{"SerialNumber": "<unique>"}'
+      templateParams:
+        SerialNumber: "<unique>"
 EOF
         # Create certificates directory
         install -d ${D}/${sysconfdir}/greengrass/certs

@@ -4,13 +4,10 @@ After=ggl.core.ggconfigd.service
 Before=ggl.core.iotcored.service
 After=systemd-time-wait-sync.service
 # Only run if device is not already provisioned
-ConditionPathExists=!/var/lib/greengrass/provisioned-cert/certificate.pem.crt
+ConditionPathExists=!/var/lib/greengrass/credentials/certificate.pem
 
 [Service]
 Type=oneshot
-ExecStartPre=/bin/sh -c '\
-    sleep 10; \
-    mkdir -p /var/lib/greengrass/provisioned-cert'
 ExecStart=/usr/bin/fleet-provisioning
 Restart=on-failure
 RestartSec=10s
