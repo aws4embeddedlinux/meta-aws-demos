@@ -63,25 +63,9 @@ rootfs_user_fstab () {
 # Allow user to use sudo
 echo "user ALL=(ALL) NOPASSWD: ALL" >> ${IMAGE_ROOTFS}/etc/sudoers
 
-
 # enable serial console auto login for root
 sed -i '/^\s*ExecStart\b/ s/getty /&--autologin root /' \
     "${IMAGE_ROOTFS}${systemd_system_unitdir}/serial-getty@.service"
-
-# reload services after data partition is mounted
-cat > ${IMAGE_ROOTFS}/lib/systemd/system/reload-systemd-data.service << 'EOF'
-[Unit]
-Description=Reload systemd services from data partition
-After=data.mount
-
-[Service]
-Type=oneshot
-ExecStart=/bin/systemctl daemon-reload
-ExecStart=/bin/systemctl start --all
-RemainAfterExit=yes
-EOF
-
-ln -sf /lib/systemd/system/reload-systemd-data.service ${IMAGE_ROOTFS}/lib/systemd/system/reload-systemd-data.service
 
 # not necessary for this image
 rm ${IMAGE_ROOTFS}//usr/lib/systemd/system/systemd-vconsole-setup.service
@@ -90,27 +74,14 @@ rm ${IMAGE_ROOTFS}//usr/lib/systemd/system/systemd-vconsole-setup.service
 cp -a ${IMAGE_ROOTFS}/etc/systemd/system/* ${IMAGE_ROOTFS}/lib/systemd/system/
 rm -rf ${IMAGE_ROOTFS}/etc/systemd/system/*
 
-# cloud-intit service needs to be started after data partition is mounted
-mkdir -p ${IMAGE_ROOTFS}/lib/systemd/system/cloud-init.service.d/
-cat << EOF > ${IMAGE_ROOTFS}/lib/systemd/system/cloud-init.service.d/overrides.conf
+# cloud-init-local service also needs to wait for data partition mounts
+mkdir -p ${IMAGE_ROOTFS}/lib/systemd/system/cloud-init-local.service.d/
+cat << EOF > ${IMAGE_ROOTFS}/lib/systemd/system/cloud-init-local.service.d/overrides.conf
 [Unit]
-After=local-fs.target
-After=rauc-grow-data-partition.service
+RequiresMountsFor=/etc/ssh/
 RequiresMountsFor=/home
 RequiresMountsFor=/root
-RequiresMountsFor=/etc/ssh/
-
-[Service]
-Restart=on-failure
-RestartSec=30
-StartLimitInterval=90
-StartLimitBurst=3
-ExecStopPost=/usr/bin/cloud-init clean
-
-[Install]
-WantedBy=multi-user.target
 EOF
-
 
 # overwrite the default fstab, adding customization for this image
 cat << EOF > ${IMAGE_ROOTFS}/${sysconfdir}/fstab
@@ -166,7 +137,6 @@ fi
 
 install -d ${IMAGE_ROOTFS}/data/etc/ssh/
 mv -f ${IMAGE_ROOTFS}/etc/ssh/* ${IMAGE_ROOTFS}/data/etc/ssh/
-
 
 }
 
