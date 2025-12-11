@@ -2,6 +2,7 @@
 Description=Grow data partition to max size and expand filesystem
 DefaultDependencies=no
 Before=data.mount
+After=tmp.mount
 
 [Service]
 Type=oneshot
