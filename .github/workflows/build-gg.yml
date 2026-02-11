@@ -54,10 +54,10 @@ jobs:
           - { device: stm32mp13-disco, image: aws-iot-greengrass-demo-simple-image }
     runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME || 'meta-aws-demos' }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
-      - name: Debug - Print IP Address
+      - name: Debug - Print Public IP Address
         run: |
-          echo "Runner IP Address:"
-          hostname -I || ip addr show
+          echo "Runner Public IP Address:"
+          curl -s https://checkip.amazonaws.com || curl -s https://api.ipify.org
       - name: checkout meta-aws-demos branch to build
         uses: actions/checkout@v4
         with:
