@@ -65,6 +65,10 @@ jobs:
           - { device: qemuarm64, image: aws-iot-greengrass-lite-container-demo-image }
     runs-on: codebuild-${{ vars.CODEBUILD_RUNNER_NAME || 'meta-aws-demos' }}-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
+      - name: Debug - Print IP Address
+        run: |
+          echo "Runner IP Address:"
+          hostname -I || ip addr show
       - name: checkout meta-aws-demos branch to build
         uses: actions/checkout@v4
         with:
