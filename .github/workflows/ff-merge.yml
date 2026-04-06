@@ -28,8 +28,8 @@ jobs:
       env:
         BRANCH_NAME: ${{ github.event.inputs.branch }}
       run: |
-        git config --global user.name aws-iot-embedded-linux-ci
-        git config --global user.email aws-iot-embedded-linux-ci@users.noreply.github.com
+        git config --global user.name meta-aws-maintainer
+        git config --global user.email meta-aws-maintainer@users.noreply.github.com
         git merge --ff-only origin/${BRANCH_NAME}-next
 
     - name: push ${{ github.event.inputs.branch }}
