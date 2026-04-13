@@ -115,6 +115,16 @@ jobs:
              echo -e "# LIST OF PACKAGES WITH THEIR LICENSE AND VERSION\n#" >> ${{ github.workspace }}/zipfile/readme.txt
              echo -e "###############################################################################\n" >> ${{ github.workspace }}/zipfile/readme.txt
              cat ${{ github.workspace }}/build/tmp/deploy/licenses/raspberrypi_armv8/${{ matrix.image }}-raspberrypi-armv8.rootfs/license.manifest >> ${{ github.workspace }}/zipfile/readme.txt
+      - name: Generate SBOM
+        if: ${{ startsWith(matrix.device, 'raspberrypi-64') && startsWith(matrix.image, 'aws-iot-greengrass-demo-image') && inputs.upload-zip }}
+        shell: bash
+        run: |
+          sudo -u yoctouser bash -c '\
+            . init-build-env && \
+            export DEVICE=${{ matrix.device }} && \
+            export IMAGE=${{ matrix.image }} && \
+            bitbake $IMAGE -c create_spdx'
+          cp ${{ github.workspace }}/build/tmp/deploy/spdx/raspberrypi_armv8/recipes/recipe-aws-iot-greengrass-demo-image.spdx.json ${{ github.workspace }}/zipfile/
       - name: cp image (raspberrypi) to zip dir
         if: startsWith(matrix.device, 'raspberrypi2')
         shell: bash
