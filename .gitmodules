@@ -1,10 +1,10 @@
 [submodule "poky"]
 	path = poky
-	url = git://git.yoctoproject.org/poky
+	url = https://git.yoctoproject.org/poky
 	branch = scarthgap
 [submodule "meta-virtualization"]
 	path = layers/sw/meta-virtualization
-	url = git://git.yoctoproject.org/meta-virtualization
+	url = https://git.yoctoproject.org/meta-virtualization
 	branch = scarthgap
 [submodule "meta-openembedded"]
 	path = layers/sw/meta-openembedded
