@@ -50,14 +50,6 @@
 	path = layers/agl/meta-agl-devel
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-devel
 	branch = ricefish
-[submodule "meta-xilinx-tools"]
-	path = layers/bsp/meta-xilinx-tools
-	url = https://git.yoctoproject.org/meta-xilinx-tools
-	branch = scarthgap
-[submodule "meta-xilinx"]
-	path = layers/bsp/meta-xilinx
-	url = https://github.com/Xilinx/meta-xilinx.git
-	branch = scarthgap
 [submodule "meta-ti"]
 	path = layers/bsp/meta-ti
 	url = https://git.yoctoproject.org/meta-ti
