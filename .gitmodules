@@ -1,7 +1,15 @@
-[submodule "poky"]
-	path = poky
-	url = git://git.yoctoproject.org/poky
-	branch = scarthgap
+[submodule "bitbake"]
+	path = bitbake
+	url = https://git.openembedded.org/bitbake
+	branch = 2.18
+[submodule "openembedded-core"]
+	path = openembedded-core
+	url = https://git.openembedded.org/openembedded-core
+	branch = wrynose
+[submodule "meta-yocto"]
+	path = meta-yocto
+	url = https://git.yoctoproject.org/meta-yocto
+	branch = wrynose
 [submodule "meta-virtualization"]
 	path = layers/sw/meta-virtualization
 	url = git://git.yoctoproject.org/meta-virtualization
