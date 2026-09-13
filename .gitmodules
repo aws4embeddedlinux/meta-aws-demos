@@ -12,28 +12,28 @@
 	branch = wrynose
 [submodule "meta-virtualization"]
 	path = layers/sw/meta-virtualization
-	url = git://git.yoctoproject.org/meta-virtualization
-	branch = scarthgap
+	url = https://git.yoctoproject.org/meta-virtualization
+	branch = wrynose
 [submodule "meta-openembedded"]
 	path = layers/sw/meta-openembedded
 	url = https://github.com/openembedded/meta-openembedded.git
-	branch = scarthgap
+	branch = wrynose
 [submodule "meta-aws"]
 	path = layers/sw/meta-aws
 	url = https://github.com/aws4embeddedlinux/meta-aws.git
-	branch = scarthgap
+	branch = wrynose
 [submodule "meta-freescale"]
 	path = layers/bsp/meta-freescale
 	url = https://github.com/Freescale/meta-freescale.git
-	branch = scarthgap
+	branch = wrynose
 [submodule "meta-raspberrypi"]
 	path = layers/bsp/meta-raspberrypi
 	url = https://github.com/agherzan/meta-raspberrypi.git
-	branch = scarthgap
+	branch = wrynose
 [submodule "meta-freescale-distro"]
 	path = layers/bsp/meta-freescale-distro
 	url = https://github.com/Freescale/meta-freescale-distro.git
-	branch = scarthgap
+	branch = wrynose
 [submodule "meta-qt5"]
 	path = layers/sw/meta-qt5
 	url = https://github.com/meta-qt5/meta-qt5.git
@@ -41,7 +41,7 @@
 [submodule "meta-clang"]
 	path = layers/sw/meta-clang
 	url = https://github.com/kraj/meta-clang.git
-	branch = scarthgap
+	branch = wrynose
 [submodule "meta-flutter"]
 	path = layers/sw/meta-flutter
 	url = https://github.com/meta-flutter/meta-flutter.git
@@ -61,11 +61,11 @@
 [submodule "meta-ti"]
 	path = layers/bsp/meta-ti
 	url = https://git.yoctoproject.org/meta-ti
-	branch = scarthgap
+	branch = wrynose
 [submodule "meta-arm"]
 	path = layers/bsp/meta-arm
 	url = https://git.yoctoproject.org/meta-arm
-	branch = scarthgap
+	branch = wrynose
 [submodule "meta-agl-refhw"]
 	path = layers/agl/meta-agl-refhw
 	url = https://gerrit.automotivelinux.org/gerrit/AGL/meta-agl-refhw
@@ -73,11 +73,11 @@
 [submodule "layers/bsp/meta-ampliphy"]
 	path = layers/bsp/meta-ampliphy
 	url = https://github.com/phytec/meta-ampliphy.git
-	branch = scarthgap
+	branch = wrynose
 [submodule "layers/sw/meta-rauc"]
 	path = layers/sw/meta-rauc
 	url = https://github.com/rauc/meta-rauc.git
-	branch = scarthgap
+	branch = wrynose
 [submodule "layers/bsp/meta-st-stm32mp"]
 	path = layers/bsp/meta-st-stm32mp
 	url = https://github.com/STMicroelectronics/meta-st-stm32mp.git
@@ -86,14 +86,10 @@
 	path = layers/bsp/meta-rauc-community
 	url = https://github.com/rauc/meta-rauc-community.git
 	branch = scarthgap
-[submodule "layers/bsp/meta-lts-mixins"]
-	path = layers/bsp/meta-lts-mixins
-	url = https://git.yoctoproject.org/meta-lts-mixins
-	branch = scarthgap/u-boot
 [submodule "layers/bsp/meta-rockchip"]
 	path = layers/bsp/meta-rockchip
 	url = https://git.yoctoproject.org/meta-rockchip
-	branch = scarthgap
+	branch = wrynose
 [submodule "layers/bsp/rockchip-rv1106-dev"]
 	path = layers/bsp/rockchip-rv1106-dev
 	url = https://github.com/thomas-roos/rockchip-rv1106-dev.git
@@ -102,22 +98,14 @@
 	path = layers/sw/meta-ptx
 	url = https://git.pengutronix.de/git/meta-ptx
 	branch = scarthgap
-[submodule "layers/sw/meta-clang"]
-	path = layers/sw/meta-clang
-	url = https://github.com/kraj/meta-clang.git
-	branch = scarthgap
 [submodule "layers/sw/meta-browser"]
 	path = layers/sw/meta-browser
 	url = https://github.com/OSSystems/meta-browser.git
-	branch = scarthgap
+	branch = wrynose
 [submodule "layers/bsp/meta-phytec"]
 	path = layers/bsp/meta-phytec
 	url = https://github.com/phytec/meta-phytec.git
-	branch = scarthgap
-[submodule "layers/sw/scarthgap-rust-mixin"]
-	path = layers/sw/scarthgap-rust-mixin
-	url = https://git.yoctoproject.org/meta-lts-mixins
-	branch = scarthgap/rust
+	branch = wrynose
 [submodule "layers/sw/meta-security"]
 	path = layers/sw/meta-security
 	url = https://github.com/thomas-roos/meta-security
@@ -129,7 +117,7 @@
 [submodule "layers/sw/meta-swupdate"]
 	path = layers/sw/meta-swupdate
 	url = https://github.com/sbabic/meta-swupdate.git
-	branch = scarthgap
+	branch = wrynose
 [submodule "layers/bsp/meta-swupdate-boards"]
 	path = layers/bsp/meta-swupdate-boards
 	url = https://github.com/sbabic/meta-swupdate-boards.git
