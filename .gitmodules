@@ -34,10 +34,10 @@
 	path = layers/bsp/meta-freescale-distro
 	url = https://github.com/Freescale/meta-freescale-distro.git
 	branch = wrynose
-[submodule "meta-qt5"]
-	path = layers/sw/meta-qt5
-	url = https://github.com/meta-qt5/meta-qt5.git
-	branch = wrynose
+[submodule "meta-qt6"]
+	path = layers/sw/meta-qt6
+	url = https://code.qt.io/yocto/meta-qt6.git
+	branch = 6.12
 [submodule "meta-clang"]
 	path = layers/sw/meta-clang
 	url = https://github.com/kraj/meta-clang.git
