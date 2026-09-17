@@ -10,6 +10,9 @@ SRC_URI = "\
     file://systemd-networkd-wait-online.service.d-override.conf \
 "
 
+# file://-only recipe: sources unpack directly into ${UNPACKDIR}.
+S = "${UNPACKDIR}"
+
 FILES:${PN} += "\
     ${systemd_unitdir}/system/greengrass-config-init.service \
     ${sysconfdir}/systemd/network/wlan.network \
