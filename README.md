@@ -46,21 +46,23 @@ alphabetical order for ease of selection, no preference should be inferred.
 
 Generally you can build all images for all "Devices", but some combinations do not work or do not make sense!
 
-- [aws-demo-image](meta-aws-demos/recipes-core/images/aws-demo-image/README.md)
-- [aws-iot-device-client-demo-image](meta-aws-demos/recipes-core/images/aws-iot-device-client-demo-image/README.md)
-- [aws-iot-fleetwise-test-image-agl](meta-aws-demos/recipes-core/images/aws-iot-fleetwise-test-image-agl/README.md)
-- [aws-iot-fleetwise-test-image](meta-aws-demos/recipes-core/images/aws-iot-fleetwise-test-image/README.md)
-- [aws-iot-greengrass-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-demo-image/README.md)
-- [aws-iot-greengrass-demo-simple-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-demo-simple-image/README.md)
-- [aws-iot-greengrass-lite-container-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-container-demo-image/README.md)
-- [aws-iot-greengrass-lite-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-image/README.md)
-- [aws-iot-greengrass-lite-demo-ec2-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-ec2-image/README.md)
-- [aws-iot-greengrass-lite-demo-simple-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-simple-image/README.md)
-- [aws-iot-greengrass-lite-demo-simple-image-tpm](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-simple-image-tpm/README.md)
-- [aws-iot-greengrass-lite-demo-swupdate-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-swupdate-image/README.md)
-- [aws-iot-greengrass-lite-demo-tiny-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-tiny-image/README.md)
-- [aws-iot-greengrass-lite-webrtc-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-webrtc-demo-image/README.md)
-- [aws-webrtc-demo-image](meta-aws-demos/recipes-core/images/aws-webrtc-demo-image/README.md)
+| Image | Description |
+| --- | --- |
+| [aws-demo-image](meta-aws-demos/recipes-core/images/aws-demo-image/README.md) | General AWS demo image bundling the AWS SDK/CRT stack (aws-sdk-cpp, aws-iot-device-sdk-cpp-v2), Amazon KVS WebRTC and AWS IoT FleetWise. |
+| [aws-iot-device-client-demo-image](meta-aws-demos/recipes-core/images/aws-iot-device-client-demo-image/README.md) | Minimal image demonstrating the AWS IoT Device Client. |
+| [aws-iot-fleetwise-test-image](meta-aws-demos/recipes-core/images/aws-iot-fleetwise-test-image/README.md) | AWS IoT FleetWise Edge Agent test image. |
+| [aws-iot-fleetwise-test-image-agl](meta-aws-demos/recipes-core/images/aws-iot-fleetwise-test-image-agl/README.md) | AWS IoT FleetWise test image built on the Automotive Grade Linux (AGL) distro. |
+| [aws-iot-greengrass-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-demo-image/README.md) | AWS IoT Greengrass nucleus (Java) demo with **A/B updates (RAUC)**. **Raspberry Pi only.** |
+| [aws-iot-greengrass-demo-simple-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-demo-simple-image/README.md) | AWS IoT Greengrass nucleus (Java) demo, single read-write rootfs (no A/B updates). |
+| [aws-iot-greengrass-lite-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-image/README.md) | AWS IoT Greengrass nucleus lite demo with **A/B updates (RAUC)**. **Raspberry Pi only.** |
+| [aws-iot-greengrass-lite-demo-simple-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-simple-image/README.md) | AWS IoT Greengrass nucleus lite demo, single read-write rootfs (no A/B updates). |
+| [aws-iot-greengrass-lite-demo-ec2-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-ec2-image/README.md) | AWS IoT Greengrass nucleus lite demo with **A/B updates (RAUC)** and grub-EFI boot, packaged as an **AWS EC2** AMI. **AWS EC2 only** (x86-64 and arm64). |
+| [aws-iot-greengrass-lite-demo-swupdate-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-swupdate-image/README.md) | AWS IoT Greengrass nucleus lite demo with **A/B updates (SWUpdate)**. **Raspberry Pi only.** |
+| [aws-iot-greengrass-lite-demo-tiny-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-tiny-image/README.md) | Size-minimized AWS IoT Greengrass nucleus lite demo (musl libc, poky-tiny style). |
+| [aws-iot-greengrass-lite-container-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-container-demo-image/README.md) | AWS IoT Greengrass nucleus lite packaged as a small (musl) **OCI container image** to run under Podman/Docker. Runs on any container host. |
+| [aws-iot-greengrass-lite-demo-simple-image-tpm](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-demo-simple-image-tpm/README.md) | AWS IoT Greengrass nucleus lite demo with **TPM 2.0** support. Supports a hardware TPM on Raspberry Pi 4 (LetsTrust-TPM), a USB TPM on any device (LetsTrust-TPM2Go), and NitroTPM on AWS EC2. |
+| [aws-iot-greengrass-lite-webrtc-demo-image](meta-aws-demos/recipes-core/images/aws-iot-greengrass-lite-webrtc-demo-image/README.md) | AWS IoT Greengrass nucleus lite demo with Amazon KVS WebRTC and camera support, **A/B updates (RAUC)**. **Raspberry Pi only.** |
+| [aws-webrtc-demo-image](meta-aws-demos/recipes-core/images/aws-webrtc-demo-image/README.md) | Amazon Kinesis Video Streams (KVS) WebRTC SDK demo image. |
 
 > [!IMPORTANT]
 > Be careful some of the images require additional local.conf entries, those config.conf files are located in the respective image.
