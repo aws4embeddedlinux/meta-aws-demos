@@ -21,7 +21,7 @@
 [submodule "meta-aws"]
 	path = layers/sw/meta-aws
 	url = https://github.com/aws4embeddedlinux/meta-aws.git
-	branch = wrynose
+	branch = master
 [submodule "meta-freescale"]
 	path = layers/bsp/meta-freescale
 	url = https://github.com/Freescale/meta-freescale.git
