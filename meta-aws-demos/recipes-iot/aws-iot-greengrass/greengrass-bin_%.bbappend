@@ -11,7 +11,7 @@ gg_user = "ggc_user"
 gg_group = "ggc_group"
 
 do_install:append:rpi () {
-    install -m 0640 ${WORKDIR}/greengrass-classic.yaml ${GG_ROOT}/greengrass-classic.yaml.fragment
+    install -m 0640 ${UNPACKDIR}/greengrass-classic.yaml ${GG_ROOT}/greengrass-classic.yaml.fragment
     sed -i -e 's,@GG_WORKING_DIR@,${gg_workingdir},g' \
         -e 's,@GG_USER@,${gg_user},g' \
         -e 's,@GG_GROUP@,${gg_group},g' \
