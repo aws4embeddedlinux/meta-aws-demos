@@ -1,0 +1,54 @@
+From: meta-aws-demos <noreply@example.com>
+Date: Fri, 18 Sep 2026 00:00:00 +0000
+Subject: [PATCH] binman: use importlib.resources instead of pkg_resources
+
+setuptools >= 80 (wrynose ships 82.0.1) removed the legacy pkg_resources
+module, so binman's `import pkg_resources` fails at build time with
+"ModuleNotFoundError: No module named 'pkg_resources'".
+
+control.py already imports importlib.resources (with an importlib_resources
+fallback), so migrate the two remaining pkg_resources.resource_* calls to the
+importlib.resources API and drop the pkg_resources import. Resources live in
+the binman package (binman/missing-blob-help and binman/etype/).
+
+This mirrors the same migration made in upstream U-Boot
+(tools/binman/control.py on u-boot master, which uses
+importlib_resources.files(__package__)...). u-boot-fslc 2025.01 predates it.
+
+Upstream-Status: Backport [equivalent to u-boot master tools/binman/control.py]
+---
+ tools/binman/control.py | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/tools/binman/control.py b/tools/binman/control.py
+index 0000000..1111111 100644
+--- a/tools/binman/control.py
++++ b/tools/binman/control.py
+@@ -13,7 +13,6 @@ except ImportError:  # pragma: no cover
+     # for Python 3.6
+     import importlib_resources
+ import os
+-import pkg_resources
+ import re
+ 
+ import sys
+@@ -96,7 +95,8 @@ def _ReadMissingBlobHelp():
+             msg = ''
+         return tag, msg
+ 
+-    my_data = pkg_resources.resource_string(__name__, 'missing-blob-help')
++    my_data = importlib.resources.files('binman').joinpath(
++        'missing-blob-help').read_bytes()
+     re_tag = re.compile('^([-a-z0-9]+):$')
+     result = {}
+     tag = None
+@@ -151,7 +151,8 @@ def GetEntryModules(include_testing=True):
+     Returns:
+         Set of paths to entry class filenames
+     """
+-    glob_list = pkg_resources.resource_listdir(__name__, 'etype')
++    glob_list = [entry.name
++                 for entry in importlib.resources.files('binman.etype').iterdir()]
+     glob_list = [fname for fname in glob_list if fname.endswith('.py')]
+     return set([os.path.splitext(os.path.basename(item))[0]
+                 for item in glob_list

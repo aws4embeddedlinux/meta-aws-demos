@@ -7,7 +7,6 @@ IMAGE_INSTALL =+ "\
     amazon-kvs-producer-sdk-c \
     amazon-kvs-producer-sdk-cpp \
     amazon-kvs-webrtc-sdk \
-    amazon-s3-gst-plugin \
     amazon-ssm-agent \
     aws-c-auth \
     aws-c-cal \
@@ -25,7 +24,6 @@ IMAGE_INSTALL =+ "\
     aws-crt-cpp \
     aws-crt-python \
     aws-iot-device-sdk-cpp-v2 \
-    aws-iot-device-sdk-cpp-v2-samples-mqtt5-pubsub \
     aws-iot-device-sdk-python-v2 \
     aws-iot-fleetwise-edge \
     aws-iot-securetunneling-localproxy \
@@ -39,4 +37,4 @@ IMAGE_INSTALL =+ "\
     s2n \
     "
 
-EXTRA_IMAGE_FEATURES += "debug-tweaks tools-debug"
+EXTRA_IMAGE_FEATURES += "allow-empty-password allow-root-login empty-root-password tools-debug"

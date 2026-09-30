@@ -45,7 +45,7 @@ get_images() {
     )
 }
 
-cd $(dirname $THIS_SCRIPT)/poky
+cd $(dirname $THIS_SCRIPT)/openembedded-core
 . oe-init-build-env "$BUILDDIR"
 
 export BB_ENV_PASSTHROUGH_ADDITIONS="${BB_ENV_PASSTHROUGH_ADDITIONS} DEVICE IMAGE"

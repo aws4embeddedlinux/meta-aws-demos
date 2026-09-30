@@ -4,7 +4,7 @@ SRC_URI:append = " file://rauc.service.d/override.conf"
 
 do_install:append() {
     install -d ${D}${systemd_system_unitdir}/rauc.service.d
-    install -m 0644 ${WORKDIR}/rauc.service.d/override.conf ${D}${systemd_system_unitdir}/rauc.service.d/
+    install -m 0644 ${UNPACKDIR}/rauc.service.d/override.conf ${D}${systemd_system_unitdir}/rauc.service.d/
 }
 
 do_install:append:rpi() {
