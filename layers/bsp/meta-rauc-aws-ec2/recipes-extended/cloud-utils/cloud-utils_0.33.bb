@@ -9,7 +9,6 @@ RDEPENDS:${PN} += " \
 	python3-core \
 	bash \
 "
-S = "${WORKDIR}/git"
 
 do_compile () {
 	oe_runmake

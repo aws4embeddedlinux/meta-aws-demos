@@ -10,6 +10,9 @@ SRC_URI = "\
     file://systemd-networkd-wait-online.service.d-override.conf \
 "
 
+# file://-only recipe: sources unpack directly into ${UNPACKDIR}.
+S = "${UNPACKDIR}"
+
 FILES:${PN} += "\
     ${systemd_unitdir}/system/greengrass-config-init.service \
     ${sysconfdir}/systemd/network/wlan.network \
@@ -31,19 +34,19 @@ SYSTEMD_SERVICE:${PN} += "greengrass-config-init.service"
 
 do_install() {
     install -d ${D}${bindir}/
-    install -m 0755 ${WORKDIR}/greengrass-config-init.sh ${D}${bindir}/
+    install -m 0755 ${UNPACKDIR}/greengrass-config-init.sh ${D}${bindir}/
 
     install -d ${D}${systemd_unitdir}/system
-    install -m 0644 ${WORKDIR}/greengrass-config-init.service ${D}${systemd_unitdir}/system/
+    install -m 0644 ${UNPACKDIR}/greengrass-config-init.service ${D}${systemd_unitdir}/system/
     sed -i  -e 's,@BINDIR@,${bindir},g' \
             ${D}${systemd_unitdir}/system/greengrass-config-init.service
 
     install -d -m 0755 ${D}${sysconfdir}/systemd/network
-    install -m 0644 ${WORKDIR}/wlan.network ${D}${sysconfdir}/systemd/network/
+    install -m 0644 ${UNPACKDIR}/wlan.network ${D}${sysconfdir}/systemd/network/
 
     # Install systemd override for networkd-wait-online
     install -d ${D}${systemd_unitdir}/system/systemd-networkd-wait-online.service.d/
-    install -m 0644 ${WORKDIR}/systemd-networkd-wait-online.service.d-override.conf ${D}${systemd_unitdir}/system/systemd-networkd-wait-online.service.d/override.conf
+    install -m 0644 ${UNPACKDIR}/systemd-networkd-wait-online.service.d-override.conf ${D}${systemd_unitdir}/system/systemd-networkd-wait-online.service.d/override.conf
 
     install -d ${D}${sysconfdir}/wpa_supplicant
 }

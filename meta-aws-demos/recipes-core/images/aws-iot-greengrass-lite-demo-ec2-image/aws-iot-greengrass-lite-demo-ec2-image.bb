@@ -19,6 +19,22 @@ IMAGE_INSTALL:append = " jq"
 IMAGE_INSTALL:append = " python3-misc python3-venv python3-tomllib python3-ensurepip libcgroup python3-pip"
 IMAGE_INSTALL:append = " gdbserver"
 
+# cloud-init renders network config for systemd-networkd, which owns the
+# systemd-network user. NO_RECOMMENDATIONS below stops networkd being pulled in
+# implicitly, so install it explicitly.
+IMAGE_INSTALL:append = " systemd-networkd"
+
+# NO_RECOMMENDATIONS below also drops os-release, which other images ship and
+# which cloud-init reads to determine the distro. Install it explicitly.
+IMAGE_INSTALL:append = " os-release"
+
+# cloud-init's per-stage services talk to the cloud-init daemon with
+# "nc -U <socket>". BusyBox nc has no Unix-socket (-U) support at all, so every
+# stage fails with "bad port" and the network is never configured. Install
+# netcat-openbsd, which provides a -U-capable nc (alternative priority 60 wins
+# over busybox's 50).
+IMAGE_INSTALL:append = " netcat-openbsd"
+
 # necessary to boot the system
 IMAGE_INSTALL:append = " kernel-image"
 
@@ -56,6 +72,21 @@ COPY_LIC_DIRS = "1"
 # this should be equal to sdimage-aws-iot-greengrass-lite-demo-ab_partition.wks.in file,
 # for rauc bundle generation wic file is not used!
 IMAGE_PREPROCESS_COMMAND:append = " rootfs_user_fstab"
+
+# The cloud-init systemd generator looks for ds-identify at
+# /usr/lib/cloud-init/ds-identify, but cloud-init installs it under
+# /usr/libexec/cloud-init. Without ds-identify the generator never enables the
+# cloud-init services, so the network is never configured at boot. Link the
+# expected path to the installed one.
+ROOTFS_POSTPROCESS_COMMAND:append = " link_cloud_init_ds_identify;"
+link_cloud_init_ds_identify () {
+    if [ -e ${IMAGE_ROOTFS}/usr/libexec/cloud-init/ds-identify ] && \
+       [ ! -e ${IMAGE_ROOTFS}/usr/lib/cloud-init/ds-identify ]; then
+        install -d ${IMAGE_ROOTFS}/usr/lib/cloud-init
+        ln -sf ../../libexec/cloud-init/ds-identify \
+            ${IMAGE_ROOTFS}/usr/lib/cloud-init/ds-identify
+    fi
+}
 
 ####
 rootfs_user_fstab () {
